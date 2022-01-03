@@ -6,13 +6,14 @@ using System;
 public class ModeSwitchManager : MonoBehaviour
 {
 
+    //////////////////////// 필요한 오브젝트
     public GameObject Shop;
 
     public GameObject Canvas;
 
     public GameObject Stars;
 
-    ///////////////////////
+    /////////////////////// 카메라 위치
 
     private Vector3 camDownPos = new Vector3 (0, -8, -2.04f);
     private Vector3 camOriginPos = new Vector3 (0, 0, -2.04f);
@@ -21,7 +22,7 @@ public class ModeSwitchManager : MonoBehaviour
     private Vector3 camLeftPos = new Vector3(-8, 0, -2.04f);
     private Vector3 camRightPos = new Vector3(8, 0, -2.04f);
 
-    /////////////////////////////////////////
+    ///////////////////////////////////////// state pattern
 
     private Home home;
     private SpecificMode starCanvas;
@@ -30,20 +31,9 @@ public class ModeSwitchManager : MonoBehaviour
     private SpecificMode HomeRight;
     private Node currentNode;
 
-    public enum StateName  {
-        Home,
-        Canvas,
-        Shop,
-        Diary,
-        HomeLeft,
-        HomeRight
-    }
-    public StateName currentState;
+    //////////////////////////////////////// 모션
 
     void Start() {
-
-        // 초기 설정
-
         home = new Home("home", camOriginPos);
         
         starCanvas = new SpecificMode("canvas", camUpPos, Canvas);
@@ -61,7 +51,6 @@ public class ModeSwitchManager : MonoBehaviour
         home.nodes = nodes;
         currentNode = home;
 
-        currentState = StateName.Home;
         Shop.SetActive(false);
         Canvas.SetActive(false);
     } 
@@ -135,33 +124,6 @@ public class ModeSwitchManager : MonoBehaviour
         }
     }
 
-    void HomeToShop () {
-        StartCoroutine(MoveCamera(camDownPos));
-    }
-
-    void ShopToHome () {
-        StartCoroutine(MoveCamera(camOriginPos));
-    }
-
-    void HomeToCanvas () {
-        StartCoroutine(MoveCamera(camUpPos));
-        StartCoroutine(MoveObject(Stars, camUpPos));
-    }
-
-    void CanvasToHome () {
-        StartCoroutine(MoveCamera(camOriginPos));
-        StartCoroutine(MoveObject(Stars, camOriginPos));
-    }
-
-    void HomeToHomeLeft () {
-        StartCoroutine(MoveCamera(camLeftPos));
-    }
-
-    void HomeToHomeRight () {
-        StartCoroutine(MoveCamera(camRightPos));
-    }
-
-
     ///////////////////////////////////////////////////////////////
 
     IEnumerator MoveObject (GameObject Page, Vector3 Destination) {
@@ -184,31 +146,18 @@ public class ModeSwitchManager : MonoBehaviour
 
 }
 
-public interface NodeInterface {
-    IEnumerator MoveCamera();
-}
 
-public class Node : NodeInterface {
+public class Node  {
     public string name;
     public Vector3 cameraPos; // 자신의 카메라 위치
     public GameObject FeatureObject {get; set;} // 각자의 기능을 담은 컴포넌트. 나중에 밖에서 켜고 꺼줄거임
 
-    public virtual Node GetNode (string name) {
-        return new Node();
+    public virtual void goToNode (string name) {
+
     }
 
-    public virtual Node returnToHome () {
-        return new Node();
-    }
+    public virtual void returnToHome () {
 
-    public IEnumerator MoveCamera() { // 카메라를 움직이기 위한 것
-
-        Vector3 mainPos = Camera.main.transform.position;
-
-        while ( Vector3.Distance(mainPos, cameraPos) >= 0.1 ) {
-            mainPos = Vector3.Lerp(mainPos, cameraPos, 0.01f);
-            yield return new WaitForSeconds(0.001f);
-        }
     }
 }
 
@@ -221,14 +170,6 @@ public class Home : Node  {
         this.cameraPos = cameraPos;
     }
 
-    public override Node GetNode(string name) {
-        foreach ( Node node in nodes ) {
-            if (node.name == name) {
-                return node;
-            }
-        }
-        return null;
-    }
 
 }
 
@@ -242,7 +183,4 @@ public class SpecificMode : Node {
         this.FeatureObject = gameObject;
     }
 
-    public override Node returnToHome() {
-        return home;
-    }
 }

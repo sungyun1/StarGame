@@ -15,6 +15,8 @@ public class ModeSwitchManager : MonoBehaviour
     public GameObject Stars;
 
     public Camera cam;
+
+    private bool isCameraOnPosition = true;
     private Vector3 openPos = new Vector3 (1080 / 2, 1920 / 2, 0);
 
     private Vector3 closePos = new Vector3 (1080 / 2 , - 1920 / 2, 0);
@@ -23,11 +25,16 @@ public class ModeSwitchManager : MonoBehaviour
     private Vector3 camOriginPos = new Vector3 (0, 0, -2.04f);
     private Vector3 camUpPos = new Vector3(0, 7, -2.04f);
 
+    private Vector3 camLeftPos = new Vector3(-8, 0, -2.04f);
+    private Vector3 camRightPos = new Vector3(8, 0, -2.04f);
+
     public enum StateName  {
         Home,
         Canvas,
         Shop,
-        Diary
+        Diary,
+        HomeLeft,
+        HomeRight
     }
     public StateName currentState;
 
@@ -42,6 +49,12 @@ public class ModeSwitchManager : MonoBehaviour
             onSlideUp();
         } else if (typeofOperation == 2) { // slide down
             onSlideDown();
+        }
+        else if (typeofOperation == 3) { // slide right
+            onSlideRight();
+        }   
+        else if (typeofOperation == 4) { // slide left 
+            onSlideLeft();
         }
     }
     
@@ -62,19 +75,38 @@ public class ModeSwitchManager : MonoBehaviour
     }
 
     void onSlideDown () {
-
-        if (currentState == StateName.Home) {
-            currentState = StateName.Canvas;
-            Canvas.SetActive(true);
-            HomeToCanvas();
-        }
-        else if (currentState == StateName.Shop) {
-            currentState = StateName.Home;
-            Shop.SetActive(false);
-            ShopToHome();
+        if (isCameraOnPosition) {
+            if (currentState == StateName.Home) {
+                currentState = StateName.Canvas;
+                Canvas.SetActive(true);
+                HomeToCanvas();
+            }
+            else if (currentState == StateName.Shop) {
+                currentState = StateName.Home;
+                Shop.SetActive(false);
+                ShopToHome();
+            }
         }
     }
 
+    void onSlideRight () {
+        if (currentState == StateName.Home) {
+            HomeToHomeLeft();
+        }
+        else if (currentState == StateName.HomeRight) {
+            StartCoroutine(MoveCamera(cam, camOriginPos));
+        }
+        
+    }
+
+    void onSlideLeft () {
+        if (currentState == StateName.Home) {
+            HomeToHomeRight();
+        }
+        else if (currentState == StateName.HomeLeft) {
+            StartCoroutine(MoveCamera(cam, camOriginPos));
+        }
+    }
 
     public void addMotion (string motionName, IEnumerator ie) {
         transition[motionName].Add(ie);
@@ -102,6 +134,14 @@ public class ModeSwitchManager : MonoBehaviour
     void CanvasToHome () {
         StartCoroutine(MoveCamera(cam, camOriginPos));
         StartCoroutine(MoveObject(Stars, camOriginPos));
+    }
+
+    void HomeToHomeLeft () {
+        StartCoroutine(MoveCamera(cam, camLeftPos));
+    }
+
+    void HomeToHomeRight () {
+        StartCoroutine(MoveCamera(cam, camRightPos));
     }
 
 

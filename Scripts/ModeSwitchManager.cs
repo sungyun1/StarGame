@@ -6,8 +6,6 @@ using System;
 public class ModeSwitchManager : MonoBehaviour
 {
 
-    private Dictionary<string, List<IEnumerator>> transition; // 동작 이름, 실제로 움직일 방법
-
     public GameObject Shop;
 
     public GameObject Canvas;
@@ -48,7 +46,7 @@ public class ModeSwitchManager : MonoBehaviour
 
         home = new Home("home", camOriginPos);
         
-        starCanvas = new SpecificMode("starCanvas", camUpPos, Canvas);
+        starCanvas = new SpecificMode("canvas", camUpPos, Canvas);
         shop = new SpecificMode("shop", camDownPos, Shop);
         HomeLeft = new SpecificMode("homeLeft", camLeftPos, null);
         HomeRight = new SpecificMode("homeRight", camRightPos, null);
@@ -60,8 +58,6 @@ public class ModeSwitchManager : MonoBehaviour
         nodes.Add(HomeLeft);
         nodes.Add(HomeRight);
 
-        print(nodes[0].GetType());
-
         home.nodes = nodes;
         currentNode = home;
 
@@ -70,18 +66,18 @@ public class ModeSwitchManager : MonoBehaviour
         Canvas.SetActive(false);
     } 
 
-    void switchState (Node fromNode, Node toNode) {
+    void switchState (Node toNode) {
         // 기능 켜주고 카메라 움직이기
-        if (fromNode.FeatureObject == null ) { }
-        else {
-            fromNode.FeatureObject.SetActive(false);
-        }
+        if (currentNode.FeatureObject != null) {
+            currentNode.FeatureObject.SetActive(false);
+        } else { }
+   
 
-        if (toNode.FeatureObject == null ) { }
-        else {
+        if (toNode.FeatureObject != null ) {
             toNode.FeatureObject.SetActive(true);
-        }
+        } else { }
 
+        currentNode = toNode;
         StartCoroutine(MoveCamera(toNode.cameraPos));
 
     }
@@ -103,71 +99,41 @@ public class ModeSwitchManager : MonoBehaviour
     void onSlideUp() {
 
         if (currentNode.name == "home") {
-            switchState(currentNode, starCanvas);
+            switchState(starCanvas);
         }
         else if (currentNode.name == "shop") {
-            switchState(currentNode, home);
+            switchState(home);
         }
-
-        /*
-        if (currentState == StateName.Canvas) {
-            currentState = StateName.Home;
-            Canvas.SetActive(false);
-            CanvasToHome();
-        }
-
-        else if (currentState == StateName.Home) {
-            currentState = StateName.Shop;
-            Shop.SetActive(true);
-            HomeToShop();
-        }
-        */
 
     }
 
     void onSlideDown () {
-        
-            if (currentState == StateName.Home) {
-                currentState = StateName.Canvas;
-                Canvas.SetActive(true);
-                HomeToCanvas();
-            }
-            else if (currentState == StateName.Shop) {
-                currentState = StateName.Home;
-                Shop.SetActive(false);
-                ShopToHome();
-            }
-    
+        if (currentNode.name == "home") {
+            switchState(shop);
+        }
+        else if (currentNode.name == "canvas") {
+            switchState(home);
+        }
+
     }
 
     void onSlideRight () {
-        if (currentState == StateName.Home) {
-            HomeToHomeLeft();
+        if (currentNode.name == "home") {
+            switchState(HomeRight);
         }
-        else if (currentState == StateName.HomeRight) {
-            StartCoroutine(MoveCamera(camOriginPos));
+        else if (currentNode.name == "homeLeft") {
+            switchState(home);
         }
-        
     }
 
     void onSlideLeft () {
-        if (currentState == StateName.Home) {
-            HomeToHomeRight();
+        if (currentNode.name == "home") {
+            switchState(HomeLeft);
         }
-        else if (currentState == StateName.HomeLeft) {
-            StartCoroutine(MoveCamera(camOriginPos));
+        else if (currentNode.name == "homeRight") {
+            switchState(home);
         }
     }
-
-    public void addMotion (string motionName, IEnumerator ie) {
-        transition[motionName].Add(ie);
-    }
-
-    public void createMotion (string motionName) {
-        transition.Add(motionName, new List<IEnumerator>());
-    }
-
-    // 대리자를 통해서 수행하는 걸로 바꾸자 !!
 
     void HomeToShop () {
         StartCoroutine(MoveCamera(camDownPos));
@@ -208,10 +174,10 @@ public class ModeSwitchManager : MonoBehaviour
 
     public IEnumerator MoveCamera(Vector3 cameraPos) { // 카메라를 움직이기 위한 것
 
-        Vector3 mainPos = Camera.main.transform.position;
+        Camera main = Camera.main;
 
-        while ( Vector3.Distance(mainPos, cameraPos) >= 0.1 ) {
-            mainPos = Vector3.Lerp(mainPos, cameraPos, 0.01f);
+        while ( Vector3.Distance(main.transform.position, cameraPos) >= 0.1 ) {
+            main.transform.position = Vector3.Lerp(main.transform.position, cameraPos, 0.01f);
             yield return new WaitForSeconds(0.001f);
         }
     }
@@ -222,18 +188,18 @@ public interface NodeInterface {
     IEnumerator MoveCamera();
 }
 
-public interface HomeInterface {
-    Node GetNode(string name);
-}
-
-public interface ModeInterface {
-    Home returnToHome();
-}
-
 public class Node : NodeInterface {
     public string name;
     public Vector3 cameraPos; // 자신의 카메라 위치
     public GameObject FeatureObject {get; set;} // 각자의 기능을 담은 컴포넌트. 나중에 밖에서 켜고 꺼줄거임
+
+    public virtual Node GetNode (string name) {
+        return new Node();
+    }
+
+    public virtual Node returnToHome () {
+        return new Node();
+    }
 
     public IEnumerator MoveCamera() { // 카메라를 움직이기 위한 것
 
@@ -246,7 +212,7 @@ public class Node : NodeInterface {
     }
 }
 
-public class Home : Node, HomeInterface  {
+public class Home : Node  {
     
     public List<Node> nodes {get; set;}
 
@@ -255,7 +221,7 @@ public class Home : Node, HomeInterface  {
         this.cameraPos = cameraPos;
     }
 
-    public Node GetNode(string name) {
+    public override Node GetNode(string name) {
         foreach ( Node node in nodes ) {
             if (node.name == name) {
                 return node;
@@ -266,9 +232,9 @@ public class Home : Node, HomeInterface  {
 
 }
 
-public class SpecificMode : Node, ModeInterface {
+public class SpecificMode : Node {
 
-    public Home home { get; set; }
+    public Node home { get; set; }
 
     public SpecificMode (string name, Vector3 cameraPos, GameObject gameObject) {
         this.name = name;
@@ -276,7 +242,7 @@ public class SpecificMode : Node, ModeInterface {
         this.FeatureObject = gameObject;
     }
 
-    public Home returnToHome() {
+    public override Node returnToHome() {
         return home;
     }
 }

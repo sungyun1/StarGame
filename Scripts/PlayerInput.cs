@@ -41,11 +41,11 @@ public class PlayerInput : MonoBehaviour
 
         Vector3 res = result;
 
-        if (res.x < 0.5 && res.y < 0.5 && res.y > - 0.5) return 0; // tap
+        if (res.x < 0.5 && res.x > -0/5 && res.y < 0.5 && res.y > - 0.5) return 0; // tap
         if (res.x < 0.5 && res.y > 1) return 1; // slide up
         if (res.x < 0.5 && res.y < -1) return 2; // slide down
         if (res.x > 1 && res.y < 0.5) return 3; // slide right
-        if (res.x < -1 && res.x < 0.5) return 4; // slide left
+        if (res.x < -1 && res.y < 0.5) return 4; // slide left
         else return 99;
     }
 

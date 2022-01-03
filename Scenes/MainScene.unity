@@ -573,7 +573,7 @@ Transform:
   m_GameObject: {fileID: 112914623}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -2.5, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 740468387}
   m_RootOrder: 0
@@ -1812,7 +1812,7 @@ Transform:
   m_GameObject: {fileID: 429029526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -10.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1921717942}
   m_RootOrder: 0
@@ -6143,7 +6143,6 @@ MonoBehaviour:
   Shop: {fileID: 1355598137}
   Canvas: {fileID: 857938822}
   Stars: {fileID: 1981272455}
-  cam: {fileID: 519420031}
   currentState: 0
 --- !u!114 &1971758968
 MonoBehaviour:

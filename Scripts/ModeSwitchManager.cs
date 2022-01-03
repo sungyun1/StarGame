@@ -5,9 +5,6 @@ using System;
 
 public class ModeSwitchManager : MonoBehaviour
 {
-
-    private Dictionary<string, List<IEnumerator>> transition; // 동작 이름, 실제로 움직일 방법
-
     public GameObject Shop;
 
     public GameObject Canvas;
@@ -106,14 +103,6 @@ public class ModeSwitchManager : MonoBehaviour
         else if (currentState == StateName.HomeLeft) {
             StartCoroutine(MoveCamera(cam, camOriginPos));
         }
-    }
-
-    public void addMotion (string motionName, IEnumerator ie) {
-        transition[motionName].Add(ie);
-    }
-
-    public void createMotion (string motionName) {
-        transition.Add(motionName, new List<IEnumerator>());
     }
 
     // 대리자를 통해서 수행하는 걸로 바꾸자 !!

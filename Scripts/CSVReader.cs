@@ -24,9 +24,7 @@ public class CSVReader : MonoBehaviour
 
     public void parse () {
 
-        // StreamReader sr = new StreamReader(Application.dataPath + fileLocation);
-
-        bool firstLineProcessed = false; // 현재까지 읽은 라인 개수
+        bool firstLineProcessed = false; 
         int currentIndex = 0;
 
         var lines = File.ReadAllLines(Application.dataPath + fileLocation);
@@ -37,15 +35,14 @@ public class CSVReader : MonoBehaviour
                 firstLineProcessed = !firstLineProcessed; 
             }
             else {
-                string[] line = sentence.Split(','); // " ~~ " 안에 있는 것들은 다 : 로 표기되었음
+                string[] line = sentence.Split(',');
 
                 charactorInformation.Add(new List<string>());
 
                 for(int i = 0; i < line.Length; i++)
                 {
-                    line[i].Replace(":", ",");
-                    print(line[i]);
-                    charactorInformation[currentIndex].Add(line[i].ToString());
+                    string tmp = line[i].Replace(":", ",").Replace("\"", "");
+                    charactorInformation[currentIndex].Add(tmp);
                 }
                 currentIndex++;
             }

@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class CSVReader : MonoBehaviour
+public class CSVReader
 {
-    
-    // 여러 개의 파일을 각각 끌어와야 하고 그 파일에 담긴 parse 방식도 다를 것이다.
-
-    public CharactorDB database;
     private string fileLocation;
 
-    public List<List<string>> charactorInformation = new List<List<string>>();
-
-    void Start() {
-        setFileLocation("/Info/CharactorInfo.csv");
-        parse();
-    }
-
-    public void setFileLocation (string path) {
+    public CSVReader setFileLocation (string path) {
         fileLocation = path;
+        return this;
     }
 
-    public void parse () {
+    // ~~.csv 를 해석해서 집어넣어주는 역할
+    public List<List<string>> parse () {
+        
+        List<List<string>> data = new List<List<string>>();
 
         bool firstLineProcessed = false; 
         int currentIndex = 0;
 
-        var lines = File.ReadAllLines(Application.dataPath + fileLocation);
+        var lines = File.ReadAllLines(Application.dataPath + "/" + fileLocation);
 
         foreach (var sentence in lines) {
 
@@ -37,21 +30,17 @@ public class CSVReader : MonoBehaviour
             else {
                 string[] line = sentence.Split(',');
 
-                charactorInformation.Add(new List<string>());
+                data.Add(new List<string>());
 
                 for(int i = 0; i < line.Length; i++)
                 {
                     string tmp = line[i].Replace(":", ",").Replace("\"", "");
-                    charactorInformation[currentIndex].Add(tmp);
+                    data[currentIndex].Add(tmp);
                 }
                 currentIndex++;
             }
         }
 
-    }
-
-    
-    public void passInfoToCharactorDB () {
-
+        return data;
     }
 }

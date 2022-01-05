@@ -21,7 +21,7 @@ public class CharactorDB : MonoBehaviour
         diarySpaceMarkSpritePath
     }
 
-    public CSVReader cSVReader;
+    public CSVReader csvReader = new CSVReader();
 
     private Dictionary<int, string> charactorDatabase;
 
@@ -29,10 +29,13 @@ public class CharactorDB : MonoBehaviour
 
     void Awake() {
 
-        // 일단 CSVReader 에서 정보를 받아온다.
-        // charactorInfo.csv 랑 questionAndAnswers.csv 에서 각각 받아옴
-        // 나머지 정보들은 이름으로 메울 수 있다.
+        List<List<string>> info = csvReader
+            .setFileLocation("Info/CharactorInfo.csv")
+            .parse();
 
+        for (int i = 0; i < info.Count; i++) {
+            print(info[i][2]);
+        }
 
         charactorDatabase = new Dictionary<int, string>();
         charactorDatabase.Add(0, "huggie");
@@ -60,12 +63,12 @@ public class CharactorDB : MonoBehaviour
 
     public string getCharactorInformation (int charactorNumber, DataIndex informationToFind) {
 
-        string value = charactorDatabase[ charactorNumber * 10 + (int) informationToFind ];
+        string value = charactorDatabase[ charactorNumber * 11 + (int) informationToFind ];
         return value;
     }
 
-    public void pushInfoToDictionary (List<List<string>> charactorInfo, List<List<string>> questionAndAnswer) {
-        // 받아온 정보를 전부 집어넣는다.
+    public void pushCharactorInfo (List<List<string>> charactorInfo) {
+        // 캐릭터에 관한 정보 입력
 
         int charactorNum = charactorInfo.Count;
 
@@ -78,8 +81,8 @@ public class CharactorDB : MonoBehaviour
             charactorDatabase.Add(currentIndex++, name); // name
             charactorDatabase.Add(currentIndex++, charactorInfo[charactorNum][2]); // description
 
-            charactorDatabase.Add(currentIndex++, charactorInfo[charactorNum][3]); // question
-            charactorDatabase.Add(currentIndex++, charactorInfo[charactorNum][4]); // answer
+            // charactorDatabase.Add(currentIndex++, charactorInfo[charactorNum][3]); // question
+            // charactorDatabase.Add(currentIndex++, charactorInfo[charactorNum][4]); // answer
 
             charactorDatabase.Add(currentIndex++, "Charactor/" + type + name); // 캐릭터 이미지
             charactorDatabase.Add(currentIndex++, "Charactor/" + type + name); // 도감 실루엣
@@ -88,6 +91,10 @@ public class CharactorDB : MonoBehaviour
             charactorDatabase.Add(currentIndex++, "Charactor/" + type + name); // 다이어리 멋진그림
             charactorDatabase.Add(currentIndex++, "Diary/" + type); // 우주 마크
         }        
+    }
+
+    public void pushQuestionInfo (List<List<string>> questionInfo) {
+
     }
 
     

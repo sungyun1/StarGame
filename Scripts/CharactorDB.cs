@@ -87,7 +87,6 @@ public class CharactorDB : MonoBehaviour
             charactorDatabase.Add(currentIndex++, "Charactor/" + type + name); // 다이어리 손그림
             charactorDatabase.Add(currentIndex++, "Charactor/" + type + name); // 다이어리 멋진그림
             charactorDatabase.Add(currentIndex++, "Diary/" + type); // 우주 마크
-
         }        
     }
 

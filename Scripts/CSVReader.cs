@@ -24,50 +24,36 @@ public class CSVReader : MonoBehaviour
 
     public void parse () {
 
-        StreamReader sr = new StreamReader(Application.dataPath + fileLocation);
+        // StreamReader sr = new StreamReader(Application.dataPath + fileLocation);
 
-        bool endOfFile = false;
         bool firstLineProcessed = false; // 현재까지 읽은 라인 개수
         int currentIndex = 0;
-        while (!endOfFile)
-        {
-            // 한 줄 읽어오기.
-            // 첫 번째 줄은 인덱싱이므로 무시해야 할 듯.
-            string line = sr.ReadLine(); 
 
-            if(line == null)
-            {
-                endOfFile = true;
-                break;
+        var lines = File.ReadAllLines(Application.dataPath + fileLocation);
+
+        foreach (var sentence in lines) {
+
+            if (firstLineProcessed == false) {
+                firstLineProcessed = !firstLineProcessed; 
             }
-
-            if (firstLineProcessed != true) {
-                firstLineProcessed = true;
-            }
-
-            else if (firstLineProcessed) {
-
-                // 이거 일단, " 가 나오면 그 자리에 : 를 넣고 이후에 : 로 자르는 게 정신건강에 좋을 것 같다.
-                // 이렇게 하면 특정한 형식에 구애를 받게 될 것 같아서, 이런 식으로 자르자.
-
-
-                string[] lineArray = line.Split('\"'); // 크게 description 과 아닌 것으로 나눈다.
-                string [] others = lineArray[0].Split(','); // 그걸 각각의 타입으로 쪼갠다.
-                string sentence = lineArray[1].ToString();
+            else {
+                string[] line = sentence.Split(','); // " ~~ " 안에 있는 것들은 다 : 로 표기되었음
 
                 charactorInformation.Add(new List<string>());
 
-                for(int i = 0; i < others.Length; i++)
+                for(int i = 0; i < line.Length; i++)
                 {
-                    charactorInformation[currentIndex].Add(others[i].ToString());
+                    line[i].Replace(":", ",");
+                    print(line[i]);
+                    charactorInformation[currentIndex].Add(line[i].ToString());
                 }
-                charactorInformation[currentIndex].Add(sentence);
                 currentIndex++;
             }
-            
         }
+
     }
 
+    
     public void passInfoToCharactorDB () {
 
     }

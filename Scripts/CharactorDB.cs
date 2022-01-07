@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.IO;
 
 public class CharactorDB : MonoBehaviour
 {
-    // 10개 단위로 조직되어 있다. 원하는 키는 DataIndex에서 추출해서 사용
+    // question 들은 사실 여기서 다룰 이유가 없어서 다른 곳으로 빼낼 것임~
+
     public enum DataIndex {
-        type = 0,
-        name,
+        name = 0,
+        type,
         description,
-        question,
-        answer,
         backgroundSpritePath,
         hiddenStateSpritePath,
         openStateSpritePath,
@@ -20,6 +17,8 @@ public class CharactorDB : MonoBehaviour
         diaryDetailSpritePath,
         diarySpaceMarkSpritePath
     }
+
+    public int numberOfDataPerCharactor = 9;
 
     public CSVReader csvReader = new CSVReader();
 
@@ -63,7 +62,7 @@ public class CharactorDB : MonoBehaviour
 
     public string getCharactorInformation (int charactorNumber, DataIndex informationToFind) {
 
-        string value = charactorDatabase[ charactorNumber * 11 + (int) informationToFind ];
+        string value = charactorDatabase[ charactorNumber * numberOfDataPerCharactor + (int) informationToFind ];
         return value;
     }
 
@@ -74,8 +73,8 @@ public class CharactorDB : MonoBehaviour
 
         for (int i = 0; i < charactorNum; i++) {
 
-            string type = charactorInfo[charactorNum][0];
-            string name = charactorInfo[charactorNum][1];
+            string name = charactorInfo[charactorNum][0];
+            string type = charactorInfo[charactorNum][1];
 
             charactorDatabase.Add(currentIndex++, type); // type
             charactorDatabase.Add(currentIndex++, name); // name
@@ -97,6 +96,7 @@ public class CharactorDB : MonoBehaviour
 
     }
 
-    
+    public void addDirectoryForSetting() {
+    }    
 }
 

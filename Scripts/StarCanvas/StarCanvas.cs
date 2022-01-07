@@ -153,7 +153,7 @@ class StarGroup {
             .build();
 
             GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
-            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Normal/Huggie");
+            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/normal/허기");
             newch.transform.position = ch.position;
 
             gameResource.GetComponent<ResourceManager>().addCharactor(ch);

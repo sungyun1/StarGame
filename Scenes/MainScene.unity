@@ -2089,7 +2089,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 58.743}
-  m_SizeDelta: {x: 1080, y: 1802.5137}
+  m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525988284
 MonoBehaviour:
@@ -4884,7 +4884,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af1808eb26c8349b79eeaddccb5b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfDataPerCharactor: 11
 --- !u!1 &1526066251
 GameObject:
   m_ObjectHideFlags: 0
@@ -5164,7 +5163,6 @@ MonoBehaviour:
   - {fileID: 1414350324}
   - {fileID: 1995157647}
   - {fileID: 901022803}
-  myCharactors: []
 --- !u!114 &1650468628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6181,10 +6179,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971758963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80276a26c75376a40a81808a9d882bb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 05ccc8361cb663449b2c69701c6e4f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfDataPerCharactor: 0
 --- !u!1 &1981272455
 GameObject:
   m_ObjectHideFlags: 0

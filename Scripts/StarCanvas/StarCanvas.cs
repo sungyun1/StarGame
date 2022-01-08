@@ -43,7 +43,6 @@ public struct StarData {
 }
 
 class StarGroup {
-
     private List<List<StarData>> stargroup = new List<List<StarData>>();
 
     public List<StarData> getHeadOfList(int num) 
@@ -146,14 +145,14 @@ class StarGroup {
     {
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
             Charactor ch = charactorBuilder
-                .setName("huggie")
+                .setName("러너")
                 .setType(0)
-                .setIndex(0)
+                .setIndex(1)
                 .setPosition(new Vector2 (1.3f, -3.5f))
             .build();
 
             GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
-            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/normal/허기");
+            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/normal/" + ch.name);
             newch.transform.position = ch.position;
 
             gameResource.GetComponent<ResourceManager>().addCharactor(ch);
@@ -167,7 +166,6 @@ class StarGroup {
             openYesOrNoPopup();    
         }
     }
-
 }
 
 

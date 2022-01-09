@@ -46,7 +46,7 @@ public class CharactorDB : MonoBehaviour
             data[i].Add("Charactor/Home/" + type + "/" + name); // 캐릭터 이미지
             data[i].Add("Charactor/Home/" + type + "/" + name); // 도감 실루엣
             data[i].Add("Charactor/DiaryOpened/" + name); // 도감 해금시
-            data[i].Add("Charactor/Home/" + type + "/" + name); // 다이어리 손그림
+            data[i].Add("Charactor/DiaryOpened/" + name); // 다이어리 손그림
             data[i].Add("Charactor/Home/" + type + "/" + name); // 다이어리 멋진그림
             data[i].Add("Diary/" + type); // 우주 마크
         }

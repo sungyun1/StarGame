@@ -26,14 +26,11 @@ public class ResourceManager : MonoBehaviour
 
     private List<Charactor> myCharactors = new List<Charactor>();
 
+    // 별자리 보관 내역 (이름 + 그 캐릭터 별자리)
+    private Dictionary<int, StarGroup> stargroups = new Dictionary<int, StarGroup>();
+
     public void Start() {
         starDust = 500;
-        
-    }
-
-    public void Update() {
-        
-        
         
     }
 
@@ -53,5 +50,10 @@ public class ResourceManager : MonoBehaviour
 
     public void addCharactor(Charactor ch) {
         myCharactors.Add(ch);
+
+    }
+
+    public void addStarGroup(int charactorID, StarGroup stargroup) {
+        stargroups.Add(charactorID, stargroup);
     }
 }

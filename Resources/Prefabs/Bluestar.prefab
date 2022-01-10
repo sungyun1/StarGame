@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 605151475078138165}
   - component: {fileID: 605151475078138166}
   - component: {fileID: 605151475078138164}
-  - component: {fileID: -756391147688010642}
+  - component: {fileID: 7727437705870176689}
   m_Layer: 8
   m_Name: Bluestar
   m_TagString: Star
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.42, y: 0.49}
   m_EdgeRadius: 0
---- !u!114 &-756391147688010642
+--- !u!114 &7727437705870176689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a10f4ddc0181845bd766dd855999ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0

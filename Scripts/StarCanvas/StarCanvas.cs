@@ -3,50 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
-// 별자리는 특정 별 개수가 임의의 개수만큼 있을 때 , 캐릭터가 랜덤으로 생성되는 걸로~~
-
-public class StarCanvas : MonoBehaviour
-{
-    public GameObject gameObjectManager;
-    public GameObject gameResource;
-    
-    public GameObject Diary;
-
-    public popUpController popUp;
-
-    public CharactorBuilder charactorBuilder = new CharactorBuilder();
-    public GameObject CharactorPrefab;
-    public GameObject CharactorFolder;
-
-    public GameObject Lines;
-
-    public GameObject LinePrefab;
-
-    LineRenderer lr;
-
-////////////////// 내부 연산용 변수
-    private StarData buffer = new StarData();
-    private int amountOfStarInBuffer = 0;
-
-    private StarGroup tmp = new StarGroup();
-
-    private Vector3 coefficient = new Vector3(0.21f, 0.25f, 0);
-
-    public event Action openYesOrNoPopup;
-
-    private Vector3 mousePos;
-
-////////////////// 자료구조
-
-public struct StarData {
-    public Vector2 position; // 위치
-    public int starType; // 무슨 별인지
-    public int index; // 인덱싱
-}
-
-class StarGroup {
-    private List<List<StarData>> stargroup = new List<List<StarData>>();
+public class StarGroup {
+    public List<List<StarData>> stargroup = new List<List<StarData>>();
 
     public List<StarData> getHeadOfList(int num) 
     {
@@ -79,6 +37,45 @@ class StarGroup {
     }
 }
 
+
+// 별자리는 특정 별 개수가 임의의 개수만큼 있을 때 , 캐릭터가 랜덤으로 생성되는 걸로~~
+
+public class StarCanvas : MonoBehaviour
+{
+    public GameObject gameObjectManager;
+    public ResourceManager gameResource;
+    public Diary diary;
+    public popUpController popUp;
+
+    public starAnalyzer starAnalyzer = new starAnalyzer();
+
+    public CharactorBuilder charactorBuilder;
+    public GameObject CharactorPrefab;
+    public GameObject CharactorFolder;
+
+    public GameObject Lines;
+
+    public GameObject LinePrefab;
+
+    LineRenderer lr;
+
+////////////////// 내부 연산용 변수
+    private StarData buffer = new StarData();
+    private int amountOfStarInBuffer = 0;
+    private string typeOfStar = "blue";
+
+    private StarGroup tmp = new StarGroup();
+
+    private Vector3 coefficient = new Vector3(0.21f, 0.25f, 0);
+
+    public event Action openYesOrNoPopup;
+
+    private Vector3 mousePos;
+
+////////////////// 자료구조
+
+
+
 //////////////////////////// 필요한 함수
 
     void Awake() {
@@ -89,10 +86,15 @@ class StarGroup {
     {   
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
             Star star;
             determineStarExistAtMousePoint(mousePos, out star);
-            if (star != null && ! ( ifStarHasAlreadyBeenVisited (star) )) {
+
+            if (star != null && star.type == typeOfStar) {
                 storeStarToBuffer(star);
+            }
+            else {
+                print("잘못된 선택");
             }
         }
         else if (Input.GetMouseButtonUp(0)) {
@@ -111,7 +113,7 @@ class StarGroup {
         else result = null;
     }
 
-    bool ifStarHasAlreadyBeenVisited(Star star) {
+    bool ifStarHasAlreadyBeenVisited (Star star) {
         int index = star.index;
 
         if (tmp.getHeadOfList(index) == null) return false;
@@ -159,28 +161,27 @@ class StarGroup {
 
     public void createCharactorFromData ()
     {
+        // starAnalyzer.setStarGroup(tmp);
+        int charactorID = starAnalyzer.calculateCharactorID();
+
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
-            Charactor ch = charactorBuilder
-                .setName("러너")
-                .setType(0)
-                .setIndex(1)
-                .setPosition(new Vector2 (1.3f, -3.5f))
-            .build();
+
+            Charactor ch = charactorBuilder.build(charactorID);
 
             GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
             newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/normal/" + ch.name);
-            newch.transform.position = ch.position;
+            newch.transform.position = new Vector2 (1.3f, -3.5f);
 
-            gameResource.GetComponent<ResourceManager>().addCharactor(ch);
-            Diary.GetComponent<Diary>().isCharactorFound[ch.charactorIndex] = true;
+            gameResource.addCharactor(ch);
+            diary.isCharactorFound[ch.charactorIndex] = true;
         }
     }
 
     public void onCharactorCreateButtonClicked () {
-        // 안 하면 nullRef 에러
         if (openYesOrNoPopup != null) {
-            openYesOrNoPopup();    
+            openYesOrNoPopup();
         }
+        // gameResource.addStarGroup(0, tmp);
     }
 }
 

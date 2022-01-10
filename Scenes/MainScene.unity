@@ -3331,6 +3331,7 @@ GameObject:
   - component: {fileID: 857938825}
   - component: {fileID: 857938824}
   - component: {fileID: 857938828}
+  - component: {fileID: 857938827}
   m_Layer: 5
   m_Name: StarCanvas
   m_TagString: Untagged
@@ -3419,6 +3420,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &857938827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857938822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afead9510ce42f943a8ddcaa5a2cd9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: {fileID: 1513153273}
 --- !u!114 &857938828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3432,9 +3446,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectManager: {fileID: 1971758963}
-  gameResource: {fileID: 1256028945}
-  Diary: {fileID: 1650468625}
+  gameResource: {fileID: 1256028950}
+  diary: {fileID: 1650468627}
   popUp: {fileID: 1971758969}
+  charactorBuilder: {fileID: 857938827}
   CharactorPrefab: {fileID: 8511746663469267763, guid: 7de7346a741dfbd42a199a3a8e8aef7e, type: 3}
   CharactorFolder: {fileID: 252999096}
   Lines: {fileID: 663383990}

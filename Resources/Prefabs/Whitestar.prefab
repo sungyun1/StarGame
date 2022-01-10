@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5784881961501786756}
   - component: {fileID: 814084497732245386}
-  - component: {fileID: 3994661302939057369}
+  - component: {fileID: -5686640889637539247}
   m_Layer: 0
   m_Name: Whitestar
   m_TagString: Star
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3994661302939057369
+--- !u!114 &-5686640889637539247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,3 +95,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a10f4ddc0181845bd766dd855999ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0

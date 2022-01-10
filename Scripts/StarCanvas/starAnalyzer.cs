@@ -12,18 +12,8 @@ public class starAnalyzer
 {
     private List<List<StarData>> data;
 
-    void setStarGroup (List<List<StarData>> data) {
-        this.data = data;
-    }
-
-    int numberOfCertainStar(int type) {
-        int num = 0;
-        foreach (List<StarData> head in data) {
-            foreach (StarData item in head) {
-                if (item.starType == type) num++;
-            }
-        }
-        return num / 2;
+    public void setStarGroup (StarGroup Target) {
+        this.data = Target.stargroup;
     }
 
     int numberOfHub () {
@@ -32,5 +22,12 @@ public class starAnalyzer
             if (head.Count >= 3) num++;
         }
         return num / 2;
+    }
+
+    public int calculateCharactorID() {
+
+        int id = 8;
+
+        return id;
     }
 }

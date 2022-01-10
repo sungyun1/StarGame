@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8885470059666217543}
   - component: {fileID: 3700408348991335738}
-  - component: {fileID: -9216820806404480063}
+  - component: {fileID: 2802740999986929554}
   m_Layer: 0
   m_Name: Yellowstar
   m_TagString: Star
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9216820806404480063
+--- !u!114 &2802740999986929554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,3 +95,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a10f4ddc0181845bd766dd855999ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Star : Entity
 {
     // Start is called before the first frame update
-    public string color { get; set;}
+    public string type { get; set;}
     public int index { get; set;}
 
     public bool isUsed = false;

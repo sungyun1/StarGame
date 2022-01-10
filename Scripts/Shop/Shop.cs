@@ -110,7 +110,10 @@ class BuyStarStrategy : Strategy {
             );
 
         newStar.transform.position = pos;
-        newStar.GetComponent<Star>().index = starindex;
+        Star str = newStar.GetComponent<Star>();
+        str.index = starindex;
+        str.type = "blue";
+        str.isUsed = false;
         starindex++;
 
         gameResource.onBuyStar();

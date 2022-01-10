@@ -87,13 +87,14 @@ abstract class Strategy : MonoBehaviour{
 
 class BuyStarStrategy : Strategy {
 
+
     public GameObject yellowStarPrefab;
     public GameObject blueStarPrefab;
     public GameObject whiteStarPrefab;
 
     private int starindex = 0;
 
-    void Start() {
+    void Awake() {
         yellowStarPrefab = Resources.Load<GameObject>("Prefabs/YellowStar");
         blueStarPrefab = Resources.Load<GameObject>("Prefabs/BlueStar");
         whiteStarPrefab = Resources.Load<GameObject>("Prefabs/WhiteStar");

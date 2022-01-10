@@ -50,6 +50,10 @@ public class StarCanvas : MonoBehaviour
     public starAnalyzer starAnalyzer = new starAnalyzer();
 
     public CharactorBuilder charactorBuilder;
+
+    public ObjectPoolManager lineObjectPool;
+
+    ///////////////////////////////////////////
     public GameObject CharactorPrefab;
     public GameObject CharactorFolder;
 
@@ -63,6 +67,7 @@ public class StarCanvas : MonoBehaviour
     private StarData buffer = new StarData();
     private int amountOfStarInBuffer = 0;
     private string typeOfStar = "blue";
+
 
     private StarGroup tmp = new StarGroup();
 
@@ -80,6 +85,8 @@ public class StarCanvas : MonoBehaviour
 
     void Awake() {
         popUp.finished += createCharactorFromData;
+
+        lineObjectPool.setObjectPrefab(LinePrefab);
     }
 
     void Update() 
@@ -98,7 +105,7 @@ public class StarCanvas : MonoBehaviour
             }
         }
         else if (Input.GetMouseButtonUp(0)) {
-            
+            amountOfStarInBuffer = 0;
         }
         
     }
@@ -108,6 +115,7 @@ public class StarCanvas : MonoBehaviour
         GameObject entity = gameObjectManager.GetComponent<InteractionManager>().pickEntity(pos);
 
         if (entity != null) {
+            print(entity.name);
             result = entity.GetComponent<Star>();
         }
         else result = null;
@@ -127,18 +135,20 @@ public class StarCanvas : MonoBehaviour
             item.position = entity.transform.position;
             item.starType = 0;
 
-            if (amountOfStarInBuffer == 0)
-            {
-                buffer = item;
-                amountOfStarInBuffer ++;
-            }
+                // 별이 변경되었을 때만 작동
+                if (amountOfStarInBuffer == 0)
+                {
+                    buffer = item;
+                    amountOfStarInBuffer ++;
+                }
 
-            else if (amountOfStarInBuffer == 1) 
-            {
-                tmp.addStarToGroup(buffer, item);
-                drawLine(buffer.position, item.position);
-                buffer = item;
-            }
+                else if (amountOfStarInBuffer == 1) 
+                {
+                    tmp.addStarToGroup(buffer, item);
+                    drawLine(buffer.position, item.position); 
+                    buffer = item;
+                }
+            
     }
 
     void drawLine(Vector3 p1, Vector3 p2) 
@@ -146,7 +156,7 @@ public class StarCanvas : MonoBehaviour
         Vector3 fixed1 = p1 + coefficient;
         Vector3 fixed2 = p2 + coefficient;
 
-        GameObject line = Instantiate(LinePrefab, Lines.transform);
+        GameObject line = lineObjectPool.pullObjectFromPoolTo(Lines);
         lr = line.GetComponent<LineRenderer>();
         lr.positionCount += 1;
         lr.SetPosition(0, fixed1);
@@ -161,6 +171,13 @@ public class StarCanvas : MonoBehaviour
 
     public void createCharactorFromData ()
     {
+
+        int num = Lines.transform.childCount;
+
+        for (int i = 0; i < num; i++) {
+
+        }
+
         // starAnalyzer.setStarGroup(tmp);
         int charactorID = starAnalyzer.calculateCharactorID();
 

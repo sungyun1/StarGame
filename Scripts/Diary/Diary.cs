@@ -19,7 +19,7 @@ public class Diary : MonoBehaviour {
     private int totalCharactorNum = 22;
     private int buttonNum = 6;
     
-    public void Start () {
+    public void Awake () {
 
         // found 면 신경쓰고, 아니면 신경 쓰지 않음. 열람조차 안 되게 함.
 

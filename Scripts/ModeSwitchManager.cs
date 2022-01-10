@@ -88,6 +88,7 @@ public class ModeSwitchManager : MonoBehaviour
 
         if (currentNode.name == "home") {
             switchState(starCanvas);
+            StartCoroutine(MoveObject(Stars, starCanvas.cameraPos));
         }
         else if (currentNode.name == "shop") {
             switchState(home);

@@ -11,7 +11,7 @@ public class Star : Entity
     public bool isUsed = false;
 
     public override void onInteract() {
-        // print(this.index);
+        print(this.index);
     }
 
 }

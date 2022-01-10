@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public ModeSwitchManager gameMode;
 
-    public GameObjectManager gameObjectManager;
+    public InteractionManager gameObjectManager;
 
 
     // 인터랙션이 일어났을 경우

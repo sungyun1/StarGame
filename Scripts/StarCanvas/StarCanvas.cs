@@ -26,13 +26,16 @@ public class StarCanvas : MonoBehaviour
     LineRenderer lr;
 
 ////////////////// 내부 연산용 변수
-    private List<StarData> buffer = new List<StarData>();
+    private StarData buffer = new StarData();
+    private int amountOfStarInBuffer = 0;
 
     private StarGroup tmp = new StarGroup();
 
     private Vector3 coefficient = new Vector3(0.21f, 0.25f, 0);
 
     public event Action openYesOrNoPopup;
+
+    private Vector3 mousePos;
 
 ////////////////// 자료구조
 
@@ -83,44 +86,57 @@ class StarGroup {
     }
 
     void Update() 
-    {
-        if (Input.GetMouseButtonDown(0)) {
-            storeStar();
-        }
-        else if (Input.GetMouseButton(0)) {
-
+    {   
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) {
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Star star;
+            determineStarExistAtMousePoint(mousePos, out star);
+            if (star != null && ! ( ifStarHasAlreadyBeenVisited (star) )) {
+                storeStarToBuffer(star);
+            }
         }
         else if (Input.GetMouseButtonUp(0)) {
             
         }
+        
     }
 
-    void storeStar () 
+    void determineStarExistAtMousePoint(Vector3 pos, out Star result) {
+
+        GameObject entity = gameObjectManager.GetComponent<InteractionManager>().pickEntity(pos);
+
+        if (entity != null) {
+            result = entity.GetComponent<Star>();
+        }
+        else result = null;
+    }
+
+    bool ifStarHasAlreadyBeenVisited(Star star) {
+        int index = star.index;
+
+        if (tmp.getHeadOfList(index) == null) return false;
+        else return true; 
+    }
+
+    void storeStarToBuffer (Star entity) 
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        GameObject entity = gameObjectManager.GetComponent<GameObjectManager>().pickEntity(mousePos);
-
-        if (entity != null) 
-        {
             StarData item;
-            item.index = entity.GetComponent<Star>().index;
-            item.position = entity.GetComponent<Transform>().position;
+            item.index = entity.index;
+            item.position = entity.transform.position;
             item.starType = 0;
 
-            if (buffer.Count == 0)
+            if (amountOfStarInBuffer == 0)
             {
-                buffer.Add(item);
+                buffer = item;
+                amountOfStarInBuffer ++;
             }
 
-            else if (buffer.Count == 1) 
+            else if (amountOfStarInBuffer == 1) 
             {
-                buffer.Add(item);
-                tmp.addStarToGroup(buffer[0], buffer[1]);
-                drawLine(buffer[0].position, buffer[1].position);
-                buffer.Clear();
+                tmp.addStarToGroup(buffer, item);
+                drawLine(buffer.position, item.position);
+                buffer = item;
             }
-        }
     }
 
     void drawLine(Vector3 p1, Vector3 p2) 

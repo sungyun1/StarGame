@@ -793,6 +793,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &117993402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 117993403}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &117993403
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117993402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1971758966}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &169085351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5764,7 +5799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1457, y: -1484}
+  m_AnchoredPosition: {x: 1080, y: 0}
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539685041
@@ -6950,10 +6985,10 @@ GameObject:
   - component: {fileID: 1971758966}
   - component: {fileID: 1971758964}
   - component: {fileID: 1971758965}
-  - component: {fileID: 1971758968}
   - component: {fileID: 1971758967}
   - component: {fileID: 1971758969}
   - component: {fileID: 1971758970}
+  - component: {fileID: 1971758968}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -7008,6 +7043,7 @@ RectTransform:
   - {fileID: 1795901451}
   - {fileID: 1921717942}
   - {fileID: 252999097}
+  - {fileID: 117993403}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7040,7 +7076,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971758963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c1d7c8ba00c54b46a9e9d96b048258f, type: 3}
+  m_Script: {fileID: 11500000, guid: e1ca27ecc9495c24597c7a38e3c11844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1971758969

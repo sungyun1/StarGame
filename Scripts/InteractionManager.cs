@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectManager : MonoBehaviour
+public class InteractionManager : MonoBehaviour
 {
 
     public void onInteract(Vector3 touchPos) {

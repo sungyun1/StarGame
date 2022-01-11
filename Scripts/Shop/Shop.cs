@@ -21,7 +21,11 @@ public class Shop : MonoBehaviour
     // 내부 변수
     private Dictionary<string, int> productList = new Dictionary<string, int>();
 
-    public event Action openYesOrNoPopup;
+    public string result;
+
+    public event Action openPopup;
+
+    ///////////////////////////
 
     void Start () {
         productList.Add("buyStarBtn", 100);
@@ -41,8 +45,8 @@ public class Shop : MonoBehaviour
             if (gameResource.starDust >= productList[name]) {
                 selectProduct(name);
                 
-                if (openYesOrNoPopup != null) {
-                    openYesOrNoPopup(); // 팝업을 열고 팝업 처리가 끝나면,,,
+                if (openPopup != null) {
+                    openPopup(); // 팝업을 열고 팝업 처리가 끝나면,,,
                 }
             }
             else {
@@ -55,8 +59,11 @@ public class Shop : MonoBehaviour
     }
     
     public void afterPopup () {
+
+        string result = popUp.popupResult;
+
         if (gameObject.activeSelf) {
-            currentStrategy.buy( interactibleObject, gameResource );
+            currentStrategy.buy( result, interactibleObject, gameResource );
         }
     }
 
@@ -82,53 +89,75 @@ public class Shop : MonoBehaviour
 ////////////////////////////////////////////////////////////////
 
 abstract class Strategy : MonoBehaviour{
-    public abstract void buy(GameObject Stars, ResourceManager gameResource);
+    public abstract void buy(string type, GameObject Stars, ResourceManager gameResource);
 }
 
 class BuyStarStrategy : Strategy {
-
 
     public GameObject yellowStarPrefab;
     public GameObject blueStarPrefab;
     public GameObject whiteStarPrefab;
 
+    public GameObject prefab = null;
+
     private int starindex = 0;
 
     void Awake() {
-        yellowStarPrefab = Resources.Load<GameObject>("Prefabs/YellowStar");
-        blueStarPrefab = Resources.Load<GameObject>("Prefabs/BlueStar");
-        whiteStarPrefab = Resources.Load<GameObject>("Prefabs/WhiteStar");
+        yellowStarPrefab = Resources.Load<GameObject>("Prefabs/Yellowstar");
+        blueStarPrefab = Resources.Load<GameObject>("Prefabs/Bluestar");
+        whiteStarPrefab = Resources.Load<GameObject>("Prefabs/Whitestar");
     }
 
-    public override void buy(GameObject Stars, ResourceManager gameResource) {
+    public override void buy(string type, GameObject Stars, ResourceManager gameResource) {
 
-        GameObject newStar = Instantiate(blueStarPrefab, Stars.transform);
+        switch (type) {
+            case "blue":
+                prefab = blueStarPrefab;
+                break;
+            case "yellow":
+                prefab = yellowStarPrefab;
+                break;
+            case "white":
+                prefab = whiteStarPrefab;
+                break;
+            default:
+                prefab = null;
+                break;
+        }
 
-        Vector3 pos = new Vector3(
+        if ( prefab != null) {
+            GameObject newStar = Instantiate(prefab, Stars.transform);
+            newStar.SetActive(true);
+
+            Vector3 pos = new Vector3(
                 UnityEngine.Random.Range(-2f, 2f),
                 UnityEngine.Random.Range(-0.5f, 4f),
                 1
             );
 
-        newStar.transform.position = pos;
-        Star str = newStar.GetComponent<Star>();
-        str.index = starindex;
-        str.type = "blue";
-        str.isUsed = false;
-        starindex++;
+            newStar.transform.position = pos;
+            Star str = newStar.GetComponent<Star>();
+            str.index = starindex;
+            str.type = "blue";
+            str.isUsed = false;
+            starindex++;
 
-        gameResource.onBuyStar();
+            gameResource.onBuyStar();
+        }
+        else {
 
+        }
+        
     }
 }
 
 class startGatchaStrategy : Strategy {
-    public override void buy(GameObject interactibleObject, ResourceManager gameResource) {
+    public override void buy(string type, GameObject interactibleObject, ResourceManager gameResource) {
     }
 }
 
 class upgradeBoyStrategy : Strategy {
-    public override void buy(GameObject interactibleObject, ResourceManager gameResource) {
+    public override void buy(string type, GameObject interactibleObject, ResourceManager gameResource) {
         gameResource.onUpgradeBoy();
     }
 }

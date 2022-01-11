@@ -67,6 +67,7 @@ public class StarCanvas : MonoBehaviour
     private StarData buffer = new StarData();
     private int amountOfStarInBuffer = 0;
     private string typeOfStar = "blue";
+    private Star starAtMousePos;
 
 
     private StarGroup tmp = new StarGroup();
@@ -77,47 +78,53 @@ public class StarCanvas : MonoBehaviour
 
     private Vector3 mousePos;
 
-////////////////// 자료구조
-
-
-
 //////////////////////////// 필요한 함수
 
     void Awake() {
         popUp.finished += createCharactorFromData;
 
         lineObjectPool.setObjectPrefab(LinePrefab);
+
     }
 
     void Update() 
     {   
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            
-            Star star;
-            determineStarExistAtMousePoint(mousePos, out star);
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (star != null && star.type == typeOfStar) {
-                storeStarToBuffer(star);
+        if (Input.GetMouseButtonDown(0) ) {
+            
+            findStarExistAtMousePoint(mousePos, out starAtMousePos);
+
+            if (starAtMousePos != null) {
+                storeStarToBuffer(starAtMousePos);
             }
-            else {
-                print("잘못된 선택");
+        }
+        else if (Input.GetMouseButton(0)) {
+            
+            findStarExistAtMousePoint(mousePos, out starAtMousePos);
+
+            if (starAtMousePos != null && buffer.index != starAtMousePos.index) {
+                storeStarToBuffer(starAtMousePos);
             }
         }
         else if (Input.GetMouseButtonUp(0)) {
             amountOfStarInBuffer = 0;
         }
-        
     }
 
-    void determineStarExistAtMousePoint(Vector3 pos, out Star result) {
-
-        GameObject entity = gameObjectManager.GetComponent<InteractionManager>().pickEntity(pos);
+    void findStarExistAtMousePoint (Vector3 mousePos, out Star result) {
+        GameObject entity = gameObjectManager.GetComponent<InteractionManager>().pickEntity(mousePos);
 
         if (entity != null) {
-            print(entity.name);
-            result = entity.GetComponent<Star>();
-        }
+            if (entity.GetComponent<Star>() != null) {
+                print("star found");
+                result = entity.GetComponent<Star>();
+            }
+            else {
+                print("star not found");
+                result = null;
+            }
+        }  
         else result = null;
     }
 
@@ -148,7 +155,6 @@ public class StarCanvas : MonoBehaviour
                     drawLine(buffer.position, item.position); 
                     buffer = item;
                 }
-            
     }
 
     void drawLine(Vector3 p1, Vector3 p2) 

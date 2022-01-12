@@ -51,7 +51,7 @@ public class StarCanvas : MonoBehaviour
 
     public CharactorBuilder charactorBuilder;
 
-    public ObjectPoolManager lineObjectPool;
+    public gameObjectManager pool;
 
     ///////////////////////////////////////////
     public GameObject CharactorPrefab;
@@ -82,8 +82,6 @@ public class StarCanvas : MonoBehaviour
 
     void Awake() {
         popUp.finished += createCharactorFromData;
-
-        lineObjectPool.setObjectPrefab(LinePrefab);
 
     }
 
@@ -162,7 +160,7 @@ public class StarCanvas : MonoBehaviour
         Vector3 fixed1 = p1 + coefficient;
         Vector3 fixed2 = p2 + coefficient;
 
-        GameObject line = lineObjectPool.pullObjectFromPoolTo(Lines);
+        GameObject line = pool.chooseTypeOfPool(ObjectType.line).pullObjectFromPoolTo(Lines);
         lr = line.GetComponent<LineRenderer>();
         lr.positionCount += 1;
         lr.SetPosition(0, fixed1);

@@ -287,6 +287,7 @@ RectTransform:
   - {fileID: 733042289}
   - {fileID: 1427803234}
   - {fileID: 1145870344}
+  - {fileID: 474471272}
   m_Father: {fileID: 497074843}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -313,6 +314,8 @@ MonoBehaviour:
   BinaryButton: {fileID: 1427803233}
   TripleButton: {fileID: 1145870343}
   OKButton: {fileID: 733042288}
+  toastMessage: {fileID: 474471273}
+  result: 
 --- !u!114 &34159126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2503,6 +2506,85 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 3
   m_TargetDisplay: 0
+--- !u!1 &474471271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 474471272}
+  - component: {fileID: 474471274}
+  - component: {fileID: 474471273}
+  m_Layer: 5
+  m_Name: ToastMessage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &474471272
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474471271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 34159124}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.2733, y: -241.685}
+  m_SizeDelta: {x: 568.6961, y: 159.2459}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &474471273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474471271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &474471274
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474471271}
+  m_CullTransparentMesh: 1
 --- !u!1 &497074839
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,7 +3822,6 @@ GameObject:
   - component: {fileID: 857938824}
   - component: {fileID: 857938828}
   - component: {fileID: 857938827}
-  - component: {fileID: 857938829}
   m_Layer: 5
   m_Name: StarCanvas
   m_TagString: Untagged
@@ -3859,24 +3940,11 @@ MonoBehaviour:
   diary: {fileID: 1650468627}
   popUp: {fileID: 1971758969}
   charactorBuilder: {fileID: 857938827}
-  lineObjectPool: {fileID: 857938829}
+  pool: {fileID: 1971758971}
   CharactorPrefab: {fileID: 8511746663469267763, guid: 7de7346a741dfbd42a199a3a8e8aef7e, type: 3}
   CharactorFolder: {fileID: 252999096}
   Lines: {fileID: 663383990}
   LinePrefab: {fileID: 1117258885102284837, guid: 8b39a13322984d044945c9f85518d28d, type: 3}
---- !u!114 &857938829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857938822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd231e179ea98e14b9c4384305e31b02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 0}
 --- !u!1 &863046955
 GameObject:
   m_ObjectHideFlags: 0
@@ -5425,7 +5493,6 @@ MonoBehaviour:
   currentGem: {fileID: 830538594}
   gameResource: {fileID: 1256028950}
   gameShop: {fileID: 1355598143}
-  isShopOpen: 0
 --- !u!114 &1355598143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5439,8 +5506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactibleObject: {fileID: 1981272455}
-  popUp: {fileID: 1971758969}
+  popupController: {fileID: 1971758969}
   gameResource: {fileID: 1256028950}
+  pool: {fileID: 1971758971}
   result: 
 --- !u!1 &1358302374
 GameObject:
@@ -7545,6 +7613,7 @@ GameObject:
   - component: {fileID: 1971758969}
   - component: {fileID: 1971758970}
   - component: {fileID: 1971758968}
+  - component: {fileID: 1971758971}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -7663,6 +7732,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ccc8361cb663449b2c69701c6e4f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1971758971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971758963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9fd6835f3970a2438a12f274a9bd68e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 1117258885102284837, guid: 8b39a13322984d044945c9f85518d28d, type: 3}
+  whiteStarPrefab: {fileID: 8259310206041681773, guid: 57a6c4d5c84888f4b85207e9c7832352, type: 3}
+  yellowStarPrefab: {fileID: 6694880069316572830, guid: 3b1fade9f5670084aa55f3125ed6a076, type: 3}
+  blueStarPrefab: {fileID: 605151475078138167, guid: a226fe5e1fe7300469fc15bb9c87f597, type: 3}
 --- !u!1 &1981272455
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,7 +7759,7 @@ GameObject:
   - component: {fileID: 1981272456}
   m_Layer: 0
   m_Name: Stars
-  m_TagString: Untagged
+  m_TagString: Stars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

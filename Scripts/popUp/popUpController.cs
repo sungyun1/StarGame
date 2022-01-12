@@ -28,21 +28,25 @@ public class popUpController : MonoBehaviour
 
         // 액션 등록 구간
         gameCanvas.openYesOrNoPopup += openYesOrNo;
-        gameShop.openPopup += openTriplechoice;
+        gameShop.showResultPopup += popupScript.callNextPopup;
     }
 
     void Start() {
         popup.SetActive(false);
     }
 
-    void openYesOrNo() {
+    public void openYesOrNo() {
         popupScript.switchState(Popup.popupState.binaryChoice);
         popup.SetActive(true);
     }
 
-    void openTriplechoice () {
+    public void openTripleChoice () {
         popupScript.switchState(Popup.popupState.tripletChoice);
         popup.SetActive(true);
+    }
+
+    public void openToastMessage () {
+        StartCoroutine(popupScript.callToastMessage());
     }
 
     public void proceedWithKeyword(string result) {

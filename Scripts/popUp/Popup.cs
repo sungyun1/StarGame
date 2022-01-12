@@ -18,6 +18,7 @@ public class Popup : MonoBehaviour {
     public GameObject BinaryButton;
     public GameObject TripleButton;
     public GameObject OKButton;
+    public Text toastMessage;
 
     // popup의 State를 변경하기 위한 친구들
     public enum popupState {
@@ -28,6 +29,10 @@ public class Popup : MonoBehaviour {
     }
 
     private popupState currentState;
+
+    ///////////////////////////
+
+    public string result;
 
     // 버튼의 callback 들
     public delegate void Callback();
@@ -43,6 +48,9 @@ public class Popup : MonoBehaviour {
     void Awake() {
         switchState(popupState.tripletChoice);
 
+        toastMessage.text = "돈이 부족합니다";
+        toastMessage.gameObject.SetActive(false);
+
         GameObject okbtn = OKButton.transform.Find("OKButton").gameObject;
         okbtn.GetComponent<Button>().onClick.AddListener(close);
 
@@ -53,16 +61,13 @@ public class Popup : MonoBehaviour {
         GameObject yellowStarBtn = TripleButton.transform.Find("yellowStarBuyBtn").gameObject;
         GameObject blueStarBtn = TripleButton.transform.Find("blueStarBuyBtn").gameObject;
 
-        SetCallBack(YesCallback, onYes);
-        SetCallBack(WhiteCallback, onFirstChoice);
 
-
+        YesCallback += onYes;
         WhiteCallback += onFirstChoice;
         YellowCallback += onSecondChoice;
         BlueCallback += onThirdChoice;
 
-        SetCallBack(YellowCallback, onSecondChoice);
-        SetCallBack(BlueCallback, onThirdChoice);
+        OKCallback += onOK;
 
         // 예를 누르면 보통 바로 꺼지지 않으므로 ~
         nobtn.GetComponent<Button>().onClick.AddListener(close);
@@ -108,34 +113,29 @@ public class Popup : MonoBehaviour {
         switch (EventSystem.current.currentSelectedGameObject.name) {
             case "OKButton":
                 OKCallback?.Invoke();
-                OKCallback = null;
                 gameObject.SetActive(false);
                 break;
             case "YesButton":
                 YesCallback?.Invoke();
-                YesCallback = null;
                 break;
             case "NoButton":
                 NoCallback?.Invoke();
-                NoCallback = null;
                 gameObject.SetActive(false);
                 break;
             case "whiteStarBuyBtn":
-                print("button clicked");
                 WhiteCallback?.Invoke();
-                WhiteCallback = null;
+
                 break;
             case "yellowStarBuyBtn":
                 YellowCallback?.Invoke();
-                YellowCallback = null;
                 break;
             case "blueStarBuyBtn":
                 BlueCallback?.Invoke();
-                BlueCallback = null;
                 break;
             default:
                 break;
         }
+
     }
 
     public void callNextPopup() {
@@ -143,26 +143,39 @@ public class Popup : MonoBehaviour {
     }
 
     public void onYes () {
-        // 하던 거 그대로 진행해 ~
-        popUpController.proceedWithKeyword("yes");
-        callNextPopup();
+        result = "yes";
+        sendCompletionMessage();
     }
 
     public void onFirstChoice() {
-        print("first method");
-        callNextPopup();
-        popUpController.proceedWithKeyword("white");
-        
+        result = "white";
+        sendCompletionMessage();
     }
 
     public void onSecondChoice () {
-        popUpController.proceedWithKeyword("yellow");
-        callNextPopup();
+        result = "yellow";
+        sendCompletionMessage();
     }
 
     public void onThirdChoice() {
-        popUpController.proceedWithKeyword("blue");
-        callNextPopup();
+        result = "blue";
+        sendCompletionMessage();
+    }
+
+    public void onOK () {
+        gameObject.SetActive(false);
+    }
+
+    public void sendCompletionMessage () {
+        popUpController.proceedWithKeyword(result);
+    }
+
+    public IEnumerator callToastMessage () {
+
+        toastMessage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        toastMessage.gameObject.SetActive(false);
     }
 
 }

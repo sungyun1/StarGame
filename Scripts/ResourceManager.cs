@@ -10,7 +10,7 @@ public class ResourceManager : MonoBehaviour
     
     // 주요 재화
     public int gemNum = 0;
-    public int starDust;
+    public int starDust = 0;
 
     int tmp = 0;
 
@@ -34,10 +34,21 @@ public class ResourceManager : MonoBehaviour
         
     }
 
-    public void onBuyStar() {
-        starDust -= 100;
-        whiteStarNum += 1;
-        print(whiteStarNum);
+    public void onBuyStar(string starType, int price) {
+        starDust -= price;
+        switch (starType) {
+            case "white":
+                whiteStarNum ++;
+                break;
+            case "yellow":
+                whiteStarNum ++;
+                break;
+            case "blue":
+                whiteStarNum ++;
+                break;
+            default:
+                break;
+        }
     }
 
     public void onUpgradeTelescope () {

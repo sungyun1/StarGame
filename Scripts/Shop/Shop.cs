@@ -138,7 +138,7 @@ class BuyStarStrategy : Strategy {
         newStar.transform.position = pos;
         Star str = newStar.GetComponent<Star>();
         str.index = starindex;
-        str.type = "blue";
+        str.type = type;
         str.isUsed = false;
         starindex++;
         

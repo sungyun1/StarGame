@@ -19,6 +19,7 @@ public class Popup : MonoBehaviour {
     public GameObject TripleButton;
     public GameObject OKButton;
     public Text toastMessage;
+    public Button Exit;
 
     // popup의 State를 변경하기 위한 친구들
     public enum popupState {
@@ -75,6 +76,9 @@ public class Popup : MonoBehaviour {
         whiteStarBtn.GetComponent<Button>().onClick.AddListener(close);
         blueStarBtn.GetComponent<Button>().onClick.AddListener(close);
         yellowStarBtn.GetComponent<Button>().onClick.AddListener(close);
+        Exit.GetComponent<Button>().onClick.AddListener(() => {
+            gameObject.SetActive(false);
+        });
     }
 
     public void SetCallBack (Callback target, Callback call) {

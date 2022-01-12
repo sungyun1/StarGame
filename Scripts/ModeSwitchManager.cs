@@ -32,6 +32,10 @@ public class ModeSwitchManager : MonoBehaviour
 
     //////////////////////////////////////// 모션
 
+    private bool isMotionFinished = true;
+
+    //////////////////////////////////////////
+
     void Start() {
         home = new Home("home", camOriginPos);
         
@@ -56,17 +60,23 @@ public class ModeSwitchManager : MonoBehaviour
 
     void switchState (Node toNode) {
         // 기능 켜주고 카메라 움직이기
-        if (currentNode.FeatureObject != null) {
+
+        if (isMotionFinished) {
+
+            if (currentNode.FeatureObject != null) {
             currentNode.FeatureObject.SetActive(false);
-        } else { }
+            } else { }
    
 
-        if (toNode.FeatureObject != null ) {
+            if (toNode.FeatureObject != null ) {
             toNode.FeatureObject.SetActive(true);
-        } else { }
+            } else { }
 
-        currentNode = toNode;
-        StartCoroutine(MoveCamera(toNode.cameraPos));
+            currentNode = toNode;
+            StartCoroutine(MoveCamera(toNode.cameraPos));
+        }
+
+        isMotionFinished = true;
 
     }
 
@@ -129,20 +139,28 @@ public class ModeSwitchManager : MonoBehaviour
 
     IEnumerator MoveObject (GameObject Page, Vector3 Destination) {
 
-        while (Vector3.Distance(Page.transform.position, Destination) >= 0.1) {
-            Page.transform.position = Vector3.Lerp(Page.transform.position, Destination, 0.01f);
-            yield return new WaitForSeconds(0.001f);
-        }
+
+            while (Vector3.Distance(Page.transform.position, Destination) >= 0.1) {
+                Page.transform.position = Vector3.Lerp(Page.transform.position, Destination, 0.01f);
+                yield return new WaitForSeconds(0.001f);
+            }
+        
+
+        isMotionFinished = true;
     }
 
     public IEnumerator MoveCamera(Vector3 cameraPos) { // 카메라를 움직이기 위한 것
 
         Camera main = Camera.main;
 
-        while ( Vector3.Distance(main.transform.position, cameraPos) >= 0.1 ) {
-            main.transform.position = Vector3.Lerp(main.transform.position, cameraPos, 0.01f);
-            yield return new WaitForSeconds(0.001f);
-        }
+            isMotionFinished = false;
+
+            while ( Vector3.Distance(main.transform.position, cameraPos) >= 0.1 ) {
+                main.transform.position = Vector3.Lerp(main.transform.position, cameraPos, 0.01f);
+                yield return new WaitForSeconds(0.001f);
+            }   
+
+        isMotionFinished = true;
     }
 
 }

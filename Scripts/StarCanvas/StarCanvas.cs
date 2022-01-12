@@ -45,7 +45,7 @@ public class StarCanvas : MonoBehaviour
     public GameObject gameObjectManager;
     public ResourceManager gameResource;
     public Diary diary;
-    public popUpController popUp;
+    public popUpController popupController;
 
     public starAnalyzer starAnalyzer = new starAnalyzer();
 
@@ -62,6 +62,10 @@ public class StarCanvas : MonoBehaviour
     public GameObject LinePrefab;
 
     LineRenderer lr;
+
+    ///////////////////////////////////////////////
+
+    public event Action showNextPopup;
 
 ////////////////// 내부 연산용 변수
     private StarData buffer = new StarData();
@@ -81,7 +85,7 @@ public class StarCanvas : MonoBehaviour
 //////////////////////////// 필요한 함수
 
     void Awake() {
-        popUp.finished += createCharactorFromData;
+        popupController.finished += createCharactorFromData;
 
     }
 
@@ -93,7 +97,7 @@ public class StarCanvas : MonoBehaviour
             
             findStarExistAtMousePoint(mousePos, out starAtMousePos);
 
-            if (starAtMousePos != null) {
+            if (starAtMousePos != null && isCurrentStarHasSameTypeWithBuffer(starAtMousePos)) {
                 storeStarToBuffer(starAtMousePos);
             }
         }
@@ -101,9 +105,10 @@ public class StarCanvas : MonoBehaviour
             
             findStarExistAtMousePoint(mousePos, out starAtMousePos);
 
-            if (starAtMousePos != null && buffer.index != starAtMousePos.index) {
+            if (isStarAppropriateToStore(starAtMousePos)) {
                 storeStarToBuffer(starAtMousePos);
             }
+
         }
         else if (Input.GetMouseButtonUp(0)) {
             amountOfStarInBuffer = 0;
@@ -115,22 +120,40 @@ public class StarCanvas : MonoBehaviour
 
         if (entity != null) {
             if (entity.GetComponent<Star>() != null) {
-                print("star found");
                 result = entity.GetComponent<Star>();
             }
             else {
-                print("star not found");
                 result = null;
             }
         }  
         else result = null;
     }
 
-    bool ifStarHasAlreadyBeenVisited (Star star) {
-        int index = star.index;
+    bool isStarAppropriateToStore (Star star) {
 
-        if (tmp.getHeadOfList(index) == null) return false;
-        else return true; 
+        if (star != null) {
+            if (buffer.index != star.index) {
+                if (isCurrentStarHasSameTypeWithBuffer(star)) {
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        else return false;
+    }
+
+    bool isCurrentStarHasSameTypeWithBuffer (Star star) {
+        if (amountOfStarInBuffer == 0) {
+            return true;
+        }
+        else {   
+            string type = star.type;
+
+            if (buffer.starType == type) return true;
+            else return false;
+        }
+        
     }
 
     void storeStarToBuffer (Star entity) 
@@ -138,7 +161,7 @@ public class StarCanvas : MonoBehaviour
             StarData item;
             item.index = entity.index;
             item.position = entity.transform.position;
-            item.starType = 0;
+            item.starType = entity.type;
 
                 // 별이 변경되었을 때만 작동
                 if (amountOfStarInBuffer == 0)
@@ -176,34 +199,49 @@ public class StarCanvas : MonoBehaviour
     public void createCharactorFromData ()
     {
 
-        int num = Lines.transform.childCount;
-
-        for (int i = 0; i < num; i++) {
-
-        }
-
-        // starAnalyzer.setStarGroup(tmp);
-        int charactorID = starAnalyzer.calculateCharactorID();
-
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
+        
+            pool.chooseTypeOfPool(ObjectType.line);
 
-            Charactor ch = charactorBuilder.build(charactorID);
+            int num = Lines.transform.childCount;
+
+            for (int i = 0; i < num; i++) {
+                GameObject line = Lines.transform.GetChild(0).gameObject;
+
+                pool.returnObjectToPool(line);
+            }
+
+            starAnalyzer.setStarGroup(tmp);
+            int charactorID = starAnalyzer.calculateCharactorID();
+
+            CharactorData ch = charactorBuilder.build(charactorID);
 
             GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
             newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/normal/" + ch.name);
             newch.transform.position = new Vector2 (1.3f, -3.5f);
 
-            gameResource.addCharactor(ch);
-            diary.isCharactorFound[ch.charactorIndex] = true;
+            gameResource.addCharactor(
+                newch.GetComponent<Charactor>()
+            );
+            diary.isCharactorFound[ch.charactorID] = true;
+
+            showNextPopup();
         }
+
+        
+    }
+
+    public void removeLine () {
+
     }
 
     public void onCharactorCreateButtonClicked () {
         if (openYesOrNoPopup != null) {
             openYesOrNoPopup();
         }
-        // gameResource.addStarGroup(0, tmp);
+        gameResource.addStarGroup(0, tmp);
     }
+
 }
 
 

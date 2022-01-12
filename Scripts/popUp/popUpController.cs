@@ -28,6 +28,8 @@ public class popUpController : MonoBehaviour
 
         // 액션 등록 구간
         gameCanvas.openYesOrNoPopup += openYesOrNo;
+        gameCanvas.showNextPopup += popupScript.callNextPopup;
+
         gameShop.showResultPopup += popupScript.callNextPopup;
     }
 

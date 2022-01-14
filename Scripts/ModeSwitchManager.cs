@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ModeSwitchManager : MonoBehaviour
+public class ModeSwitchManager : UI_Interface
 {
 
     public GameObject Shop;
@@ -139,18 +139,6 @@ public class ModeSwitchManager : MonoBehaviour
 
 
     ///////////////////////////////////////////////////////////////
-
-    IEnumerator MoveObject (GameObject Page, Vector3 Destination) {
-
-
-            while (Vector3.Distance(Page.transform.position, Destination) >= 0.1) {
-                Page.transform.position = Vector3.Lerp(Page.transform.position, Destination, 0.01f);
-                yield return new WaitForSeconds(0.001f);
-            }
-        
-
-        isMotionFinished = true;
-    }
 
     IEnumerator MoveCamera(Vector3 cameraPos) { // 카메라를 움직이기 위한 것
 

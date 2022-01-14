@@ -10,13 +10,21 @@ public class UI_Interface : MonoBehaviour
     public bool isMotionLocked = false;
 
     public IEnumerator MoveObject (GameObject obj, Vector3 Destination) {
+
+        isMotionLocked = true;
+
         while (Vector3.Distance(obj.transform.position, Destination) >= 0.1) {
             obj.transform.position = Vector3.Lerp(obj.transform.position, Destination, 0.01f);
             yield return new WaitForSeconds(0.001f);
         }
+
+        isMotionLocked = false;
     }
 
     public IEnumerator Fade (GameObject obj, float goal) {
+
+        isMotionLocked = true;
+
         if (obj.GetComponent<Image>() == null) {
             throw new Exception("object has no image component");
         }
@@ -30,5 +38,7 @@ public class UI_Interface : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+
+        isMotionLocked = false;
     }
 }

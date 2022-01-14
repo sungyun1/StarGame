@@ -12,8 +12,6 @@ public class ResourceManager : MonoBehaviour
     public int gemNum = 0;
     public int starDust = 0;
 
-    int tmp = 0;
-
     // 별 개수
      private int whiteStarNum = 0;
     private int yellowStarNum = 0;
@@ -30,8 +28,11 @@ public class ResourceManager : MonoBehaviour
     public Dictionary<int, StarGroup> stargroups = new Dictionary<int, StarGroup>();
 
     public void Start() {
+        giveInitialResource();
+    }
+
+    public void giveInitialResource() {
         starDust = 500;
-        
     }
 
     public void onBuyStar(string starType, int price) {
@@ -41,10 +42,10 @@ public class ResourceManager : MonoBehaviour
                 whiteStarNum ++;
                 break;
             case "yellow":
-                whiteStarNum ++;
+                yellowStarNum ++;
                 break;
             case "blue":
-                whiteStarNum ++;
+                blueStarNum ++;
                 break;
             default:
                 break;

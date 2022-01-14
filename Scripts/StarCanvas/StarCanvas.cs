@@ -217,7 +217,7 @@ public class StarCanvas : MonoBehaviour
             CharactorData ch = charactorBuilder.build(charactorID);
 
             GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
-            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/normal/" + ch.name);
+            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/" +ch.type + '/' + ch.name);
             newch.transform.position = new Vector2 (1.3f, -3.5f);
 
             gameResource.addCharactor(

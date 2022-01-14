@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public class DiaryManager : MonoBehaviour
+public class DiaryManager : UI_Interface
 {
     public GameObject DiaryCanvas;
     public GameObject generalPage;
@@ -15,25 +15,21 @@ public class DiaryManager : MonoBehaviour
 
     private bool isMoving = false;
 
-    IEnumerator Move (GameObject Page, Vector3 Destination) {
-
-        while (Vector3.Distance(Page.transform.position, Destination) >= 0.1) {
-            Page.transform.position = Vector3.Lerp(Page.transform.position, Destination, 0.01f);
-            yield return new WaitForSeconds(0.001f);
-        }
-        isMoving = false;
-        print(Page.transform.position);
-    }
-
     public void onOpenButtonClicked () {
         // Boy 가 눌렀을 때
         DiaryCanvas.GetComponent<Diary>().fillGeneralPage();
-        StartCoroutine(Move(generalPage, openPos));
+
+        if (isMotionLocked == false) {
+            StartCoroutine(MoveObject(generalPage, openPos));
+        }
     }
 
     public void onCloseButtonClicked () {
-        GameObject obj = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
-        StartCoroutine(Move(obj, closePos));
+        if (isMotionLocked == false) {
+            GameObject obj = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+            StartCoroutine(MoveObject(obj, closePos));
+        }
+        
     }
 
     public void onSpecificCharactorChosen () {
@@ -44,7 +40,7 @@ public class DiaryManager : MonoBehaviour
 
         if (DiaryCanvas.GetComponent<Diary>().isCharactorFound[btnNo]) {
             DiaryCanvas.GetComponent<Diary>().fillSpecificPage(btnNo);
-            StartCoroutine(Move(specificPage, openPos));
+            StartCoroutine(MoveObject(specificPage, openPos));
         }
         else {
             print("the charactor is not found");

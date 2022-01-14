@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class menuManager : MonoBehaviour
 {
     void ShowStartScreen() {
         // 제목과 함께 시작 화면

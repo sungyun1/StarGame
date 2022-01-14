@@ -33,6 +33,7 @@ public class ModeSwitchManager : MonoBehaviour
     //////////////////////////////////////// 모션
 
     private bool isMotionFinished = true;
+    public bool isMotionSwitchEnabled = true;
 
     //////////////////////////////////////////
 
@@ -81,16 +82,18 @@ public class ModeSwitchManager : MonoBehaviour
     }
 
     public void onInteract (int typeofOperation) {
-        if (typeofOperation == 1) { // slide up
-            onSlideUp();
-        } else if (typeofOperation == 2) { // slide down
-            onSlideDown();
-        }
-        else if (typeofOperation == 3) { // slide right
-            onSlideRight();
-        }   
-        else if (typeofOperation == 4) { // slide left 
-            onSlideLeft();
+        if (isMotionSwitchEnabled) {
+            if (typeofOperation == 1) { // slide up
+                onSlideUp();
+            } else if (typeofOperation == 2) { // slide down
+                onSlideDown();
+            }
+            else if (typeofOperation == 3) { // slide right
+                onSlideRight();
+            }   
+            else if (typeofOperation == 4) { // slide left 
+                onSlideLeft();
+            }
         }
     }
     
@@ -149,7 +152,7 @@ public class ModeSwitchManager : MonoBehaviour
         isMotionFinished = true;
     }
 
-    public IEnumerator MoveCamera(Vector3 cameraPos) { // 카메라를 움직이기 위한 것
+    IEnumerator MoveCamera(Vector3 cameraPos) { // 카메라를 움직이기 위한 것
 
         Camera main = Camera.main;
 

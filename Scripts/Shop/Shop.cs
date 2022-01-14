@@ -97,7 +97,6 @@ class BuyStarStrategy : Strategy {
 
     void Awake() {
         whereStarIsLocated = GameObject.FindWithTag("Stars").gameObject;
-        print(whereStarIsLocated);
     }
 
     void setLocation (GameObject location) {

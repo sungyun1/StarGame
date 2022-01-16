@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CharactorDB : MonoBehaviour
 {
     // question 들은 사실 여기서 다룰 이유가 없어서 다른 곳으로 빼낼 것임~
@@ -23,7 +24,6 @@ public class CharactorDB : MonoBehaviour
     private List<List<string>> data = new List<List<string>>();
 
     void Awake() {
-
         data = reader
             .setFileLocation("Info/CharactorInfo.csv")
             .parse();

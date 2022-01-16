@@ -13,30 +13,47 @@ public class popUpController : MonoBehaviour
 
     public GameObject popup;
 
+    private Popup popupScript;
+
     private Dictionary<string, string> popUpQuestions;
 
-    public event Action finished;
+    public string popupResult;
 
-    public Stack tmpStack = new Stack();
+    public event Action finished;
 
     void Awake() {
         popUpQuestions = new Dictionary<string, string>();
 
+        popupScript = popup.GetComponent<Popup>();
+
         // 액션 등록 구간
         gameCanvas.openYesOrNoPopup += openYesOrNo;
-        gameShop.openYesOrNoPopup += openYesOrNo;
+        gameCanvas.showNextPopup += popupScript.callNextPopup;
+
+        gameShop.showResultPopup += popupScript.callNextPopup;
     }
 
     void Start() {
         popup.SetActive(false);
     }
 
-    void openYesOrNo() {
+    public void openYesOrNo() {
+        popupScript.switchState(Popup.popupState.binaryChoice);
         popup.SetActive(true);
     }
 
-    public void proceed() {
+    public void openTripleChoice () {
+        popupScript.switchState(Popup.popupState.tripletChoice);
+        popup.SetActive(true);
+    }
+
+    public void openToastMessage () {
+        StartCoroutine(popupScript.callToastMessage());
+    }
+
+    public void proceedWithKeyword(string result) {
         // 그냥 진행해라~
+        popupResult = result;
         finished();
     }
 

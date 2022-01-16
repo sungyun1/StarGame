@@ -8,7 +8,6 @@ public class InteractionManager : MonoBehaviour
     public void onInteract(Vector3 touchPos) {
 
         var entity = pickEntity(touchPos);
-        print(entity);
 
         if (entity == null) {
             // 엔티티가 아니면, 아무것도 검사되지 않으면

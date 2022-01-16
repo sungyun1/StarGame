@@ -10,9 +10,7 @@ public class ResourceManager : MonoBehaviour
     
     // 주요 재화
     public int gemNum = 0;
-    public int starDust;
-
-    int tmp = 0;
+    public int starDust = 0;
 
     // 별 개수
      private int whiteStarNum = 0;
@@ -26,21 +24,32 @@ public class ResourceManager : MonoBehaviour
 
     private List<Charactor> myCharactors = new List<Charactor>();
 
+    // 별자리 보관 내역 (이름 + 그 캐릭터 별자리)
+    public Dictionary<int, StarGroup> stargroups = new Dictionary<int, StarGroup>();
+
     public void Start() {
+        giveInitialResource();
+    }
+
+    public void giveInitialResource() {
         starDust = 500;
-        
     }
 
-    public void Update() {
-        
-        
-        
-    }
-
-    public void onBuyStar() {
-        starDust -= 100;
-        whiteStarNum += 1;
-        print(whiteStarNum);
+    public void onBuyStar(string starType, int price) {
+        starDust -= price;
+        switch (starType) {
+            case "white":
+                whiteStarNum ++;
+                break;
+            case "yellow":
+                yellowStarNum ++;
+                break;
+            case "blue":
+                blueStarNum ++;
+                break;
+            default:
+                break;
+        }
     }
 
     public void onUpgradeTelescope () {
@@ -53,5 +62,12 @@ public class ResourceManager : MonoBehaviour
 
     public void addCharactor(Charactor ch) {
         myCharactors.Add(ch);
+
+    }
+
+    public void addStarGroup(int charactorID, StarGroup stargroup) {
+        if (stargroup != null) {
+            stargroups.Add(charactorID, stargroup);
+        }
     }
 }

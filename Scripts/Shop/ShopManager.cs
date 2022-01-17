@@ -16,8 +16,8 @@ public class ShopManager : MonoBehaviour
     public Shop gameShop;
 
     void Update () {
-        currentStarDust.text = gameResource.starDust.ToString();
-        currentGem.text = gameResource.gemNum.ToString();
+        currentStarDust.text = gameResource.gameData.amountOfStarDust.ToString();
+        currentGem.text = gameResource.gameData.amountOfGem.ToString();
     }
     
     public void onButtonClick() {

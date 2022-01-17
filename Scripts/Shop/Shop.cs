@@ -65,7 +65,7 @@ public class Shop : MonoBehaviour
 
             int priceOfProduct = price[keyword];
 
-            if (gameResource.starDust >= priceOfProduct ) {
+            if (gameResource.gameData.amountOfStarDust >= priceOfProduct ) {
                 currentStrategy.buy( keyword , pool );
                 gameResource.onBuyStar( keyword , priceOfProduct );
                 showResultPopup();

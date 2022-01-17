@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -9,43 +10,30 @@ public class ResourceManager : MonoBehaviour
     // 저장되어야 하는 것들은 전부 여기에 저장한다.
     
     // 주요 재화
-    public int gemNum = 0;
-    public int starDust = 0;
 
-    // 별 개수
-     private int whiteStarNum = 0;
-    private int yellowStarNum = 0;
-    private int blueStarNum = 0;
-    
-    // 업그레이드 내역
-    private int telescopeLevel = 0;
-
-    private int playerLevel = 0;
-
-    private List<Charactor> myCharactors = new List<Charactor>();
-
-    // 별자리 보관 내역 (이름 + 그 캐릭터 별자리)
-    public Dictionary<int, StarGroup> stargroups = new Dictionary<int, StarGroup>();
+    public Data gameData;
 
     public void Start() {
-        giveInitialResource();
+        Load();
     }
 
-    public void giveInitialResource() {
-        starDust = 500;
+    public void Load () {
+        string dataFromFile = File.ReadAllText(Application.dataPath + "/gameStatus.json");
+        print(dataFromFile);
+        gameData = JsonUtility.FromJson<Data>(dataFromFile);
     }
 
     public void onBuyStar(string starType, int price) {
-        starDust -= price;
+        gameData.amountOfStarDust -= price;
         switch (starType) {
             case "white":
-                whiteStarNum ++;
+                gameData.whiteStarNum ++;
                 break;
             case "yellow":
-                yellowStarNum ++;
+                gameData.yellowStarNum ++;
                 break;
             case "blue":
-                blueStarNum ++;
+                gameData.blueStarNum ++;
                 break;
             default:
                 break;
@@ -53,21 +41,21 @@ public class ResourceManager : MonoBehaviour
     }
 
     public void onUpgradeTelescope () {
-        telescopeLevel += 1;
+        gameData.telescopeLevel += 1;
     }
 
     public void onUpgradeBoy () {
-        playerLevel += 1;
+        gameData.playerLevel += 1;
     }
 
     public void addCharactor(Charactor ch) {
-        myCharactors.Add(ch);
+        gameData.myCharactors.Add(ch);
 
     }
 
     public void addStarGroup(int charactorID, StarGroup stargroup) {
         if (stargroup != null) {
-            stargroups.Add(charactorID, stargroup);
+            gameData.stargroups.Add(charactorID, stargroup);
         }
     }
 }

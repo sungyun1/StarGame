@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct StarData {
     public Vector2 position; // 위치
     public string starType; // 무슨 별인지
@@ -12,11 +13,12 @@ public class starAnalyzer
 {
     private List<List<StarData>> data;
 
+    public ResourceManager resource;
+
     public void setStarGroup (StarGroup Target) {
         if (Target != null) {
             this.data = Target.stargroup;
         }
-
     }
 
     int[] rangeOfCharactorID (string StarType) {
@@ -44,9 +46,9 @@ public class starAnalyzer
     int numberOfStar () {
         int num = 0;
         foreach (List<StarData> head in data) {
-            num += head.Count;
+            num += 1;
         }
-        return num / 2 ;
+        return num;
     }
 
     int numberOfHub () {
@@ -57,16 +59,41 @@ public class starAnalyzer
         return num / 2;
     }
 
+    bool isNumberConditionSatisfied (string type) {
+        
+        var limit = 2;
+        if (type == "normal") {
+            limit = resource.gameData.normalStarGroupCreationLevel;
+        }
+        else if (type == "rare") {
+            limit = resource.gameData.rareStarGroupCreationLevel;
+        }
+        else if (type == "epic") {
+            limit = resource.gameData.epicStarGroupCreationLevel;
+        } else {
+            Debug.Log("에러 발생");
+        }
+
+        if (numberOfStar() < limit) {
+            return false;
+        }
+        else return true;
+    }
+
     public int calculateCharactorID() {
 
         string type = data[0][0].starType;
 
-        int[] range = rangeOfCharactorID(type);
-        Debug.Log(range[0]);
-        Debug.Log(range[1]);
+        if (isNumberConditionSatisfied(type)) {
+            int[] range = rangeOfCharactorID(type);
+            Debug.Log(range[0]);
+            Debug.Log(range[1]);
 
-        int charactorID = Random.Range(range[0], range[1]);
+            int charactorID = Random.Range(range[0], range[1]);
 
-        return charactorID;
+            return charactorID;
+        }
+
+        else return 99;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[System.Serializable]
 public class StarGroup {
     public List<List<StarData>> stargroup = new List<List<StarData>>();
 
@@ -54,12 +55,8 @@ public class StarCanvas : MonoBehaviour
     public gameObjectManager pool;
 
     ///////////////////////////////////////////
-    public GameObject CharactorPrefab;
-    public GameObject CharactorFolder;
 
-    public GameObject Lines;
-
-    public GameObject LinePrefab;
+    public GameObject LineFolder;
 
     LineRenderer lr;
 
@@ -70,11 +67,9 @@ public class StarCanvas : MonoBehaviour
 ////////////////// 내부 연산용 변수
     private StarData buffer = new StarData();
     private int amountOfStarInBuffer = 0;
-    private string typeOfStar = "blue";
     private Star starAtMousePos;
 
-
-    private StarGroup tmp = new StarGroup();
+    private StarGroup currentStarGroup = new StarGroup();
 
     private Vector3 coefficient = new Vector3(0.21f, 0.25f, 0);
 
@@ -86,7 +81,6 @@ public class StarCanvas : MonoBehaviour
 
     void Awake() {
         popupController.finished += createCharactorFromData;
-
     }
 
     void Update() 
@@ -172,7 +166,7 @@ public class StarCanvas : MonoBehaviour
 
                 else if (amountOfStarInBuffer == 1) 
                 {
-                    tmp.addStarToGroup(buffer, item);
+                    currentStarGroup.addStarToGroup(buffer, item);
                     drawLine(buffer.position, item.position); 
                     buffer = item;
                 }
@@ -183,17 +177,12 @@ public class StarCanvas : MonoBehaviour
         Vector3 fixed1 = p1 + coefficient;
         Vector3 fixed2 = p2 + coefficient;
 
-        GameObject line = pool.chooseTypeOfPool(ObjectType.line).pullObjectFromPoolTo(Lines);
+        GameObject line = pool.chooseTypeOfPool(ObjectType.line).pullObjectFromPoolTo(LineFolder);
         lr = line.GetComponent<LineRenderer>();
         lr.positionCount += 1;
         lr.SetPosition(0, fixed1);
         lr.positionCount += 1;
         lr.SetPosition(1, fixed2);
-    }
-
-    void restoreStarGroupFromData (StarGroup data) 
-    {
-
     }
 
     public void createCharactorFromData ()
@@ -203,43 +192,31 @@ public class StarCanvas : MonoBehaviour
         
             pool.chooseTypeOfPool(ObjectType.line);
 
-            int num = Lines.transform.childCount;
+            int num = LineFolder.transform.childCount;
 
             for (int i = 0; i < num; i++) {
-                GameObject line = Lines.transform.GetChild(0).gameObject;
-
+                GameObject line = LineFolder.transform.GetChild(0).gameObject;
                 pool.returnObjectToPool(line);
             }
 
-            starAnalyzer.setStarGroup(tmp);
+            starAnalyzer.setStarGroup(currentStarGroup);
             int charactorID = starAnalyzer.calculateCharactorID();
-
             CharactorData ch = charactorBuilder.build(charactorID);
+            charactorBuilder.createCharactorFromCharactorData(ch);
 
-            GameObject newch = Instantiate(CharactorPrefab, CharactorFolder.transform);
-            newch.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Charactor/Home/" +ch.type + '/' + ch.name);
-            newch.transform.position = new Vector2 (1.3f, -3.5f);
-
-            gameResource.addCharactor(
-                newch.GetComponent<Charactor>()
-            );
+            gameResource.addCharactor(ch);
+            gameResource.addStarGroup(ch.charactorID, currentStarGroup.stargroup);
+            currentStarGroup.stargroup.Clear(); // 다 끝나면 비워야 한다.
             diary.isCharactorFound[ch.charactorID] = true;
 
             showNextPopup();
         }
-
-        
-    }
-
-    public void removeLine () {
-
     }
 
     public void onCharactorCreateButtonClicked () {
         if (openYesOrNoPopup != null) {
             openYesOrNoPopup();
         }
-        gameResource.addStarGroup(0, tmp);
     }
 
 }

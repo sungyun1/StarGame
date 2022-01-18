@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     public Camera cam;
 
+    public float holdTime = 0.7f;
 
     public event Action onInteract;
     

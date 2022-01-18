@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class menuManager : MonoBehaviour
 {
 
-    public StatusLoader gameStatus;
-
     void ShowStartScreen() {
         // 제목과 함께 시작 화면
     }

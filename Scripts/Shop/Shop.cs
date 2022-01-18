@@ -123,8 +123,6 @@ class BuyStarStrategy : Strategy {
                 break;
         }
 
-        
-        print("started");
         GameObject newStar = pool.chooseTypeOfPool(productType).pullObjectFromPoolTo(whereStarIsLocated);
         newStar.SetActive(true);
 

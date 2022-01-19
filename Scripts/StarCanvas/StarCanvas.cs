@@ -147,29 +147,28 @@ public class StarCanvas : MonoBehaviour
             if (buffer.starType == type) return true;
             else return false;
         }
-        
     }
 
     void storeStarToBuffer (Star entity) 
     {
-            StarData item;
-            item.index = entity.index;
-            item.position = entity.transform.position;
-            item.starType = entity.type;
+        StarData item;
+        item.index = entity.index;
+        item.position = entity.transform.position;
+        item.starType = entity.type;
 
-                // 별이 변경되었을 때만 작동
-                if (amountOfStarInBuffer == 0)
-                {
-                    buffer = item;
-                    amountOfStarInBuffer ++;
-                }
+            // 별이 변경되었을 때만 작동
+            if (amountOfStarInBuffer == 0)
+            {
+                buffer = item;
+                amountOfStarInBuffer ++;
+            }
 
-                else if (amountOfStarInBuffer == 1) 
-                {
+            else if (amountOfStarInBuffer == 1) 
+            {
                     currentStarGroup.addStarToGroup(buffer, item);
                     drawLine(buffer.position, item.position); 
                     buffer = item;
-                }
+            }
     }
 
     void drawLine(Vector3 p1, Vector3 p2) 

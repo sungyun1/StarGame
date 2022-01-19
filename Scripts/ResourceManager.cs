@@ -28,6 +28,9 @@ public class Data {
 
     // 별자리 보관 내역 (캐릭터 id + 그 캐릭터 별자리)
     public List<StarGroupData> stargroups = new List<StarGroupData>();
+
+    // 진행 상황 관련
+    public int currentDate;
 }
 
 [System.Serializable]
@@ -68,14 +71,17 @@ public class ResourceManager : MonoBehaviour
             default:
                 break;
         }
+        saveCurrentGameInfo();
     }
 
     public void onUpgradeTelescope () {
         gameData.telescopeLevel += 1;
+        saveCurrentGameInfo();
     }
 
     public void onUpgradeBoy () {
         gameData.playerLevel += 1;
+        saveCurrentGameInfo();
     }
 
     public void addCharactor(CharactorData chData) {
@@ -94,6 +100,8 @@ public class ResourceManager : MonoBehaviour
             default:
                 break;
         }
+
+        saveCurrentGameInfo();
     }
 
     public void addStarGroup(int charactorID, List<List<StarData>> stargroup) {
@@ -103,11 +111,14 @@ public class ResourceManager : MonoBehaviour
             data.starGroup = stargroup;
             gameData.stargroups.Add(data);
         }
+        saveCurrentGameInfo();
     }
 
     public void restorePreviousGame() {
-        // 캐릭터 화면에 표시
         Load();
+    }
+
+    public void printData() {
         foreach (CharactorData data in gameData.myCharactors) {
             charactorBuilder.createCharactorFromCharactorData(data);
         }

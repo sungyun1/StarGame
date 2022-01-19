@@ -54,7 +54,7 @@ public class CutSceneManager : MonoBehaviour
             }
             else {
                 showNextScene();
-            }   
+            }
         }
     }
 
@@ -80,9 +80,9 @@ public class CutSceneManager : MonoBehaviour
         }
     }
 
-    void showNextImage () {
+    void showNextImage () { 
 
-        if (dialogue[currentScene][(int)DialogueType.isSceneImageHaveToChange] == "1") { // 리로드
+        if (dialogue[currentScene][(int)DialogueType.isSceneImageHaveToChange] == "1") { // 필요할 때만 리로드해야 함
             currentImageNumber++;
             cutSceneImage.sprite = Resources.Load<Sprite>(
                 "CutScene/" + type.ToString() + "/" + currentImageNumber

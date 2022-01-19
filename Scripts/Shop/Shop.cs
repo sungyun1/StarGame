@@ -138,8 +138,6 @@ class BuyStarStrategy : Strategy {
         str.type = type;
         str.isUsed = false;
         starindex++;
-        
-        
     }
 }
 

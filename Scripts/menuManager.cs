@@ -5,18 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class menuManager : MonoBehaviour
 {
-
-    void ShowStartScreen() {
-        // 제목과 함께 시작 화면
+    void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            StartGame();
+        }
     }
 
     void StartGame () {
-        
+        SceneManager.LoadScene("Story");
     }
-
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            SceneManager.LoadScene("MainScene");
-        }
-    }
+    
 }

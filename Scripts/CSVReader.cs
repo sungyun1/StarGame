@@ -8,8 +8,11 @@ public class CSVReader
     private string fileLocation;
 
     public CSVReader setFileLocation (string path) {
-        fileLocation = path;
-        return this;
+        if (File.Exists(Application.dataPath + "/" + path)) {
+            fileLocation = path;
+            return this;
+        }
+        else throw new System.Exception("there is no file on that directory");
     }
 
     // ~~.csv 를 해석해서 집어넣어주는 역할

@@ -30,6 +30,10 @@ public class CharactorBuilder : MonoBehaviour{
         string type = database.getCharactorInformation(charactorID, CharactorDB.DataIndex.type);
 
         CharactorData ch = new CharactorData (name, type, index);
+        ch.position = new Vector2 (
+            Random.Range(-2, 2),
+            Random.Range(-2.27f, -3.6f)
+        );
         return ch;
     }
 

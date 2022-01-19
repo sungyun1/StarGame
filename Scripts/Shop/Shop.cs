@@ -71,7 +71,7 @@ public class Shop : MonoBehaviour
                 showResultPopup();
             }
             else {
-                popupController.openToastMessage();
+                popupController.openToastMessage("돈이 부족합니다");
             }
         }
     }

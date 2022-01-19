@@ -116,6 +116,11 @@ public class ResourceManager : MonoBehaviour
 
     public void restorePreviousGame() {
         Load();
+
+        List<CharactorData> charactors = gameData.myCharactors;
+        foreach (CharactorData data in charactors) {
+            charactorBuilder.createCharactorFromCharactorData(data);
+        }
     }
 
     public void printData() {

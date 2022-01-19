@@ -71,7 +71,7 @@ public class starAnalyzer
         else if (type == "epic") {
             limit = resource.gameData.epicStarGroupCreationLevel;
         } else {
-            Debug.Log("에러 발생");
+            
         }
 
         if (numberOfStar() < limit) {

@@ -47,7 +47,8 @@ public class popUpController : MonoBehaviour
         popup.SetActive(true);
     }
 
-    public void openToastMessage () {
+    public void openToastMessage (string message) {
+        popupScript.toastMessage.text = message;
         StartCoroutine(popupScript.callToastMessage());
     }
 

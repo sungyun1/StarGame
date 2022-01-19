@@ -65,7 +65,7 @@ public class StarCanvas : MonoBehaviour
     public event Action showNextPopup;
 
 ////////////////// 내부 연산용 변수
-    private StarData buffer = new StarData();
+    private Star buffer = null;
     private int amountOfStarInBuffer = 0;
     private Star starAtMousePos;
 
@@ -144,30 +144,38 @@ public class StarCanvas : MonoBehaviour
         else {   
             string type = star.type;
 
-            if (buffer.starType == type) return true;
+            if (buffer.type == type) return true;
             else return false;
         }
     }
 
     void storeStarToBuffer (Star entity) 
     {
-        StarData item;
-        item.index = entity.index;
-        item.position = entity.transform.position;
-        item.starType = entity.type;
+        
 
             // 별이 변경되었을 때만 작동
             if (amountOfStarInBuffer == 0)
             {
-                buffer = item;
+                buffer = entity;
                 amountOfStarInBuffer ++;
             }
 
             else if (amountOfStarInBuffer == 1) 
             {
-                    currentStarGroup.addStarToGroup(buffer, item);
-                    drawLine(buffer.position, item.position); 
-                    buffer = item;
+
+                    StarData item = new StarData();
+                    item.index = entity.index;
+                    item.position = entity.transform.position;
+                    item.starType = entity.type;
+
+                    StarData buf = new StarData();
+                    buf.index = buffer.index;
+                    buf.position = buffer.transform.position;
+                    buf.starType = buffer.type;
+
+                    currentStarGroup.addStarToGroup(buf, item);
+                    drawLine(buf.position, item.position); 
+                    buffer = entity;
             }
     }
 
@@ -200,15 +208,22 @@ public class StarCanvas : MonoBehaviour
 
             starAnalyzer.setStarGroup(currentStarGroup);
             int charactorID = starAnalyzer.calculateCharactorID();
-            CharactorData ch = charactorBuilder.build(charactorID);
-            charactorBuilder.createCharactorFromCharactorData(ch);
 
-            gameResource.addCharactor(ch);
-            gameResource.addStarGroup(ch.charactorID, currentStarGroup.stargroup);
-            currentStarGroup.stargroup.Clear(); // 다 끝나면 비워야 한다.
-            diary.isCharactorFound[ch.charactorID] = true;
+            if (charactorID == 99) {
+                popupController.openToastMessage("지난번 사용했던 것보다 더 많은 별을 써야 합니다. 지난번 사용한 별 개수 : " + gameResource.gameData.normalStarGroupCreationLevel);
+            }
+            else {
+                CharactorData ch = charactorBuilder.build(charactorID);
+                charactorBuilder.createCharactorFromCharactorData(ch);
 
-            showNextPopup();
+                gameResource.addCharactor(ch);
+                gameResource.addStarGroup(ch.charactorID, currentStarGroup.stargroup);
+                currentStarGroup.stargroup.Clear(); // 다 끝나면 비워야 한다.
+                diary.isCharactorFound[ch.charactorID] = true;
+
+                showNextPopup();
+            }
+            
         }
     }
 

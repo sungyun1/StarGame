@@ -20,6 +20,9 @@ public class Popup : MonoBehaviour {
     public GameObject OKButton;
     public Text toastMessage;
     public Button Exit;
+    public GameObject amountOfStar;
+    public Text amountOfStarBuying;
+    public int currentStarInShopping = 0;
 
     // popup의 State를 변경하기 위한 친구들
     public enum popupState {
@@ -45,11 +48,11 @@ public class Popup : MonoBehaviour {
     private Callback YellowCallback = null;
     private Callback BlueCallback = null;
 
-    
     void Awake() {
         switchState(popupState.tripletChoice);
 
-        toastMessage.text = "돈이 부족합니다";
+        amountOfStarBuying.text = currentStarInShopping.ToString();
+
         toastMessage.gameObject.SetActive(false);
 
         GameObject okbtn = OKButton.transform.Find("OKButton").gameObject;
@@ -79,6 +82,13 @@ public class Popup : MonoBehaviour {
         Exit.GetComponent<Button>().onClick.AddListener(() => {
             gameObject.SetActive(false);
         });
+
+    }
+
+    void Update () {
+        if (amountOfStar.activeSelf) {
+            amountOfStarBuying.text = currentStarInShopping.ToString();
+        }
     }
 
     public void SetCallBack (Callback target, Callback call) {
@@ -94,6 +104,7 @@ public class Popup : MonoBehaviour {
                 BinaryButton.SetActive(true);
                 TripleButton.SetActive(false);
                 OKButton.SetActive(false);
+                amountOfStar.SetActive(false);
                 break;
             case popupState.description:
                 popupText.SetActive(true);
@@ -101,6 +112,7 @@ public class Popup : MonoBehaviour {
                 BinaryButton.SetActive(false);
                 TripleButton.SetActive(false);
                 OKButton.SetActive(true);
+                amountOfStar.SetActive(false);
                 break;
             case popupState.tripletChoice:
                 popupText.SetActive(true);
@@ -108,6 +120,7 @@ public class Popup : MonoBehaviour {
                 BinaryButton.SetActive(false);
                 TripleButton.SetActive(true);
                 OKButton.SetActive(false);
+                amountOfStar.SetActive(true);
                 break;
         }
         currentState = State;
@@ -128,7 +141,6 @@ public class Popup : MonoBehaviour {
                 break;
             case "whiteStarBuyBtn":
                 WhiteCallback?.Invoke();
-
                 break;
             case "yellowStarBuyBtn":
                 YellowCallback?.Invoke();
@@ -136,6 +148,8 @@ public class Popup : MonoBehaviour {
             case "blueStarBuyBtn":
                 BlueCallback?.Invoke();
                 break;
+            case "plus":
+
             default:
                 break;
         }
@@ -168,6 +182,16 @@ public class Popup : MonoBehaviour {
 
     public void onOK () {
         gameObject.SetActive(false);
+    }
+
+    public void onPlusButton () {
+        currentStarInShopping += 1;
+    }
+
+    public void onMinusButton() {
+        if (currentStarInShopping != 0 ) {
+            currentStarInShopping -= 1;
+        } else {}
     }
 
     public void sendCompletionMessage () {

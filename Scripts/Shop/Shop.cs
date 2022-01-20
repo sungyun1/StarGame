@@ -60,19 +60,24 @@ public class Shop : MonoBehaviour
     public void afterPopup () {
 
         string keyword = popupController.popupResult;
+        int amount = popupController.detailPopupResult;
         
         if (gameObject.activeSelf) {
 
             int priceOfProduct = price[keyword];
 
-            if (gameResource.gameData.amountOfStarDust >= priceOfProduct ) {
-                currentStrategy.buy( keyword , pool );
-                gameResource.onBuyStar( keyword , priceOfProduct );
-                showResultPopup();
+            for (int i = 0; i < amount; i++) {
+                if (gameResource.gameData.amountOfStarDust >= priceOfProduct ) {
+                    currentStrategy.buy( keyword , pool );
+                    gameResource.onBuyStar( keyword , priceOfProduct );
+                    showResultPopup();
+                }
+                else {
+                    popupController.openToastMessage("돈이 부족합니다");
+                    i = amount + 1;
+                }
             }
-            else {
-                popupController.openToastMessage("돈이 부족합니다");
-            }
+            
         }
     }
 

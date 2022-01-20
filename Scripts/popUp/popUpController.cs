@@ -18,6 +18,7 @@ public class popUpController : MonoBehaviour
     private Dictionary<string, string> popUpQuestions;
 
     public string popupResult;
+    public int detailPopupResult;
 
     public event Action finished;
 
@@ -55,6 +56,7 @@ public class popUpController : MonoBehaviour
     public void proceedWithKeyword(string result) {
         // 그냥 진행해라~
         popupResult = result;
+        detailPopupResult = popupScript.currentStarInShopping;
         finished();
     }
 

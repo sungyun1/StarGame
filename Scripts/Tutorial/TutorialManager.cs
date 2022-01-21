@@ -9,6 +9,8 @@ public class TutorialManager : MonoBehaviour
     // 튜토리얼을 진행한다.
     // 뒤의 ModeManager를 끔으로서 메인 화면에서 벗어나지 못하게 한다.
 
+    ///////////////////// 사용해야 하는 기능
+
     public ModeSwitchManager gameMode;
     public GameObject tutorialPanel;
     public Text tutorialText;
@@ -19,7 +21,7 @@ public class TutorialManager : MonoBehaviour
     ///////////////////////// CSV parser
 
     public CSVReader reader = new CSVReader();
-    private List<List<string>> tutorialDialogue = new List<List<string>>();
+    private List<List<string>> fileContent = new List<List<string>>();
 
     ////////////////////////// step
 
@@ -27,52 +29,73 @@ public class TutorialManager : MonoBehaviour
         public string dialogue; // 출력될 문장
         public Action actionsNeedToDo = null;
         public void checkConditionIsSatisfied () {
-            // 검사할 것
+
         }
 
         public void finishStep () {
             actionsNeedToDo?.Invoke();
-        }
-
-        public void determineInputIsAllowed () {
-            // 허용되지 않은 입력 ex. 캔버스에서 벗어나지 못하게 한다.
         }
     }
 
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private TutorialStep currentStep = null;
 
-    public TutorialStep one = new TutorialStep();
-    public TutorialStep two = new TutorialStep();
+    private int index = 0;
 
     //////////////////////////////////////////////////////////
 
     public void Awake() {
-        // tutorialDialogue = reader.setFileLocation("tutorial.csv").parse();
-        // startTutorial();
 
-        one.dialogue = "one";
-        one.actionsNeedToDo = null;
-        chooseCombinationOfAction("MVC", ref one.actionsNeedToDo);
-        two.dialogue = "two";
+        createListOfTutorial();
 
-        input.onInteract += test;
+        input.onInteract += onTap;
 
-        currentStep = one;
+        currentStep = tutorialSteps[index];
 
         gameObject.SetActive(true);
+        startTutorial();
+    }
 
+    public void createListOfTutorial () {
+
+        fileContent = reader.setFileLocation("Info/tutorial.csv").parse();
+
+        int length = fileContent.Count;
+
+        for (int i = 0; i < length; i++) {
+            TutorialStep newTutorialStep = new TutorialStep();
+            var item = fileContent[i];
+            newTutorialStep.dialogue = item[1];
+            print(fileContent[i][1]);
+            print(fileContent[i][2]);
+            newTutorialStep.actionsNeedToDo = null;
+            chooseCombinationOfAction(
+                item[2], ref newTutorialStep.actionsNeedToDo
+            );
+
+            tutorialSteps.Add(newTutorialStep);
+        }
     }
 
     public void startTutorial() {
         gameObject.SetActive(true);
+        currentStep = tutorialSteps[0];
         gameMode.isMotionSwitchEnabled = false;
+        boy.isMotionSwitchEnabled = false;
+        telescope.isMotionSwitchEnabled = false;
+        startCurrentStep();
     }
 
     public void goToNextStep () {
         currentStep.finishStep();
-        currentStep = two;
-        startCurrentStep();
+        index++;
+        if (index == tutorialSteps.Count) {
+            endTutorial();
+        }
+        else {
+            currentStep = tutorialSteps[index];
+            startCurrentStep();
+        }
     }
 
     public void startCurrentStep() {
@@ -82,22 +105,26 @@ public class TutorialManager : MonoBehaviour
     public void endTutorial() {
         gameObject.SetActive(false);
         gameMode.isMotionSwitchEnabled = true;
+        boy.isMotionSwitchEnabled = true;
+        telescope.isMotionSwitchEnabled = true;
     }
 
-    void test () {
-        goToNextStep();
+    void onTap () {
+        if (gameObject.activeSelf) {
+            goToNextStep();
+        }
     }
 
     void chooseCombinationOfAction (string str, ref Action target) {
 
-        print("started");
-
         switch(str) {
             case "MVC":
                 target += gameMode.onSlideUp;
+                target += gameMode.switchState;
                 break;
             case "MVS":
                 target += gameMode.onSlideDown;
+                target += gameMode.switchState;
                 break;
             case "MVD":
                 target += boy.onInteract;
@@ -105,7 +132,11 @@ public class TutorialManager : MonoBehaviour
             case "MVT":
                 target += telescope.onInteract;
                 break;
-            default: break;
+            case "MVH":
+                target += gameMode.returnToHome;
+                break;
+            default: 
+                throw new Exception("unexpected triplet code");
         }
     }
 

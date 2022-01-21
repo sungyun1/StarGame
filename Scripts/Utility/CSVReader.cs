@@ -43,7 +43,6 @@ public class CSVReader
                 currentIndex++;
             }
         }
-
         return data;
     }
 }

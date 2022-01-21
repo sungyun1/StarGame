@@ -8239,6 +8239,8 @@ MonoBehaviour:
   tutorialPanel: {fileID: 189685827}
   tutorialText: {fileID: 380838423}
   input: {fileID: 1971758964}
+  boy: {fileID: 1256028949}
+  telescope: {fileID: 605278972}
 --- !u!114 &1567443721
 MonoBehaviour:
   m_ObjectHideFlags: 0

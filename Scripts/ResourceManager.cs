@@ -52,7 +52,6 @@ public class ResourceManager : MonoBehaviour
 
     public void Load () {
         string dataFromFile = File.ReadAllText(Application.dataPath + "/gameStatus.json");
-        print(dataFromFile);
         gameData = JsonUtility.FromJson<Data>(dataFromFile);
     }
 
@@ -131,7 +130,6 @@ public class ResourceManager : MonoBehaviour
 
     public void saveCurrentGameInfo () {
         string newGameData = JsonUtility.ToJson(gameData);
-        print(newGameData);
         File.WriteAllText(Application.dataPath + "/gameStatus.json", newGameData);
     }
 }

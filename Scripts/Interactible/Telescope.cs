@@ -6,8 +6,11 @@ public class Telescope : Entity
 {
 
     public UniverseUpgradeManager upgradeMenu;
+    public bool isMotionSwitchEnabled = true;
 
     public override void onInteract() {
-        upgradeMenu.openUniverseUpgradeMenu();
+        if (isMotionSwitchEnabled) {
+            upgradeMenu.openUniverseUpgradeMenu();
+        }
     }
 }

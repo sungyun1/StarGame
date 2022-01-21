@@ -29,6 +29,7 @@ public class ModeSwitchManager : UI_Interface
     private SpecificMode HomeLeft;
     private SpecificMode HomeRight;
     private Node currentNode;
+    private Node destination;
 
     //////////////////////////////////////// 모션
 
@@ -59,7 +60,7 @@ public class ModeSwitchManager : UI_Interface
         Canvas.SetActive(false);
     } 
 
-    public void switchState (Node toNode) {
+    public void switchState () {
         // 기능 켜주고 카메라 움직이기
 
         if (isMotionFinished) {
@@ -69,16 +70,15 @@ public class ModeSwitchManager : UI_Interface
             } else { }
    
 
-            if (toNode.FeatureObject != null ) {
-            toNode.FeatureObject.SetActive(true);
+            if (destination.FeatureObject != null ) {
+            destination.FeatureObject.SetActive(true);
             } else { }
 
-            currentNode = toNode;
-            StartCoroutine(MoveCamera(toNode.cameraPos));
+            currentNode = destination;
+            StartCoroutine(MoveCamera(destination.cameraPos));
         }
 
         isMotionFinished = true;
-
     }
 
     public void onInteract (int typeofOperation) {
@@ -94,46 +94,50 @@ public class ModeSwitchManager : UI_Interface
             else if (typeofOperation == 4) { // slide left 
                 onSlideLeft();
             }
+            switchState();
         }
+    }
+
+    public void returnToHome () {
+        destination = home;
+        switchState();
     }
     
     public void onSlideUp() {
-
         if (currentNode.name == "home") {
-            switchState(starCanvas);
+            destination = starCanvas;
             StartCoroutine(MoveObject(Stars, starCanvas.cameraPos));
         }
         else if (currentNode.name == "shop") {
-            switchState(home);
+            destination = home;
         }
-
     }
 
     public void onSlideDown () {
         if (currentNode.name == "home") {
-            switchState(shop);
+            destination = shop;
         }
         else if (currentNode.name == "canvas") {
-            switchState(home);
+            destination = home;
         }
 
     }
 
     public void onSlideRight () {
         if (currentNode.name == "home") {
-            switchState(HomeRight);
+            destination = HomeRight;
         }
         else if (currentNode.name == "homeLeft") {
-            switchState(home);
+            destination = home;
         }
     }
 
     public void onSlideLeft () {
         if (currentNode.name == "home") {
-            switchState(HomeLeft);
+            destination = HomeLeft;
         }
         else if (currentNode.name == "homeRight") {
-            switchState(home);
+            destination = home;
         }
     }
 

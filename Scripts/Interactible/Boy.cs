@@ -6,9 +6,13 @@ using System;
 public class Boy : Entity
 {
     public DiaryManager diaryManager;
+    public bool isMotionSwitchEnabled = true;
 
     public override void onInteract() {
-        diaryManager.onOpenButtonClicked();
+        if (isMotionSwitchEnabled) {
+            diaryManager.onOpenButtonClicked();
+        }
+        
     }
 
 

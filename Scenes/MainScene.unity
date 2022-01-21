@@ -320,6 +320,7 @@ MonoBehaviour:
   Exit: {fileID: 1857622124}
   amountOfStar: {fileID: 1058320435}
   amountOfStarBuying: {fileID: 1364974299}
+  currentStarInShopping: 0
   result: 
 --- !u!114 &34159126
 MonoBehaviour:
@@ -8237,6 +8238,7 @@ MonoBehaviour:
   gameMode: {fileID: 1971758967}
   tutorialPanel: {fileID: 189685827}
   tutorialText: {fileID: 380838423}
+  input: {fileID: 1971758964}
 --- !u!114 &1567443721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10531,6 +10533,7 @@ MonoBehaviour:
   gameCanvas: {fileID: 857938828}
   popup: {fileID: 34159123}
   popupResult: 
+  detailPopupResult: 0
 --- !u!114 &1971758970
 MonoBehaviour:
   m_ObjectHideFlags: 0

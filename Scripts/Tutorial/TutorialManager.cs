@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -9,19 +10,28 @@ public class TutorialManager : MonoBehaviour
     // 뒤의 ModeManager를 끔으로서 메인 화면에서 벗어나지 못하게 한다.
 
     public ModeSwitchManager gameMode;
-    public CSVReader reader = new CSVReader();
-    private List<List<string>> tutorialDialogue = new List<List<string>>();
     public GameObject tutorialPanel;
     public Text tutorialText;
+    public PlayerInput input;
+    public Boy boy;
+    public Telescope telescope;
+
+    ///////////////////////// CSV parser
+
+    public CSVReader reader = new CSVReader();
+    private List<List<string>> tutorialDialogue = new List<List<string>>();
+
+    ////////////////////////// step
 
     public class TutorialStep {
-        private string explanation; // 문장
+        public string dialogue; // 출력될 문장
+        public Action actionsNeedToDo = null;
         public void checkConditionIsSatisfied () {
             // 검사할 것
         }
 
         public void finishStep () {
-            // 실행할 것
+            actionsNeedToDo?.Invoke();
         }
 
         public void determineInputIsAllowed () {
@@ -32,19 +42,26 @@ public class TutorialManager : MonoBehaviour
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private TutorialStep currentStep = null;
 
+    public TutorialStep one = new TutorialStep();
+    public TutorialStep two = new TutorialStep();
+
+    //////////////////////////////////////////////////////////
+
     public void Awake() {
         // tutorialDialogue = reader.setFileLocation("tutorial.csv").parse();
         // startTutorial();
-        tutorialText.text = "hello";
 
-        if (tutorialDialogue != null) {
-            foreach (List<string> Head in tutorialDialogue) {
-            // tutorialStep 완성
-            }
-        }
+        one.dialogue = "one";
+        one.actionsNeedToDo = null;
+        chooseCombinationOfAction("MVC", ref one.actionsNeedToDo);
+        two.dialogue = "two";
 
-        gameObject.SetActive(false);
-        
+        input.onInteract += test;
+
+        currentStep = one;
+
+        gameObject.SetActive(true);
+
     }
 
     public void startTutorial() {
@@ -53,11 +70,44 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void goToNextStep () {
+        currentStep.finishStep();
+        currentStep = two;
+        startCurrentStep();
+    }
 
+    public void startCurrentStep() {
+        tutorialText.text = currentStep.dialogue;
     }
 
     public void endTutorial() {
         gameObject.SetActive(false);
         gameMode.isMotionSwitchEnabled = true;
     }
+
+    void test () {
+        goToNextStep();
+    }
+
+    void chooseCombinationOfAction (string str, ref Action target) {
+
+        print("started");
+
+        switch(str) {
+            case "MVC":
+                target += gameMode.onSlideUp;
+                break;
+            case "MVS":
+                target += gameMode.onSlideDown;
+                break;
+            case "MVD":
+                target += boy.onInteract;
+                break;
+            case "MVT":
+                target += telescope.onInteract;
+                break;
+            default: break;
+        }
+    }
+
+
 }

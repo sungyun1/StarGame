@@ -59,7 +59,7 @@ public class ModeSwitchManager : UI_Interface
         Canvas.SetActive(false);
     } 
 
-    void switchState (Node toNode) {
+    public void switchState (Node toNode) {
         // 기능 켜주고 카메라 움직이기
 
         if (isMotionFinished) {
@@ -97,7 +97,7 @@ public class ModeSwitchManager : UI_Interface
         }
     }
     
-    void onSlideUp() {
+    public void onSlideUp() {
 
         if (currentNode.name == "home") {
             switchState(starCanvas);
@@ -109,7 +109,7 @@ public class ModeSwitchManager : UI_Interface
 
     }
 
-    void onSlideDown () {
+    public void onSlideDown () {
         if (currentNode.name == "home") {
             switchState(shop);
         }
@@ -119,7 +119,7 @@ public class ModeSwitchManager : UI_Interface
 
     }
 
-    void onSlideRight () {
+    public void onSlideRight () {
         if (currentNode.name == "home") {
             switchState(HomeRight);
         }
@@ -128,7 +128,7 @@ public class ModeSwitchManager : UI_Interface
         }
     }
 
-    void onSlideLeft () {
+    public void onSlideLeft () {
         if (currentNode.name == "home") {
             switchState(HomeLeft);
         }

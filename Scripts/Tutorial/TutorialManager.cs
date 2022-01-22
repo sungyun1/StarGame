@@ -17,6 +17,7 @@ public class TutorialManager : MonoBehaviour
     public PlayerInput input;
     public Boy boy;
     public Telescope telescope;
+    public GameObject maskingPanel;
 
     ///////////////////////// CSV parser
 
@@ -41,6 +42,7 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep currentStep = null;
 
     private int index = 0;
+    private bool isMaskingPanelOn = true;
 
     //////////////////////////////////////////////////////////
 
@@ -115,6 +117,11 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    void toggleMaskingPanel () {
+        isMaskingPanelOn = !isMaskingPanelOn;
+        maskingPanel.SetActive(isMaskingPanelOn);
+    }
+
     void chooseCombinationOfAction (string str, ref Action target) {
 
         switch(str) {
@@ -134,6 +141,9 @@ public class TutorialManager : MonoBehaviour
                 break;
             case "MVH":
                 target += gameMode.returnToHome;
+                break;
+            case "TMP":
+                target += toggleMaskingPanel;
                 break;
             default: 
                 throw new Exception("unexpected triplet code");

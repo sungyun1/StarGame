@@ -24,9 +24,9 @@ public class UniverseUpgrade : MonoBehaviour
         if (!isMotionLocked) {
             inputType = playerInput.typeofInput;
             if (inputType == 1) {
-                StartCoroutine(spinTelescopeImageAtDegreeOf(-90));
+                StartCoroutine(spinTelescopeImageAtDegreeOf(-120));
             } else if (inputType == 2) {
-                StartCoroutine(spinTelescopeImageAtDegreeOf(90));
+                StartCoroutine(spinTelescopeImageAtDegreeOf(120));
             }
         }
     }

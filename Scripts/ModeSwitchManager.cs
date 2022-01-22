@@ -64,20 +64,15 @@ public class ModeSwitchManager : UI_Interface
         // 기능 켜주고 카메라 움직이기
 
         if (isMotionFinished) {
-
             if (currentNode.FeatureObject != null) {
             currentNode.FeatureObject.SetActive(false);
             } else { }
-   
-
             if (destination.FeatureObject != null ) {
             destination.FeatureObject.SetActive(true);
             } else { }
-
             currentNode = destination;
             StartCoroutine(MoveCamera(destination.cameraPos));
         }
-
         isMotionFinished = true;
     }
 
@@ -94,7 +89,6 @@ public class ModeSwitchManager : UI_Interface
             else if (typeofOperation == 4) { // slide left 
                 onSlideLeft();
             }
-            switchState();
         }
     }
 
@@ -106,11 +100,12 @@ public class ModeSwitchManager : UI_Interface
     public void onSlideUp() {
         if (currentNode.name == "home") {
             destination = starCanvas;
-            StartCoroutine(MoveObject(Stars, starCanvas.cameraPos));
+            // StartCoroutine(MoveObject(Stars, starCanvas.cameraPos));
         }
         else if (currentNode.name == "shop") {
             destination = home;
         }
+        switchState();
     }
 
     public void onSlideDown () {
@@ -120,7 +115,7 @@ public class ModeSwitchManager : UI_Interface
         else if (currentNode.name == "canvas") {
             destination = home;
         }
-
+        switchState();
     }
 
     public void onSlideRight () {
@@ -130,6 +125,7 @@ public class ModeSwitchManager : UI_Interface
         else if (currentNode.name == "homeLeft") {
             destination = home;
         }
+        switchState();
     }
 
     public void onSlideLeft () {
@@ -139,6 +135,7 @@ public class ModeSwitchManager : UI_Interface
         else if (currentNode.name == "homeRight") {
             destination = home;
         }
+        switchState();
     }
 
 
@@ -166,13 +163,6 @@ public class Node  {
     public Vector3 cameraPos; // 자신의 카메라 위치
     public GameObject FeatureObject {get; set;} // 각자의 기능을 담은 컴포넌트. 나중에 밖에서 켜고 꺼줄거임
 
-    public virtual void goToNode (string name) {
-
-    }
-
-    public virtual void returnToHome () {
-
-    }
 }
 
 public class Home : Node  {

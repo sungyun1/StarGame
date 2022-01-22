@@ -99,13 +99,8 @@ class BuyStarStrategy : Strategy {
     private GameObject prefab = null;
 
     private int starindex = 0;
-
-    void Awake() {
+    void Start () {
         whereStarIsLocated = GameObject.FindWithTag("Stars").gameObject;
-    }
-
-    void setLocation (GameObject location) {
-        whereStarIsLocated = location;
     }
 
     public override void openPopupUsing( popUpController popup  ) {
@@ -132,8 +127,8 @@ class BuyStarStrategy : Strategy {
         newStar.SetActive(true);
 
         Vector3 pos = new Vector3(
-            UnityEngine.Random.Range(-2f, 2f),
-            UnityEngine.Random.Range(-0.5f, 4f),
+            UnityEngine.Random.Range(-2f, 2f) + whereStarIsLocated.transform.position.x,
+            UnityEngine.Random.Range(-0.5f, 4f) + whereStarIsLocated.transform.position.y,
             1
         );
 

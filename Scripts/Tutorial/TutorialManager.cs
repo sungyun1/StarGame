@@ -29,23 +29,6 @@ public class TutorialManager : MonoBehaviour
 
     ////////////////////////// step
 
-    public class TutorialStep {
-        public string dialogue; // 출력될 문장
-        public Action actionsNeedToDo = null; // 끝난 뒤 실행할 것
-        public Action conditionsNeedToCheck = null;
-
-        public bool isConditionSatisfied = false;
-
-        public void checkWhetherConditionIsSatisfied () {
-            isConditionSatisfied = true;
-        }
-
-        public void finishStep () {
-            actionsNeedToDo?.Invoke();
-        }
-    }
-
-
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private TutorialStep currentStep = null;
 
@@ -61,9 +44,6 @@ public class TutorialManager : MonoBehaviour
 
         input.onInteract += onTap;
 
-        currentStep = tutorialSteps[index];
-
-        gameObject.SetActive(true);
         startTutorial();
     }
 
@@ -77,9 +57,6 @@ public class TutorialManager : MonoBehaviour
             TutorialStep newTutorialStep = new TutorialStep();
             var item = fileContent[i];
             newTutorialStep.dialogue = item[1];
-
-            newTutorialStep.conditionsNeedToCheck += newTutorialStep.checkWhetherConditionIsSatisfied;
-            chooseCombinationOfCondition(item[2], ref newTutorialStep.conditionsNeedToCheck);
             
             newTutorialStep.actionsNeedToDo = null;
             chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
@@ -94,27 +71,31 @@ public class TutorialManager : MonoBehaviour
         gameMode.isMotionSwitchEnabled = false;
         boy.isMotionSwitchEnabled = false;
         telescope.isMotionSwitchEnabled = false;
-        startCurrentStep();
+        
+        startStep();
     }
 
     public void goToNextStep () {
-        if (currentStep.isConditionSatisfied) {
-            currentStep.finishStep();
-            isDialogueFinished = false;
-            index++;
-            if (index == tutorialSteps.Count) {
-                endTutorial();
-            }
-            else {
-                currentStep = tutorialSteps[index];
-                startCurrentStep();
-            }
+        currentStep.finishStep();
+        index++;
+        if (index == tutorialSteps.Count) {
+            endTutorial();
         }
-        
+        else {
+            currentStep = tutorialSteps[index];
+            startStep();
+        }
     }
 
-    public void startCurrentStep() {
+    //////////////////////////////////////////////////////////
+
+    public void startStep() {
         tutorialText.text = currentStep.dialogue;
+    }
+
+    public void toggleDialogueOfCurrentStep() {
+        isDialogueFinished = !isDialogueFinished;
+        tutorialText.gameObject.SetActive(isDialogueFinished);
     }
 
     public void endTutorial() {
@@ -124,15 +105,16 @@ public class TutorialManager : MonoBehaviour
         telescope.isMotionSwitchEnabled = true;
     }
 
+    /////////////////////////////////////////////////////////////////
+
     void onTap () {
         if (gameObject.activeSelf) {
             if (isDialogueFinished) {
-                
+                toggleDialogueOfCurrentStep();
             }
             else {
-
+                goToNextStep();
             }
-            goToNextStep();
         }
     }
 
@@ -167,7 +149,7 @@ public class TutorialManager : MonoBehaviour
             case "NXT":
                 break;
             default: 
-                throw new Exception("unexpected triplet code");
+                throw new Exception("unexpected triplet code : actionsNeedToDo");
         }
     }
 
@@ -181,10 +163,9 @@ public class TutorialManager : MonoBehaviour
                 starCanvas.finished += target;
                 break;
             case "NOT":
-                target?.Invoke();
                 break;
             default: 
-                throw new Exception("unexpected triplet code");
+                throw new Exception("unexpected triplet code : conditionsNeedToCheck");
         }
     }
 

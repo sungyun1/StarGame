@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 [System.Serializable]
 public class Data {
@@ -31,6 +32,9 @@ public class Data {
 
     // 진행 상황 관련
     public int currentDate;
+
+    ///// 저장 완료 액션
+    
 }
 
 [System.Serializable]
@@ -45,6 +49,9 @@ public class ResourceManager : MonoBehaviour
     public CharactorBuilder charactorBuilder;
 
     public Data gameData;
+
+    public event Action boughtStar;
+    public event Action createdCharactor;
 
     public void Start() {
         restorePreviousGame();
@@ -70,7 +77,9 @@ public class ResourceManager : MonoBehaviour
             default:
                 break;
         }
+        
         saveCurrentGameInfo();
+        boughtStar();
     }
 
     public void onUpgradeTelescope () {
@@ -101,6 +110,7 @@ public class ResourceManager : MonoBehaviour
         }
 
         saveCurrentGameInfo();
+        createdCharactor();
     }
 
     public void addStarGroup(int charactorID, List<List<StarData>> stargroup) {

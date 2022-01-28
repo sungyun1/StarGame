@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoryManager : MonoBehaviour
+public class StoryManager : UI_Interface
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public ResourceManager gameResource;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    // 일자별 기준
+    private CSVReader reader = new CSVReader();
+    private List<List<string>> diaryContext = new List<List<string>>();
+
+    void Awake() {
+        diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
     }
 }

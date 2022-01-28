@@ -16,11 +16,13 @@ public class TutorialManager : MonoBehaviour
     public Text tutorialText;
     public PlayerInput input;
     public Boy boy;
-    public popUpController popUpController;
     public Telescope telescope;
     public GameObject maskingPanel;
-    public StarCanvas starCanvas;
-    public Shop shop;
+
+    //////////////////////////////// 명령 제어기
+    public StrategyBuilder builder;
+
+    public CombinationChooser chooser;
 
     ///////////////////////// CSV parser
 
@@ -33,8 +35,7 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep currentStep = null;
 
     private int index = 0;
-    private bool isMaskingPanelOn = true;
-    private bool isDialogueFinished = false;
+    private bool isInDialogueProcess = true;
 
     //////////////////////////////////////////////////////////
 
@@ -57,9 +58,11 @@ public class TutorialManager : MonoBehaviour
             TutorialStep newTutorialStep = new TutorialStep();
             var item = fileContent[i];
             newTutorialStep.dialogue = item[1];
+
+            newTutorialStep.strategy = builder.build(item[2]);
             
-            newTutorialStep.actionsNeedToDo = null;
-            chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
+            print(newTutorialStep.strategy);
+            chooser.chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
 
             tutorialSteps.Add(newTutorialStep);
         }
@@ -83,6 +86,7 @@ public class TutorialManager : MonoBehaviour
         }
         else {
             currentStep = tutorialSteps[index];
+            toggleDialogueProcess();
             startStep();
         }
     }
@@ -93,9 +97,10 @@ public class TutorialManager : MonoBehaviour
         tutorialText.text = currentStep.dialogue;
     }
 
-    public void toggleDialogueOfCurrentStep() {
-        isDialogueFinished = !isDialogueFinished;
-        tutorialText.gameObject.SetActive(isDialogueFinished);
+    public void toggleDialogueProcess() {
+        isInDialogueProcess = !isInDialogueProcess;
+        maskingPanel.SetActive(isInDialogueProcess);
+        tutorialPanel.SetActive(isInDialogueProcess);
     }
 
     public void endTutorial() {
@@ -109,66 +114,14 @@ public class TutorialManager : MonoBehaviour
 
     void onTap () {
         if (gameObject.activeSelf) {
-            if (isDialogueFinished) {
-                toggleDialogueOfCurrentStep();
+            if (isInDialogueProcess) {
+                toggleDialogueProcess();
             }
             else {
-                goToNextStep();
+                if (currentStep.checkCondition()) {
+                    goToNextStep();
+                }
             }
         }
     }
-
-    void toggleMaskingPanel () {
-        isMaskingPanelOn = !isMaskingPanelOn;
-        maskingPanel.SetActive(isMaskingPanelOn);
-    }
-
-    void chooseCombinationOfAction (string str, ref Action target) {
-
-        switch(str) {
-            case "MVC":
-                target += gameMode.onSlideUp;
-                target += gameMode.switchState;
-                break;
-            case "MVS":
-                target += gameMode.onSlideDown;
-                target += gameMode.switchState;
-                break;
-            case "MVD":
-                target += boy.onInteract;
-                break;
-            case "MVT":
-                target += telescope.onInteract;
-                break;
-            case "MVH":
-                target += gameMode.returnToHome;
-                break;
-            case "TMP":
-                target += toggleMaskingPanel;
-                break;
-            case "NXT":
-                break;
-            default: 
-                throw new Exception("unexpected triplet code : actionsNeedToDo");
-        }
-    }
-
-    void chooseCombinationOfCondition (string str, ref Action target) 
-    {
-        switch(str) {
-            case "BWS":
-                shop.finished += target;
-                break;
-            case "CSG":
-                starCanvas.finished += target;
-                break;
-            case "NOT":
-                break;
-            default: 
-                throw new Exception("unexpected triplet code : conditionsNeedToCheck");
-        }
-    }
-
-
-
 }

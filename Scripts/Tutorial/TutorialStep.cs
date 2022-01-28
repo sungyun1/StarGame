@@ -4,21 +4,18 @@ using System;
 public class TutorialStep {
     public string dialogue; // 출력될 문장
     public Action actionsNeedToDo = null; // 끝난 뒤 실행할 것
-    public Action conditionsNeedToCheck = null; // 체크해야 할 것
+    public bool isConditionSatisfied = false;
 
-    public CheckConditionStrategy strategy = new CheckConditionStrategy();
+    public CheckConditionStrategy strategy;
 
-    public void checkCondition () {
-        strategy.check();
+    public bool checkCondition () {
+        if (strategy != null) {
+            return strategy.check();
+        }
+        else return false;
     }
 
     public void finishStep () {
         actionsNeedToDo?.Invoke();
-    }
-}
-
-public class CheckConditionStrategy {
-    public void check() {
-        Debug.Log("hello");
     }
 }

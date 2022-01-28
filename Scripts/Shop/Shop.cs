@@ -25,6 +25,8 @@ public class Shop : MonoBehaviour
 
     public event Action showResultPopup;
 
+    public event Action finished;
+
     ///////////////////////////
 
     void Start () {
@@ -79,6 +81,8 @@ public class Shop : MonoBehaviour
             }
             
         }
+
+        finished();
     }
 
 }

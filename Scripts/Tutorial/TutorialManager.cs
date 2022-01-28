@@ -16,8 +16,11 @@ public class TutorialManager : MonoBehaviour
     public Text tutorialText;
     public PlayerInput input;
     public Boy boy;
+    public popUpController popUpController;
     public Telescope telescope;
     public GameObject maskingPanel;
+    public StarCanvas starCanvas;
+    public Shop shop;
 
     ///////////////////////// CSV parser
 
@@ -28,9 +31,13 @@ public class TutorialManager : MonoBehaviour
 
     public class TutorialStep {
         public string dialogue; // 출력될 문장
-        public Action actionsNeedToDo = null;
-        public void checkConditionIsSatisfied () {
+        public Action actionsNeedToDo = null; // 끝난 뒤 실행할 것
+        public Action conditionsNeedToCheck = null;
 
+        public bool isConditionSatisfied = false;
+
+        public void checkWhetherConditionIsSatisfied () {
+            isConditionSatisfied = true;
         }
 
         public void finishStep () {
@@ -38,11 +45,13 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private TutorialStep currentStep = null;
 
     private int index = 0;
     private bool isMaskingPanelOn = true;
+    private bool isDialogueFinished = false;
 
     //////////////////////////////////////////////////////////
 
@@ -68,12 +77,12 @@ public class TutorialManager : MonoBehaviour
             TutorialStep newTutorialStep = new TutorialStep();
             var item = fileContent[i];
             newTutorialStep.dialogue = item[1];
-            print(fileContent[i][1]);
-            print(fileContent[i][2]);
+
+            newTutorialStep.conditionsNeedToCheck += newTutorialStep.checkWhetherConditionIsSatisfied;
+            chooseCombinationOfCondition(item[2], ref newTutorialStep.conditionsNeedToCheck);
+            
             newTutorialStep.actionsNeedToDo = null;
-            chooseCombinationOfAction(
-                item[2], ref newTutorialStep.actionsNeedToDo
-            );
+            chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
 
             tutorialSteps.Add(newTutorialStep);
         }
@@ -89,15 +98,19 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void goToNextStep () {
-        currentStep.finishStep();
-        index++;
-        if (index == tutorialSteps.Count) {
-            endTutorial();
+        if (currentStep.isConditionSatisfied) {
+            currentStep.finishStep();
+            isDialogueFinished = false;
+            index++;
+            if (index == tutorialSteps.Count) {
+                endTutorial();
+            }
+            else {
+                currentStep = tutorialSteps[index];
+                startCurrentStep();
+            }
         }
-        else {
-            currentStep = tutorialSteps[index];
-            startCurrentStep();
-        }
+        
     }
 
     public void startCurrentStep() {
@@ -113,6 +126,12 @@ public class TutorialManager : MonoBehaviour
 
     void onTap () {
         if (gameObject.activeSelf) {
+            if (isDialogueFinished) {
+                
+            }
+            else {
+
+            }
             goToNextStep();
         }
     }
@@ -145,10 +164,30 @@ public class TutorialManager : MonoBehaviour
             case "TMP":
                 target += toggleMaskingPanel;
                 break;
+            case "NXT":
+                break;
             default: 
                 throw new Exception("unexpected triplet code");
         }
     }
+
+    void chooseCombinationOfCondition (string str, ref Action target) 
+    {
+        switch(str) {
+            case "BWS":
+                shop.finished += target;
+                break;
+            case "CSG":
+                starCanvas.finished += target;
+                break;
+            case "NOT":
+                target?.Invoke();
+                break;
+            default: 
+                throw new Exception("unexpected triplet code");
+        }
+    }
+
 
 
 }

@@ -8243,8 +8243,11 @@ MonoBehaviour:
   tutorialText: {fileID: 380838423}
   input: {fileID: 1971758964}
   boy: {fileID: 1256028949}
+  popUpController: {fileID: 1971758969}
   telescope: {fileID: 605278972}
   maskingPanel: {fileID: 1674202364}
+  starCanvas: {fileID: 857938828}
+  shop: {fileID: 1355598143}
 --- !u!114 &1567443721
 MonoBehaviour:
   m_ObjectHideFlags: 0

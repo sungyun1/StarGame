@@ -16,6 +16,8 @@ public class CSVReader
     }
 
     // ~~.csv 를 해석해서 집어넣어주는 역할
+    // 엔터가 있을 경우 삭제하기
+    // 아무 내용도 없는 , 역시 삭제하기
     public List<List<string>> parse () {
         
         List<List<string>> data = new List<List<string>>();
@@ -32,13 +34,18 @@ public class CSVReader
             }
             else {
                 string[] line = sentence.Split(',');
+                int length = line.Length;
 
                 data.Add(new List<string>());
 
                 for(int i = 0; i < line.Length; i++)
                 {
-                    string tmp = line[i].Replace(":", ",").Replace("\"", "");
-                    data[currentIndex].Add(tmp);
+                    var item = line[i];
+                    if (item != "") {
+                        string tmp = item.Replace(":", ",").Replace("\"", "");
+                        data[currentIndex].Add(tmp);
+                        Debug.Log(tmp);
+                    }
                 }
                 currentIndex++;
             }

@@ -43,12 +43,14 @@ public class TutorialManager : MonoBehaviour
 
     public void Awake() {
 
+        gameObject.SetActive(false);
+
         createListOfTutorial();
 
         input.onInteract += onTap;
         popup.OKPressed += togglePopupInteractionFactor;
 
-        startTutorial();
+        // startTutorial();
     }
 
     void onTap () {

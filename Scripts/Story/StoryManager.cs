@@ -14,19 +14,38 @@ public class StoryManager : UI_Interface
     private CSVReader reader = new CSVReader();
     private List<List<string>> diaryContext = new List<List<string>>();
 
+    ///////////////////////
+
+    private int pageNum = 1;
+    private int dayNum = 0;
+
+    //////////////// methods ///////////////////
+
     void Awake() {
-        // diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
+        diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
+        showdayNumDiary();
     }
 
-    void showTodayDiary() {
+    public void showdayNumDiary() {
 
-        int date = gameResource.gameData.currentDate;
+        dayNum = gameResource.gameData.currentDate;
 
-        storyDate.text = "D - " + date.ToString();
-        storyText.text = diaryContext[date][1];
+        storyDate.text = "D-" + (dayNum+1);
+        storyText.text = diaryContext[dayNum][pageNum];
     }
 
-    void showNextPage() {
+    public void showNextPage() {
+
+        pageNum++;
+        if (pageNum >= diaryContext[dayNum].Count) {
+            gameObject.SetActive(false);
+        }
+        else {
+            storyText.text = diaryContext[dayNum][pageNum];
+        }
+    }
+
+    public void showCharactorQuestions () {
         
     }
 }

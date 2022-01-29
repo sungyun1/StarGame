@@ -31,7 +31,7 @@ public class Data {
     public List<StarGroupData> stargroups = new List<StarGroupData>();
 
     // 진행 상황 관련
-    public int currentDate;
+    public int currentDate = 0;
 
     ///// 저장 완료 액션
     
@@ -115,6 +115,11 @@ public class ResourceManager : MonoBehaviour
             data.starGroup = stargroup;
             gameData.stargroups.Add(data);
         }
+        saveCurrentGameInfo();
+    }
+
+    public void onConditionForNextDaySatisfied () {
+        gameData.currentDate += 1;
         saveCurrentGameInfo();
     }
 

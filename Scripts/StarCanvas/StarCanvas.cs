@@ -77,8 +77,6 @@ public class StarCanvas : MonoBehaviour
 
     private Vector3 mousePos;
 
-    public event Action finished;
-
 //////////////////////////// 필요한 함수
 
     void Awake() {
@@ -227,8 +225,6 @@ public class StarCanvas : MonoBehaviour
             }
             
         }
-
-        finished();
     }
 
     public void onCharactorCreateButtonClicked () {

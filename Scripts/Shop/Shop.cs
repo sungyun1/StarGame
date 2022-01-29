@@ -25,7 +25,6 @@ public class Shop : MonoBehaviour
 
     public event Action showResultPopup;
 
-    public event Action finished;
 
     ///////////////////////////
 
@@ -81,8 +80,6 @@ public class Shop : MonoBehaviour
             }
             
         }
-
-        finished();
     }
 
 }

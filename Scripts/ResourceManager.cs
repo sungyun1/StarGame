@@ -50,9 +50,6 @@ public class ResourceManager : MonoBehaviour
 
     public Data gameData;
 
-    public event Action boughtStar;
-    public event Action createdCharactor;
-
     public void Start() {
         restorePreviousGame();
     }
@@ -79,7 +76,6 @@ public class ResourceManager : MonoBehaviour
         }
         
         saveCurrentGameInfo();
-        boughtStar();
     }
 
     public void onUpgradeTelescope () {
@@ -110,7 +106,6 @@ public class ResourceManager : MonoBehaviour
         }
 
         saveCurrentGameInfo();
-        createdCharactor();
     }
 
     public void addStarGroup(int charactorID, List<List<StarData>> stargroup) {

@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
 
     ///////////////////// 사용해야 하는 기능
 
+    public Popup popup;
     public ModeSwitchManager gameMode;
     public GameObject tutorialPanel;
     public Text tutorialText;
@@ -36,16 +37,16 @@ public class TutorialManager : MonoBehaviour
 
     private int index = 0;
     private bool isDialogueProcessDone = false;
+    private bool isPopupInteractionFinished = false;
 
     //////////////////////////////////////////////////////////
 
     public void Awake() {
 
-        // gameObject.SetActive(false);
-
         createListOfTutorial();
 
         input.onInteract += onTap;
+        popup.OKPressed += togglePopupInteractionFactor;
 
         startTutorial();
     }
@@ -54,7 +55,8 @@ public class TutorialManager : MonoBehaviour
         if (gameObject.activeSelf) {
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
-                if (currentStep.checkCondition()) {
+                if (currentStep.checkCondition() && isPopupInteractionFinished) {
+                    togglePopupInteractionFactor();
                     goToNextStep();
                 }
             }
@@ -127,7 +129,7 @@ public class TutorialManager : MonoBehaviour
         telescope.isMotionSwitchEnabled = true;
     }
 
-    /////////////////////////////////////////////////////////////////
-
-    
+    void togglePopupInteractionFactor () {
+        isPopupInteractionFinished = !isPopupInteractionFinished;
+    }
 }

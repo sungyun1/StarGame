@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public interface IpopupSender {
     void beforePopup(); // 팝업 이전에 실행할 함수
@@ -47,6 +48,8 @@ public class Popup : MonoBehaviour {
     private Callback WhiteCallback = null;
     private Callback YellowCallback = null;
     private Callback BlueCallback = null;
+
+    public event Action OKPressed;
 
     void Awake() {
         switchState(popupState.tripletChoice);
@@ -181,6 +184,7 @@ public class Popup : MonoBehaviour {
     }
 
     public void onOK () {
+        OKPressed();
         gameObject.SetActive(false);
     }
 

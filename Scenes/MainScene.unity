@@ -8340,6 +8340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3cd9cb50fc50048b7c529d0e83fef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popup: {fileID: 34159125}
   gameMode: {fileID: 1971758967}
   tutorialPanel: {fileID: 189685827}
   tutorialText: {fileID: 380838423}

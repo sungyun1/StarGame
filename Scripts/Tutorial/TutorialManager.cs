@@ -50,6 +50,19 @@ public class TutorialManager : MonoBehaviour
         // startTutorial();
     }
 
+    void onTap () {
+        if (gameObject.activeSelf) {
+            if (isInDialogueProcess) {
+                toggleDialogueProcess();
+            }
+            else {
+                if (currentStep.checkCondition()) {
+                    goToNextStep();
+                }
+            }
+        }
+    }
+
     public void createListOfTutorial () {
 
         fileContent = reader.setFileLocation("Info/tutorial.csv").parse();
@@ -114,16 +127,5 @@ public class TutorialManager : MonoBehaviour
 
     /////////////////////////////////////////////////////////////////
 
-    void onTap () {
-        if (gameObject.activeSelf) {
-            if (isInDialogueProcess) {
-                toggleDialogueProcess();
-            }
-            else {
-                if (currentStep.checkCondition()) {
-                    goToNextStep();
-                }
-            }
-        }
-    }
+    
 }

@@ -4,7 +4,7 @@ using System;
 public class TutorialStep {
     public string dialogue; // 출력될 문장
     public Action actionsNeedToDo = null; // 끝난 뒤 실행할 것
-    public bool isConditionSatisfied = false;
+    public bool isThereConditionToCheck = false;
 
     public CheckConditionStrategy strategy;
 

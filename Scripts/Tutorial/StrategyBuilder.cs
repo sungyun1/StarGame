@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class StrategyBuilder : MonoBehaviour {
 
-    private ResourceManager manager;
-    void Awake() {
-        manager = GameObject.Find("Boy").GetComponent<ResourceManager>();
-        print(manager);
-    }
+    public ResourceManager manager;
     public CheckConditionStrategy build (string str) 
     {
         switch(str) {
@@ -27,16 +23,13 @@ public class StrategyBuilder : MonoBehaviour {
     }
 }
 
+public interface CheckConditionStrategy {
 
-public class CheckConditionStrategy {
-
-    public virtual bool check() {
-        return true;
-    }
+    bool check();
 }
 
 public class NextStepStrategy : CheckConditionStrategy {
-    public override bool check() {
+    public bool check() {
         return true;
     }
 }
@@ -49,7 +42,7 @@ public class BuyStarConditionStrategy : CheckConditionStrategy {
         resource = obj;
     }
 
-    public override bool check() {
+    public bool check() {
         if (resource.gameData.whiteStarNum > 0) {
             return true;
         }
@@ -64,7 +57,7 @@ public class createCharactorStrategy : CheckConditionStrategy {
     public createCharactorStrategy (ResourceManager obj) {
         resource = obj;
     }
-    public override bool check() {
+    public bool check() {
         if (resource.gameData.myCharactors.Count > 0) {
             return true;
         }

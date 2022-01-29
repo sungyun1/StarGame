@@ -35,30 +35,31 @@ public class TutorialManager : MonoBehaviour
     private TutorialStep currentStep = null;
 
     private int index = 0;
-    private bool isInDialogueProcess = true;
+    private bool isDialogueProcessDone = false;
 
     //////////////////////////////////////////////////////////
 
     public void Awake() {
 
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
 
         createListOfTutorial();
 
         input.onInteract += onTap;
 
-        // startTutorial();
+        startTutorial();
     }
 
     void onTap () {
         if (gameObject.activeSelf) {
-            if (isInDialogueProcess) {
-                toggleDialogueProcess();
-            }
-            else {
+            if (currentStep.isThereConditionToCheck) {
+                toggleDialogueProcess(false);
                 if (currentStep.checkCondition()) {
                     goToNextStep();
                 }
+            }
+            else {
+                goToNextStep();
             }
         }
     }
@@ -71,12 +72,14 @@ public class TutorialManager : MonoBehaviour
 
         for (int i = 0; i < length; i++) {
             TutorialStep newTutorialStep = new TutorialStep();
+
             var item = fileContent[i];
             newTutorialStep.dialogue = item[1];
 
             newTutorialStep.strategy = builder.build(item[2]);
-            
-            print(newTutorialStep.strategy);
+            if (item[2] != "NOT") newTutorialStep.isThereConditionToCheck = true;
+            else newTutorialStep.isThereConditionToCheck = false;
+
             chooser.chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
 
             tutorialSteps.Add(newTutorialStep);
@@ -101,7 +104,7 @@ public class TutorialManager : MonoBehaviour
         }
         else {
             currentStep = tutorialSteps[index];
-            toggleDialogueProcess();
+            toggleDialogueProcess(true);
             startStep();
         }
     }
@@ -112,10 +115,9 @@ public class TutorialManager : MonoBehaviour
         tutorialText.text = currentStep.dialogue;
     }
 
-    public void toggleDialogueProcess() {
-        isInDialogueProcess = !isInDialogueProcess;
-        maskingPanel.SetActive(isInDialogueProcess);
-        tutorialPanel.SetActive(isInDialogueProcess);
+    public void toggleDialogueProcess(bool value) {
+        maskingPanel.SetActive(value);
+        tutorialPanel.SetActive(value);
     }
 
     public void endTutorial() {

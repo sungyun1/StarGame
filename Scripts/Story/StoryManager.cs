@@ -11,6 +11,6 @@ public class StoryManager : UI_Interface
     private List<List<string>> diaryContext = new List<List<string>>();
 
     void Awake() {
-        diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
+        // diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
     }
 }

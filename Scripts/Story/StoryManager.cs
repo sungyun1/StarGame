@@ -1,52 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System;
 
-public class StoryManager : UI_Interface
+public interface CheckListForEachDay {
+    // 각 날짜별 스토리
+    bool check(ResourceManager obj);
+}
+
+public class firstDay : CheckListForEachDay {
+    public bool check(ResourceManager obj) {
+        if (obj.gameData.myCharactors.Count >= 3) {
+            return true;
+        }
+        else return false;
+    }
+}
+
+public class secondDay : CheckListForEachDay {
+    public bool check(ResourceManager obj) {
+        return true;
+    }
+}
+
+public class thirdDay : CheckListForEachDay {
+    public bool check(ResourceManager obj) {
+        return true;
+    }
+}
+
+public class fourthDay : CheckListForEachDay {
+    public bool check(ResourceManager obj) {
+        return true;
+    }
+}
+
+public class StoryManager : MonoBehaviour
 {
-    // 진행상황 관리하는 친구
-    public ResourceManager gameResource;
-    public Text storyText;
-    public Text storyDate;
+    public ResourceManager resourceManager;
 
-    // 일자별 기준
-    private List<List<string>> diaryContext = new List<List<string>>();
+    /////////////////////////////////////
+    private List<CheckListForEachDay> checkList = new List<CheckListForEachDay>();
+    private CheckListForEachDay currentDayList;
 
-    ///////////////////////
-
-    private int pageNum = 1;
-    private int dayNum = 0;
-
-    //////////////// methods ///////////////////
+    /////////////////////////////// methods
 
     void Awake() {
-        gameObject.SetActive(false);
-        CSVReader.setFileLocation("Info/diaryContext.csv");
-        diaryContext = CSVReader.parse();
-        showTodayDiary();
+        init();
+        currentDayList = checkList[0];
     }
 
-    public void showTodayDiary() {
-
-        dayNum = gameResource.gameData.currentDate;
-
-        storyDate.text = "D-" + (dayNum+1);
-        storyText.text = diaryContext[dayNum][pageNum];
+    void init() { // 초기 체크리스트들을 등록한다.
+        checkList.Add(new firstDay());
+        checkList.Add(new secondDay());
+        checkList.Add(new thirdDay());
+        checkList.Add(new fourthDay());
     }
 
-    public void showNextPage() {
-
-        pageNum++;
-        if (pageNum >= diaryContext[dayNum].Count) {
-            gameObject.SetActive(false);
-        }
-        else {
-            storyText.text = diaryContext[dayNum][pageNum];
+    public void checkCondition () {
+        if (currentDayList.check(resourceManager)) {
+            resourceManager.onConditionForNextDaySatisfied();
         }
     }
 
-    public void showCharactorQuestions () {
-        
-    }
 }

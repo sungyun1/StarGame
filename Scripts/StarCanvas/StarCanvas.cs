@@ -196,7 +196,7 @@ public class StarCanvas : MonoBehaviour
 
                 gameResource.addCharactor(ch);
                 gameResource.addStarGroup(ch.charactorID, currentStarGroup.stargroup);
-                currentStarGroup.stargroup.Clear(); // 다 끝나면 비워야 한다.
+                currentStarGroup.stargroup.Clear();
                 diary.isCharactorFound[ch.charactorID] = true;
 
                 showNextPopup();

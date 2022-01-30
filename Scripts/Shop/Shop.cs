@@ -95,8 +95,6 @@ class BuyStarStrategy : Strategy {
 
     public GameObject whereStarIsLocated; 
 
-    private ObjectType productType;
-
     private GameObject prefab = null;
 
     private int starindex = 0;
@@ -110,19 +108,6 @@ class BuyStarStrategy : Strategy {
 
     public override void buy(string type, gameObjectManager pool) {
 
-        switch (type) {
-            case "blue":
-                productType = ObjectType.blueStar;
-                break;
-            case "yellow":
-                productType = ObjectType.yellowStar;
-                break;
-            case "white":
-                productType = ObjectType.whiteStar;
-                break;
-            default:
-                break;
-        }
 
         GameObject newStar = pool.chooseTypeOfPool(type).pullObjectFromPoolTo(whereStarIsLocated);
         newStar.SetActive(true);

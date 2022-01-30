@@ -49,14 +49,11 @@ public class StarCarouselManager : MonoBehaviour
             if (type == 3) {
                 frontButtonNum = (frontButtonNum + 1) % 3;
                 degreeNeedToSpin = 120f;
-                // setButton();
                 StartCoroutine(Spin(degreeNeedToSpin));
-                
             }
             else if (type == 4) {
                 frontButtonNum = (frontButtonNum - 1) % 3;
                 degreeNeedToSpin = -120f;
-                // setButton();
                 StartCoroutine(Spin(degreeNeedToSpin));
             }
             else {

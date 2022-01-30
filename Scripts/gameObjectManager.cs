@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObjectType {
-        line = 0,
-        whiteStar,
-        yellowStar,
-        blueStar
-    }
 
 public class gameObjectManager : MonoBehaviour
 {
@@ -29,7 +23,10 @@ public class gameObjectManager : MonoBehaviour
 
     private GameObject prefab;
 
-    
+    ///////////////////////////////////////////////////////
+
+    public CharactorBuilder builder;
+
     // 메소드 체이닝
 
     public gameObjectManager chooseTypeOfPool (string type) {

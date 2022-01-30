@@ -66,6 +66,24 @@ public class ResourceManager : MonoBehaviour
         restorePreviousGame();
     }
 
+    void init() {
+        Load();
+        gameData.amountOfStarDust = 500;
+        gameData.amountOfGem = 200;
+        gameData.blueStarNum = 0;
+        gameData.whiteStarNum = 0;
+        gameData.yellowStarNum = 0;
+        gameData.normalStarGroupCreationLevel = 2;
+        gameData.rareStarGroupCreationLevel = 2;
+        gameData.epicStarGroupCreationLevel = 2;
+        gameData.telescopeLevel = 1;
+        gameData.playerLevel = 1;
+        gameData.currentDate = 1;
+        gameData.myCharactors.Clear();
+        gameData.stargroups.Clear();
+        saveCurrentGameInfo();
+    }
+
     public void Load () {
         string dataFromFile = File.ReadAllText(Application.dataPath + "/gameStatus.json");
         gameData = JsonUtility.FromJson<Data>(dataFromFile);
@@ -142,6 +160,12 @@ public class ResourceManager : MonoBehaviour
         foreach (CharactorData data in charactors) {
             charactorBuilder.createCharactorFromCharactorData(data);
         }
+
+        /*  별들도 다시 만들어 줘야 함,,,
+        for (int i = 0; i < gameData.whiteStarNum; i++) {
+
+        }
+        */
     }
 
     public void printData() {

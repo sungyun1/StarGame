@@ -6,8 +6,6 @@ using System;
 [System.Serializable]
 public class StarGroup {
     public List<StarConnection> stargroup = new List<StarConnection>();
-
-    
 }
 
 
@@ -25,6 +23,7 @@ public class StarCanvas : MonoBehaviour
     public CharactorBuilder charactorBuilder;
 
     public gameObjectManager pool;
+    private List<Star> starThatUsed = new List<Star>();
 
     ///////////////////////////////////////////
 
@@ -66,6 +65,7 @@ public class StarCanvas : MonoBehaviour
 
             if (starAtMousePos != null && isCurrentStarHasSameTypeWithBuffer(starAtMousePos)) {
                 storeStarToBuffer(starAtMousePos);
+                starThatUsed.Add(starAtMousePos);
             }
         }
         else if (Input.GetMouseButton(0)) {
@@ -74,6 +74,7 @@ public class StarCanvas : MonoBehaviour
 
             if (isStarAppropriateToStore(starAtMousePos)) {
                 storeStarToBuffer(starAtMousePos);
+                starThatUsed.Add(starAtMousePos);
             }
 
         }
@@ -133,7 +134,6 @@ public class StarCanvas : MonoBehaviour
 
             else if (amountOfStarInBuffer == 1) 
             {
-
                     StarData item = new StarData();
                     item.index = entity.index;
                     item.position = entity.transform.position;
@@ -155,7 +155,7 @@ public class StarCanvas : MonoBehaviour
         Vector3 fixed1 = p1 + coefficient;
         Vector3 fixed2 = p2 + coefficient;
 
-        GameObject line = pool.chooseTypeOfPool(ObjectType.line).pullObjectFromPoolTo(LineFolder);
+        GameObject line = pool.chooseTypeOfPool("line").pullObjectFromPoolTo(LineFolder);
         lr = line.GetComponent<LineRenderer>();
         lr.positionCount += 1;
         lr.SetPosition(0, fixed1);
@@ -168,7 +168,7 @@ public class StarCanvas : MonoBehaviour
 
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
         
-            pool.chooseTypeOfPool(ObjectType.line);
+            pool.chooseTypeOfPool("line");
 
             int num = LineFolder.transform.childCount;
 
@@ -177,7 +177,14 @@ public class StarCanvas : MonoBehaviour
                 pool.returnObjectToPool(line);
             }
 
-            starAnalyzer.setStarGroup(currentStarGroup);
+            string type = starThatUsed[0].type;
+            pool.chooseTypeOfPool(type);
+
+            foreach (Star usedStar in starThatUsed) {
+                GameObject Star = usedStar.gameObject; 
+                pool.returnObjectToPool(Star);
+            }
+
             int charactorID = starAnalyzer.calculateCharactorID();
 
             if (charactorID == 99) {

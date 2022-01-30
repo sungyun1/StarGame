@@ -32,22 +32,22 @@ public class gameObjectManager : MonoBehaviour
     
     // 메소드 체이닝
 
-    public gameObjectManager chooseTypeOfPool (ObjectType type) {
+    public gameObjectManager chooseTypeOfPool (string type) {
 
         switch (type) {
-            case ObjectType.line:
+            case "line":
                 currentPool = linePool;
                 prefab = linePrefab;
                 break;
-            case ObjectType.whiteStar:
+            case "white":
                 currentPool = whiteStarPool;
                 prefab = whiteStarPrefab;
                 break;
-            case ObjectType.yellowStar:
+            case "yellow":
                 currentPool = yellowStarPool;
                 prefab = yellowStarPrefab;
                 break;
-            case ObjectType.blueStar:
+            case "blue":
                 currentPool = blueStarPool;
                 prefab = blueStarPrefab;
                 break;

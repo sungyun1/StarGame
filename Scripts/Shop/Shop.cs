@@ -124,7 +124,7 @@ class BuyStarStrategy : Strategy {
                 break;
         }
 
-        GameObject newStar = pool.chooseTypeOfPool(productType).pullObjectFromPoolTo(whereStarIsLocated);
+        GameObject newStar = pool.chooseTypeOfPool(type).pullObjectFromPoolTo(whereStarIsLocated);
         newStar.SetActive(true);
 
         Vector3 pos = new Vector3(

@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class questionDB : MonoBehaviour
-{
-    public enum DataIndex {
+public enum DataIndex {
        name = 0,
        type,
        question,
@@ -13,8 +10,10 @@ public class questionDB : MonoBehaviour
        answer,
        firstChoiceMessage,
        secondChoiceMessage
-    }
+}
 
+public class questionDB : MonoBehaviour
+{
     private List<List<string>> data;
 
     void Awake() {
@@ -22,9 +21,8 @@ public class questionDB : MonoBehaviour
         data = CSVReader.parse();
     }
 
-    void getInformation (int charactorNum, DataIndex indexOfInformatinToFind) {
-        print(
-            data[charactorNum][(int) indexOfInformatinToFind]
-        );
+    public string getInformation (int charactorNum, DataIndex indexOfInformatinToFind) {
+        return data[charactorNum][(int) indexOfInformatinToFind];
+        
     }
 }

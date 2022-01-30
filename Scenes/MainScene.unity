@@ -11319,10 +11319,8 @@ GameObject:
   - component: {fileID: 1971758965}
   - component: {fileID: 1971758967}
   - component: {fileID: 1971758969}
-  - component: {fileID: 1971758970}
   - component: {fileID: 1971758968}
   - component: {fileID: 1971758971}
-  - component: {fileID: 1971758972}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -11433,18 +11431,6 @@ MonoBehaviour:
   popup: {fileID: 34159123}
   popupResult: 
   detailPopupResult: 0
---- !u!114 &1971758970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971758963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ccc8361cb663449b2c69701c6e4f42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1971758971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11461,22 +11447,6 @@ MonoBehaviour:
   whiteStarPrefab: {fileID: 8259310206041681773, guid: 57a6c4d5c84888f4b85207e9c7832352, type: 3}
   yellowStarPrefab: {fileID: 6694880069316572830, guid: 3b1fade9f5670084aa55f3125ed6a076, type: 3}
   blueStarPrefab: {fileID: 605151475078138167, guid: a226fe5e1fe7300469fc15bb9c87f597, type: 3}
---- !u!114 &1971758972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971758963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c902b2aa902304e822eec7820b3edd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMotionLocked: 0
-  gameResource: {fileID: 1256028950}
-  storyText: {fileID: 0}
-  storyDate: {fileID: 0}
 --- !u!1 &1981272455
 GameObject:
   m_ObjectHideFlags: 0

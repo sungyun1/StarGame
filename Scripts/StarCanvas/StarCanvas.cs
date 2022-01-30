@@ -5,37 +5,9 @@ using System;
 
 [System.Serializable]
 public class StarGroup {
-    public List<List<StarData>> stargroup = new List<List<StarData>>();
+    public List<StarConnection> stargroup = new List<StarConnection>();
 
-    public List<StarData> getHeadOfList(int num) 
-    {
-        for (int i = 0; i < stargroup.Count; i++) {
-            if (stargroup[i][0].index == num) 
-            {
-                return stargroup[i];
-            }
-        }
-        return null;
-    }
-
-    public void addStarToGroup (StarData head, StarData follow) 
-    {
-        List<StarData> list = getHeadOfList(head.index);
-
-        // 별을 리스트에 추가한다.
-        if (list == null) 
-        {
-            // 특정 번호가 없다면 추가한다. 그 이후에 follow를 붙인다.
-            List<StarData> newlist = new List<StarData>();
-            newlist.Add(head);
-            newlist.Add(follow);
-            stargroup.Add(newlist);
-        }
-        else 
-        {
-            list.Add(follow);
-        }
-    }
+    
 }
 
 
@@ -81,6 +53,7 @@ public class StarCanvas : MonoBehaviour
 
     void Awake() {
         popupController.finished += createCharactorFromData;
+        starAnalyzer.setStarGroup(currentStarGroup);
     }
 
     void Update() 
@@ -151,8 +124,6 @@ public class StarCanvas : MonoBehaviour
 
     void storeStarToBuffer (Star entity) 
     {
-        
-
             // 별이 변경되었을 때만 작동
             if (amountOfStarInBuffer == 0)
             {
@@ -173,7 +144,7 @@ public class StarCanvas : MonoBehaviour
                     buf.position = buffer.transform.position;
                     buf.starType = buffer.type;
 
-                    currentStarGroup.addStarToGroup(buf, item);
+                    starAnalyzer.addStarToGroup(buf, item);
                     drawLine(buf.position, item.position); 
                     buffer = entity;
             }

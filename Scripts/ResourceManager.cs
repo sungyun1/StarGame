@@ -38,9 +38,21 @@ public class Data {
 }
 
 [System.Serializable]
+public struct StarData {
+    public Vector2 position; // 위치
+    public string starType; // 무슨 별인지
+    public int index; // 인덱싱
+}
+
+[System.Serializable]
 public class StarGroupData {
     public int charactorID;
-    public List<List<StarData>> starGroup;
+    public List<StarConnection> starGroup;
+}
+
+[System.Serializable]
+public class StarConnection {
+    public List<StarData> connections;
 }
 
 public class ResourceManager : MonoBehaviour
@@ -108,7 +120,7 @@ public class ResourceManager : MonoBehaviour
         saveCurrentGameInfo();
     }
 
-    public void addStarGroup(int charactorID, List<List<StarData>> stargroup) {
+    public void addStarGroup(int charactorID, List<StarConnection> stargroup) {
         if (stargroup != null) {
             StarGroupData data = new StarGroupData();
             data.charactorID = charactorID;

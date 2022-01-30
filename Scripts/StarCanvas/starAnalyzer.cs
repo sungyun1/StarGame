@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct StarData {
-    public Vector2 position; // 위치
-    public string starType; // 무슨 별인지
-    public int index; // 인덱싱
-}
+
 
 public class starAnalyzer
 {
-    private List<List<StarData>> data;
+    private List<StarConnection> data;
 
     public ResourceManager resource;
 
@@ -45,7 +40,7 @@ public class starAnalyzer
 
     int numberOfStar () {
         int num = 0;
-        foreach (List<StarData> head in data) {
+        foreach (StarConnection head in data) {
             num += 1;
         }
         return num;
@@ -53,8 +48,8 @@ public class starAnalyzer
 
     int numberOfHub () {
         int num = 0;
-        foreach (List<StarData> head in data) {
-            if (head.Count >= 3) num++;
+        foreach (StarConnection head in data) {
+            if (head.connections.Count >= 3) num++;
         }
         return num / 2;
     }
@@ -82,7 +77,7 @@ public class starAnalyzer
 
     public int calculateCharactorID() {
 
-        string type = data[0][0].starType;
+        string type = data[0].connections[0].starType;
 
         if (isNumberConditionSatisfied(type)) {
             int[] range = rangeOfCharactorID(type);
@@ -95,5 +90,37 @@ public class starAnalyzer
         }
 
         else return 99;
+    }
+
+    public StarConnection getHeadOfList(int num) 
+    {
+        for (int i = 0; i < data.Count; i++) {
+            var item = data[i];
+            if (item.connections[0].index == num) 
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void addStarToGroup (StarData head, StarData follow) 
+    {
+        StarConnection list = getHeadOfList(head.index);
+
+        // 별을 리스트에 추가한다.
+        if (list == null) 
+        {
+            // 특정 번호가 없다면 추가한다. 그 이후에 follow를 붙인다.
+            StarConnection newlist = new StarConnection();
+            newlist.connections = new List<StarData>();
+            newlist.connections.Add(head);
+            newlist.connections.Add(follow);
+            data.Add(newlist);
+        }
+        else 
+        {
+            list.connections.Add(follow);
+        }
     }
 }

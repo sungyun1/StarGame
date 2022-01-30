@@ -15,14 +15,11 @@ public class questionDB : MonoBehaviour
        secondChoiceMessage
     }
 
-    private CSVReader reader = new CSVReader();
-
     private List<List<string>> data;
 
     void Awake() {
-        data = reader  
-            .setFileLocation("Info/QuestionInfo.csv")
-            .parse();
+        CSVReader.setFileLocation("Info/QuestionInfo.csv");
+        data = CSVReader.parse();
     }
 
     void getInformation (int charactorNum, DataIndex indexOfInformatinToFind) {

@@ -19,14 +19,14 @@ public class CharactorDB : MonoBehaviour
         diarySpaceMarkSpritePath
     }
 
-    public CSVReader reader = new CSVReader();
-
     private List<List<string>> data = new List<List<string>>();
 
     void Awake() {
-        data = reader
-            .setFileLocation("Info/CharactorInfo.csv")
-            .parse();
+        
+        CSVReader.setFileLocation("Info/CharactorInfo.csv");
+    
+
+        data = CSVReader.parse();
 
         addDirectoryAdressForSetting();
     }

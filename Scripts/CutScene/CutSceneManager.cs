@@ -20,7 +20,7 @@ public enum cutSceneType {
 
 public class CutSceneManager : MonoBehaviour
 {
-    private CSVReader reader = new CSVReader();
+    // private CSVReader reader = new CSVReader();
 
     private List<List<string>> dialogue = new List<List<string>>();
 
@@ -59,7 +59,8 @@ public class CutSceneManager : MonoBehaviour
     }
 
     void loadDialogueFrom(string filename) {
-        dialogue = reader.setFileLocation("/Info/" + filename).parse();
+        CSVReader.setFileLocation("/Info/" + filename);
+        dialogue = CSVReader.parse();
         lengthOfDialogue = dialogue.Count;
     }
 

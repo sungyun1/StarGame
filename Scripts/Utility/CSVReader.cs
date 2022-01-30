@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class CSVReader
+public static class CSVReader
 {
-    private string fileLocation;
+    private static string fileLocation;
 
-    public CSVReader setFileLocation (string path) {
+    public static void setFileLocation (string path) {
         if (File.Exists(Application.dataPath + "/" + path)) {
             fileLocation = path;
-            return this;
         }
         else throw new System.Exception("there is no file on that directory");
     }
@@ -18,7 +17,7 @@ public class CSVReader
     // ~~.csv 를 해석해서 집어넣어주는 역할
     // 엔터가 있을 경우 삭제하기
     // 아무 내용도 없는 , 역시 삭제하기
-    public List<List<string>> parse () {
+    public static List<List<string>> parse () {
         
         List<List<string>> data = new List<List<string>>();
 

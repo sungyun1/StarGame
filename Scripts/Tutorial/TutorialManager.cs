@@ -27,7 +27,6 @@ public class TutorialManager : MonoBehaviour
 
     ///////////////////////// CSV parser
 
-    public CSVReader reader = new CSVReader();
     private List<List<string>> fileContent = new List<List<string>>();
 
     ////////////////////////// step
@@ -70,7 +69,8 @@ public class TutorialManager : MonoBehaviour
 
     public void createListOfTutorial () {
 
-        fileContent = reader.setFileLocation("Info/tutorial.csv").parse();
+        CSVReader.setFileLocation("Info/tutorial.csv");
+        fileContent = CSVReader.parse();
 
         int length = fileContent.Count;
 

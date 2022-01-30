@@ -11,7 +11,6 @@ public class StoryManager : UI_Interface
     public Text storyDate;
 
     // 일자별 기준
-    private CSVReader reader = new CSVReader();
     private List<List<string>> diaryContext = new List<List<string>>();
 
     ///////////////////////
@@ -22,11 +21,13 @@ public class StoryManager : UI_Interface
     //////////////// methods ///////////////////
 
     void Awake() {
-        diaryContext = reader.setFileLocation("Info/diaryContext.csv").parse();
-        showdayNumDiary();
+        
+        CSVReader.setFileLocation("Info/diaryContext.csv");
+        diaryContext = CSVReader.parse();
+        showTodayDiary();
     }
 
-    public void showdayNumDiary() {
+    public void showTodayDiary() {
 
         dayNum = gameResource.gameData.currentDate;
 

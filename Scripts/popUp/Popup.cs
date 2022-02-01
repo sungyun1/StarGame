@@ -5,16 +5,24 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public interface IpopupSender {
-    void beforePopup(); // 팝업 이전에 실행할 함수
-    void afterPopup();  // 팝업 이후에 실행할 함수
+
+public enum currentDescriptionState {
+    whenBoughtStar = 0,
+    whenCreatedStarGroup,
+    whenUpgradedUniverse,
+    whenUpgradedPlayer,
+    notEnoughStarDust,
+    notEnoughGem,
 }
 
 public class Popup : MonoBehaviour {
 
     public popUpController popUpController;
+    public popupDialogueManager dialogueManager;
 
-    public GameObject popupText;
+/////////////////////////////////////////////////////
+    public GameObject popupTextObject;
+    public Text popupText;
     public GameObject popupImage;
     public GameObject BinaryButton;
     public GameObject TripleButton;
@@ -34,6 +42,7 @@ public class Popup : MonoBehaviour {
     }
 
     private popupState currentState;
+    private currentDescriptionState descriptionState;
 
     ///////////////////////////
 
@@ -82,6 +91,7 @@ public class Popup : MonoBehaviour {
         whiteStarBtn.GetComponent<Button>().onClick.AddListener(close);
         blueStarBtn.GetComponent<Button>().onClick.AddListener(close);
         yellowStarBtn.GetComponent<Button>().onClick.AddListener(close);
+
         Exit.GetComponent<Button>().onClick.AddListener(() => {
             gameObject.SetActive(false);
         });
@@ -102,7 +112,7 @@ public class Popup : MonoBehaviour {
     public void switchState (popupState State) {
         switch(State) {
             case popupState.binaryChoice:
-                popupText.SetActive(true);
+                popupTextObject.SetActive(true);
                 popupImage.SetActive(true);
                 BinaryButton.SetActive(true);
                 TripleButton.SetActive(false);
@@ -110,7 +120,7 @@ public class Popup : MonoBehaviour {
                 amountOfStar.SetActive(false);
                 break;
             case popupState.description:
-                popupText.SetActive(true);
+                popupTextObject.SetActive(true);
                 popupImage.SetActive(true);
                 BinaryButton.SetActive(false);
                 TripleButton.SetActive(false);
@@ -118,12 +128,13 @@ public class Popup : MonoBehaviour {
                 amountOfStar.SetActive(false);
                 break;
             case popupState.tripletChoice:
-                popupText.SetActive(true);
+                popupTextObject.SetActive(true);
                 popupImage.SetActive(false);
                 BinaryButton.SetActive(false);
                 TripleButton.SetActive(true);
                 OKButton.SetActive(false);
                 amountOfStar.SetActive(true);
+                
                 break;
         }
         currentState = State;
@@ -143,12 +154,15 @@ public class Popup : MonoBehaviour {
                 gameObject.SetActive(false);
                 break;
             case "whiteStarBuyBtn":
+                descriptionState = currentDescriptionState.whenBoughtStar;
                 WhiteCallback?.Invoke();
                 break;
             case "yellowStarBuyBtn":
+                descriptionState = currentDescriptionState.whenBoughtStar;
                 YellowCallback?.Invoke();
                 break;
             case "blueStarBuyBtn":
+                descriptionState = currentDescriptionState.whenBoughtStar;
                 BlueCallback?.Invoke();
                 break;
             case "plus":
@@ -160,6 +174,7 @@ public class Popup : MonoBehaviour {
     }
 
     public void callNextPopup() {
+        choosePopupMessage();
         switchState(popupState.description);
     }
 
@@ -208,6 +223,10 @@ public class Popup : MonoBehaviour {
 
         yield return new WaitForSeconds(2f);
         toastMessage.gameObject.SetActive(false);
+    }
+
+    void choosePopupMessage ( ) {
+        popupText.text = dialogueManager.chooseMessage(descriptionState);
     }
 
 }

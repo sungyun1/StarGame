@@ -134,7 +134,6 @@ public class Popup : MonoBehaviour {
                 TripleButton.SetActive(true);
                 OKButton.SetActive(false);
                 amountOfStar.SetActive(true);
-                
                 break;
         }
         currentState = State;

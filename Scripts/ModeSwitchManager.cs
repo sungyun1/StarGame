@@ -28,7 +28,7 @@ public class ModeSwitchManager : UI_Interface
     private SpecificMode shop;
     private SpecificMode HomeLeft;
     private SpecificMode HomeRight;
-    private Node currentNode;
+    public Node currentNode;
     private Node destination;
 
     //////////////////////////////////////// 모션

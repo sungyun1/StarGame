@@ -7,6 +7,8 @@ public class StrategyBuilder : MonoBehaviour {
     public CheckConditionStrategy build (string str) 
     {
         switch(str) {
+            case "CSH":
+
             case "BWS":
                 return new BuyStarConditionStrategy(
                     manager
@@ -18,7 +20,7 @@ public class StrategyBuilder : MonoBehaviour {
             case "NOT":
                 return new NextStepStrategy();
             default: 
-                throw new Exception("unexpected triplet code : conditionsNeedToCheck");
+                return new NextStepStrategy();
         }
     }
 }

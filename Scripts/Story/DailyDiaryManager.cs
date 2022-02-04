@@ -21,6 +21,7 @@ public class DailyDiaryManager : UI_Interface
     //////////////// methods ///////////////////
 
     void Awake() {
+        gameObject.SetActive(false);
         CSVReader.setFileLocation("Info/diaryContext.csv");
         diaryContext = CSVReader.parse();
         showTodayDiary();

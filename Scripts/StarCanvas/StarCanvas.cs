@@ -11,7 +11,7 @@ public class StarGroup {
 
 // 별자리는 특정 별 개수가 임의의 개수만큼 있을 때 , 캐릭터가 랜덤으로 생성되는 걸로~~
 
-public class StarCanvas : MonoBehaviour
+public class StarCanvas : popupClient
 {
     public GameObject gameObjectManager;
     public ResourceManager gameResource;
@@ -44,14 +44,12 @@ public class StarCanvas : MonoBehaviour
 
     private Vector3 coefficient = new Vector3(0.21f, 0.25f, 0);
 
-    public event Action openYesOrNoPopup;
-
     private Vector3 mousePos;
 
 //////////////////////////// 필요한 함수
 
     void Awake() {
-        popupController.finished += createCharactorFromData;
+        popupController.finished += afterPopup;
         starAnalyzer.setStarGroup(currentStarGroup);
     }
 
@@ -81,6 +79,18 @@ public class StarCanvas : MonoBehaviour
         else if (Input.GetMouseButtonUp(0)) {
             amountOfStarInBuffer = 0;
         }
+    }
+
+    public void onCreateCharactorButtonClicked () {
+        beforePopup("binary");
+    }
+
+    public override void beforePopup(string type) {
+        popupController.openSpecificTypeOfPopup(type);
+    }
+
+    public override void afterPopup() {
+        createCharactorFromData();
     }
 
     void findStarExistAtMousePoint (Vector3 mousePos, out Star result) {
@@ -134,15 +144,11 @@ public class StarCanvas : MonoBehaviour
 
             else if (amountOfStarInBuffer == 1) 
             {
-                    StarData item = new StarData();
-                    item.index = entity.index;
+                    StarData item = entity.starToStarData();
                     item.position = entity.transform.position;
-                    item.starType = entity.type;
 
-                    StarData buf = new StarData();
-                    buf.index = buffer.index;
+                    StarData buf = buffer.starToStarData();
                     buf.position = buffer.transform.position;
-                    buf.starType = buffer.type;
 
                     starAnalyzer.addStarToGroup(buf, item);
                     drawLine(buf.position, item.position); 
@@ -165,7 +171,6 @@ public class StarCanvas : MonoBehaviour
 
     public void createCharactorFromData ()
     {
-
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
         
             pool.chooseTypeOfPool("line");
@@ -199,15 +204,8 @@ public class StarCanvas : MonoBehaviour
                 currentStarGroup.stargroup.Clear();
                 diary.isCharactorFound[ch.charactorID] = true;
 
-                showNextPopup();
+                popupController.openSpecificTypeOfPopup("description");
             }
-            
-        }
-    }
-
-    public void onCharactorCreateButtonClicked () {
-        if (openYesOrNoPopup != null) {
-            openYesOrNoPopup();
         }
     }
 

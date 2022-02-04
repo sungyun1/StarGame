@@ -26,26 +26,29 @@ public class popUpController : MonoBehaviour
         popUpQuestions = new Dictionary<string, string>();
 
         popupScript = popup.GetComponent<Popup>();
-
-        // 액션 등록 구간
-        gameCanvas.openYesOrNoPopup += openYesOrNo;
-        gameCanvas.showNextPopup += popupScript.callNextPopup;
-
-        gameShop.showResultPopup += popupScript.callNextPopup;
     }
 
     void Start() {
         popup.SetActive(false);
     }
 
-    public void openYesOrNo() {
-        popupScript.switchState(Popup.popupState.binaryChoice);
-        popup.SetActive(true);
-    }
-
-    public void openTripleChoice () {
-        popupScript.switchState(Popup.popupState.tripletChoice);
-        popup.SetActive(true);
+    public void openSpecificTypeOfPopup (string type) {
+        switch (type) {
+            case "binary":
+                popupScript.switchState(Popup.popupState.binaryChoice);
+                break;
+            case "triplet":
+                popupScript.switchState(Popup.popupState.tripletChoice);
+                break;
+            case "description":
+                popupScript.switchState(Popup.popupState.description);
+                break;
+            default:
+                throw new Exception("state of Popup is not allocated");
+        }
+        if (popup.activeSelf != true) {
+            popup.SetActive(true);
+        }
     }
 
     public void openToastMessage (string message) {

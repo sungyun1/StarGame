@@ -19,6 +19,7 @@ public class TutorialManager : MonoBehaviour
     public Boy boy;
     public Telescope telescope;
     public GameObject maskingPanel;
+    public popUpController popUpController;
 
     //////////////////////////////// 명령 제어기
     public StrategyBuilder builder;
@@ -49,6 +50,7 @@ public class TutorialManager : MonoBehaviour
         input.onInteract += onTap;
         popup.OKPressed += togglePopupInteractionFactor;
 
+        // popUpController.finished += togglePopupInteractionFactor;
         // startTutorial();
     }
 

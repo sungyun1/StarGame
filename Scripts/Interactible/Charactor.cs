@@ -13,5 +13,9 @@ public class Charactor : Entity {
         this.type = type;
         this.charactorIndex = charactorIndex;
     }
+
+    public CharactorData charactorToCharactorData() {
+        return new CharactorData(name, type, charactorIndex); 
+    }
 }
 

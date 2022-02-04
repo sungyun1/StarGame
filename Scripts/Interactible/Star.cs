@@ -14,4 +14,11 @@ public class Star : Entity
         print(this.index);
     }
 
+    public StarData starToStarData () {
+        StarData newData = new StarData();
+        newData.index = index;
+        newData.starType = type;
+        return newData;
+    }
+
 }

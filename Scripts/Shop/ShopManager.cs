@@ -22,7 +22,7 @@ public class ShopManager : MonoBehaviour
     
     public void onButtonClick() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        gameShop.chooseBehaviourWithKeyword(buttonName);
+        gameShop.beforePopup(buttonName);
     }
     
 

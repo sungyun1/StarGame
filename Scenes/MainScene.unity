@@ -5051,6 +5051,7 @@ GameObject:
   - component: {fileID: 857938824}
   - component: {fileID: 857938828}
   - component: {fileID: 857938827}
+  - component: {fileID: 857938829}
   m_Layer: 5
   m_Name: StarCanvas
   m_TagString: Untagged
@@ -5171,6 +5172,20 @@ MonoBehaviour:
   diary: {fileID: 1650468627}
   popupController: {fileID: 1971758969}
   charactorBuilder: {fileID: 857938827}
+  pool: {fileID: 1971758971}
+  LineFolder: {fileID: 663383990}
+--- !u!114 &857938829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857938822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89656089551bd8644956ba47eddcf82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   pool: {fileID: 1971758971}
   LineFolder: {fileID: 663383990}
 --- !u!1 &863046955
@@ -9069,6 +9084,7 @@ MonoBehaviour:
   boy: {fileID: 1256028949}
   telescope: {fileID: 605278972}
   maskingPanel: {fileID: 1674202364}
+  popUpController: {fileID: 1971758969}
   builder: {fileID: 1567443724}
   chooser: {fileID: 1567443725}
 --- !u!114 &1567443721
@@ -12336,7 +12352,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 857938828}
         m_TargetAssemblyTypeName: StarCanvas, Assembly-CSharp
-        m_MethodName: onCharactorCreateButtonClicked
+        m_MethodName: onCreateCharactorButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

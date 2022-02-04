@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class Shop : MonoBehaviour
+public class Shop : popupClient
 {
     
     // 필요한 외부 오브젝트
@@ -23,8 +23,6 @@ public class Shop : MonoBehaviour
     // 내부 변수
     private Dictionary<string, int> price = new Dictionary<string, int>();
 
-    public event Action showResultPopup;
-
 
     ///////////////////////////
 
@@ -40,25 +38,12 @@ public class Shop : MonoBehaviour
         popupController.finished += afterPopup;
     }
 
-    public void chooseBehaviourWithKeyword (string name) {
-        switch (name) {
-            case "buyStarBtn":
-                currentStrategy = buyStarStrategy;
-                break;
-            case "gatchaBtn":
-                currentStrategy = startGatchaStrategy;
-                break;
-            case "upgradeBoyBtn":
-                currentStrategy = upgradeBoyStrategy;
-                break;
-            default:
-                break;
-        }
-
+    public override void beforePopup(string popupTypeName) {
+        chooseCurrentStrategyWithKeyword(popupTypeName);
         currentStrategy.openPopupUsing( popupController );
     }
-    
-    public void afterPopup () {
+
+    public override void afterPopup () {
 
         string keyword = popupController.popupResult;
         int amount = popupController.detailPopupResult;
@@ -71,7 +56,7 @@ public class Shop : MonoBehaviour
                 if (gameResource.gameData.amountOfStarDust >= priceOfProduct ) {
                     currentStrategy.buy( keyword , pool );
                     gameResource.onBuyStar( keyword , priceOfProduct );
-                    showResultPopup();
+                    popupController.openSpecificTypeOfPopup("description");
                 }
                 else {
                     popupController.openToastMessage("돈이 부족합니다");
@@ -79,6 +64,22 @@ public class Shop : MonoBehaviour
                 }
             }
             
+        }
+    }
+
+    public void chooseCurrentStrategyWithKeyword (string name) {
+        switch (name) {
+            case "buyStarBtn":
+                currentStrategy = buyStarStrategy;
+                break;
+            case "gatchaBtn":
+                currentStrategy = startGatchaStrategy;
+                break;
+            case "upgradeBoyBtn":
+                currentStrategy = upgradeBoyStrategy;
+                break;
+            default:
+                break;
         }
     }
 
@@ -103,7 +104,7 @@ class BuyStarStrategy : Strategy {
     }
 
     public override void openPopupUsing( popUpController popup  ) {
-        popup.openTripleChoice();
+        popup.openSpecificTypeOfPopup("triplet");
     }
 
     public override void buy(string type, gameObjectManager pool) {

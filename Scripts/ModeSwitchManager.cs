@@ -10,8 +10,6 @@ public class ModeSwitchManager : UI_Interface
 
     public GameObject Canvas;
 
-    public GameObject Stars;
-
     /////////////////////// 카메라 위치
 
     private Vector3 camDownPos = new Vector3 (0, -8, -2.04f);

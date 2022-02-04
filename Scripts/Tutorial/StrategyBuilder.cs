@@ -26,7 +26,6 @@ public class StrategyBuilder : MonoBehaviour {
 }
 
 public interface CheckConditionStrategy {
-
     bool check();
 }
 

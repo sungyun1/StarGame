@@ -19,7 +19,6 @@ public class TutorialManager : MonoBehaviour
     public Boy boy;
     public Telescope telescope;
     public GameObject maskingPanel;
-    public popUpController popUpController;
 
     //////////////////////////////// 명령 제어기
     public StrategyBuilder builder;
@@ -50,23 +49,34 @@ public class TutorialManager : MonoBehaviour
         input.onInteract += onTap;
         popup.OKPressed += togglePopupInteractionFactor;
 
-        popUpController.finished += togglePopupInteractionFactor;
         startTutorial();
+    }
+
+    IEnumerator whenTap () {
+        yield return new WaitForEndOfFrame();
+        // 검사할 내용
+        if (currentStep.checkCondition()) {
+            goToNextStep();
+        }
+        else {
+            
+        }
     }
 
     void onTap () {
         if (gameObject.activeSelf) {
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
-                if (currentStep.checkCondition() && isPopupInteractionFinished) {
-                    togglePopupInteractionFactor();
-                    goToNextStep();
-                }
+                StartCoroutine(whenTap());
             }
             else {
                 goToNextStep();
             }
         }
+    }
+
+    void checkCurrentStepConditionSatisfied () {
+        print("check");
     }
 
     public void createListOfTutorial () {
@@ -95,9 +105,7 @@ public class TutorialManager : MonoBehaviour
     public void startTutorial() {
         gameObject.SetActive(true);
         currentStep = tutorialSteps[0];
-        gameMode.isMotionSwitchEnabled = false;
-        boy.isMotionSwitchEnabled = false;
-        telescope.isMotionSwitchEnabled = false;
+        setMoveMent(false);
         
         startStep();
     }
@@ -124,6 +132,12 @@ public class TutorialManager : MonoBehaviour
     public void toggleDialogueProcess(bool value) {
         maskingPanel.SetActive(value);
         tutorialPanel.SetActive(value);
+    }
+
+    public void setMoveMent(bool value) {
+        gameMode.isMotionSwitchEnabled = value;
+        boy.isMotionSwitchEnabled = value;
+        telescope.isMotionSwitchEnabled = value;
     }
 
     public void endTutorial() {

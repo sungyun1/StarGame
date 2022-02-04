@@ -47,36 +47,28 @@ public class TutorialManager : MonoBehaviour
         createListOfTutorial();
 
         input.onInteract += onTap;
-        popup.OKPressed += togglePopupInteractionFactor;
+        gameMode.checkEventForTutorial += togglePopupInteractionFactor;
+        popup.checkEventForTutorial += togglePopupInteractionFactor;
 
         startTutorial();
     }
 
-    IEnumerator whenTap () {
-        yield return new WaitForEndOfFrame();
-        // 검사할 내용
-        if (currentStep.checkCondition()) {
-            goToNextStep();
-        }
-        else {
-            
-        }
-    }
-
     void onTap () {
+        
         if (gameObject.activeSelf) {
+            
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
-                StartCoroutine(whenTap());
+                if (currentStep.checkCondition() && isPopupInteractionFinished) {
+                    togglePopupInteractionFactor();
+                    goToNextStep();
+                }
+                else {}
             }
             else {
                 goToNextStep();
             }
         }
-    }
-
-    void checkCurrentStepConditionSatisfied () {
-        print("check");
     }
 
     public void createListOfTutorial () {
@@ -142,9 +134,7 @@ public class TutorialManager : MonoBehaviour
 
     public void endTutorial() {
         gameObject.SetActive(false);
-        gameMode.isMotionSwitchEnabled = true;
-        boy.isMotionSwitchEnabled = true;
-        telescope.isMotionSwitchEnabled = true;
+        setMoveMent(true);
     }
 
     void togglePopupInteractionFactor () {

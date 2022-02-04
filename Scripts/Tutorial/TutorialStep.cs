@@ -8,6 +8,10 @@ public class TutorialStep {
 
     public CheckConditionStrategy strategy;
 
+    public void unlockMovementThatNeeds() {
+        
+    }
+
     public bool checkCondition () {
         if (strategy != null) {
             return strategy.check();

@@ -58,7 +58,7 @@ public class Popup : MonoBehaviour {
     private Callback YellowCallback = null;
     private Callback BlueCallback = null;
 
-    public event Action OKPressed;
+    public event Action checkEventForTutorial;
 
     void Awake() {
         switchState(popupState.tripletChoice);
@@ -198,7 +198,7 @@ public class Popup : MonoBehaviour {
     }
 
     public void onOK () {
-        OKPressed();
+        checkEventForTutorial();
         gameObject.SetActive(false);
     }
 

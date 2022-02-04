@@ -9084,7 +9084,6 @@ MonoBehaviour:
   boy: {fileID: 1256028949}
   telescope: {fileID: 605278972}
   maskingPanel: {fileID: 1674202364}
-  popUpController: {fileID: 1971758969}
   builder: {fileID: 1567443724}
   chooser: {fileID: 1567443725}
 --- !u!114 &1567443721
@@ -9161,6 +9160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1256028950}
+  gameMode: {fileID: 1971758967}
 --- !u!114 &1567443725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11668,7 +11668,6 @@ MonoBehaviour:
   isMotionLocked: 0
   Shop: {fileID: 1355598137}
   Canvas: {fileID: 857938822}
-  Stars: {fileID: 1981272455}
   isMotionSwitchEnabled: 1
 --- !u!114 &1971758968
 MonoBehaviour:

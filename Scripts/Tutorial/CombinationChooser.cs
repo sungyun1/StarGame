@@ -28,10 +28,10 @@ public class CombinationChooser : MonoBehaviour {
             case "MVH":
                 target += gameMode.returnToHome;
                 break;
-            case "NXT":
+            case "PRE":
                 break;
             default: 
-                throw new Exception("unexpected triplet code : actionsNeedToDo");
+                break;
         }
     }
 

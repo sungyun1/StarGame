@@ -19,6 +19,7 @@ public class TutorialManager : MonoBehaviour
     public Boy boy;
     public Telescope telescope;
     public GameObject maskingPanel;
+
     
     //////////////////////////////// 명령 제어기
 
@@ -48,6 +49,8 @@ public class TutorialManager : MonoBehaviour
         input.onInteract += onTap;
         gameMode.checkEventForTutorial += determineIsConditionSatisfied;
         popup.checkEventForTutorial += determineIsConditionSatisfied;
+        boy.checkEventForTutorial += determineIsConditionSatisfied;
+        telescope.checkEventForTutorial += determineIsConditionSatisfied;
 
         startTutorial();
     }

@@ -58,3 +58,33 @@ public class checkCurrentStatusStrategy : CheckConditionStrategy {
         else return false;
     }
 }
+
+public class checkDiaryStrategy : CheckConditionStrategy {
+    private DiaryManager diaryManager;
+
+    public checkDiaryStrategy (GameObject obj) {
+        diaryManager = obj.GetComponent<DiaryManager>();
+    }
+
+    public bool check() {
+        if (diaryManager.isDiaryOpen) {
+            return true;
+        }
+        else return false;
+    }
+}
+
+public class checkUpgradeStrategy : CheckConditionStrategy {
+    private UniverseUpgradeManager Manager;
+
+    public checkUpgradeStrategy (GameObject obj) {
+        Manager = obj.GetComponent<UniverseUpgradeManager>();
+    }
+
+    public bool check() {
+        if (Manager.isUniverseUpgradeOpen) {
+            return true;
+        }
+        else return false;
+    }
+}

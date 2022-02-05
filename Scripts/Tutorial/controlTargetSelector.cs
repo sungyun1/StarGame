@@ -11,11 +11,15 @@ public class controlTargetSelector : MonoBehaviour {
     public GameObject Boy; // resourceManager
     public GameObject Telescope;
 
+    public GameObject shop;
+    public GameObject Diary;
+
     //////////////////////////////////////
 
     private bool[] onlyMode = new bool[] {true, false, false};
-    private bool[] onlyResource = new bool[] {false, true, false};
-    private bool[] onlyUpgrade = new bool[] {false, false, true};
+    private bool[] onlyBoy = new bool[] {false, true, false};
+    private bool[] onlyTelescope = new bool[] {false, false, true};
+    private bool[] nothing = new bool[] {false, false, false};
 
     ///////////////////////////////////////
 
@@ -33,11 +37,13 @@ public class controlTargetSelector : MonoBehaviour {
                 break;
             case "CSD": 
                 step.isThereConditionToCheck = true;
-                step.objectToCheck = null;
+                step.objectToCheck = onlyBoy;
+                step.strategy = new checkDiaryStrategy(Diary);
                 break;
             case "CSU": 
                 step.isThereConditionToCheck = true;
-                step.objectToCheck = null;
+                step.objectToCheck = nothing;
+                step.strategy = new checkUpgradeStrategy(Telescope);
                 break;
             case "CSH": 
                 step.isThereConditionToCheck = true;
@@ -46,21 +52,24 @@ public class controlTargetSelector : MonoBehaviour {
                 break;
             case "BWS":
                 step.isThereConditionToCheck = true;
-                step.objectToCheck = null;
+                step.objectToCheck = nothing;
                 step.strategy = new BuyStarConditionStrategy(Boy);
                 break;
             case "CSG":
                 step.isThereConditionToCheck = true;
-                step.objectToCheck = null;
+                step.objectToCheck = nothing;
                 step.strategy = new createCharactorStrategy(Boy);
                 break;
-            case "NOT":
+            case "PRE":
                 step.isThereConditionToCheck = false;
                 step.objectToCheck = null;
                 step.strategy = new NextStepStrategy();
                 break;
             default: 
-                throw new Exception("unauthorized triplet code : selectTargetToUnlcok");
+                step.isThereConditionToCheck = false;
+                step.objectToCheck = null;
+                step.strategy = new NextStepStrategy();
+                break;
         }
     }
 }

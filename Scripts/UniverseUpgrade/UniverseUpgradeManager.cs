@@ -22,13 +22,17 @@ public class UniverseUpgradeManager : UI_Interface
     private Vector3 openPos = new Vector3 ( 1080 / 2 , 1920 / 2, 0 );
     private Vector3 closePos = new Vector3 ( 1080 * 1.5f, 1920 / 2, 0);
 
+    public bool isUniverseUpgradeOpen = false;
+
     public void openUniverseUpgradeMenu () {
+        isUniverseUpgradeOpen = true;
         StartCoroutine(MoveObject(universe.gameObject, openPos));
         gameMode.isMotionSwitchEnabled = false;
         universe.isMotionLocked = false;
     }
 
     public void closeUniverseUpgradeMenu () {
+        isUniverseUpgradeOpen = false;
         StartCoroutine(MoveObject(universe.gameObject, closePos));
         gameMode.isMotionSwitchEnabled = true;
         universe.isMotionLocked = true;

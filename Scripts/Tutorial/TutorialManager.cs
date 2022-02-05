@@ -19,11 +19,12 @@ public class TutorialManager : MonoBehaviour
     public Boy boy;
     public Telescope telescope;
     public GameObject maskingPanel;
-
+    
     //////////////////////////////// 명령 제어기
-    public StrategyBuilder builder;
 
     public CombinationChooser chooser;
+
+    public controlTargetSelector selector;
 
     ///////////////////////// CSV parser
 
@@ -42,13 +43,11 @@ public class TutorialManager : MonoBehaviour
 
     public void Awake() {
 
-        // gameObject.SetActive(false);
-
         createListOfTutorial();
 
         input.onInteract += onTap;
-        gameMode.checkEventForTutorial += togglePopupInteractionFactor;
-        popup.checkEventForTutorial += togglePopupInteractionFactor;
+        gameMode.checkEventForTutorial += determineIsConditionSatisfied;
+        popup.checkEventForTutorial += determineIsConditionSatisfied;
 
         startTutorial();
     }
@@ -59,11 +58,7 @@ public class TutorialManager : MonoBehaviour
             
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
-                if (currentStep.checkCondition() && isPopupInteractionFinished) {
-                    togglePopupInteractionFactor();
-                    goToNextStep();
-                }
-                else {}
+                determineIsConditionSatisfied();
             }
             else {
                 goToNextStep();
@@ -79,15 +74,11 @@ public class TutorialManager : MonoBehaviour
         int length = fileContent.Count;
 
         for (int i = 0; i < length; i++) {
-            TutorialStep newTutorialStep = new TutorialStep();
-
             var item = fileContent[i];
+
+            TutorialStep newTutorialStep = new TutorialStep();
             newTutorialStep.dialogue = item[1];
-
-            newTutorialStep.strategy = builder.build(item[2]);
-            if (item[2] != "NOT") newTutorialStep.isThereConditionToCheck = true;
-            else newTutorialStep.isThereConditionToCheck = false;
-
+            selector.selectTargetToOperate(item[2], ref newTutorialStep);
             chooser.chooseCombinationOfAction(item[3], ref newTutorialStep.actionsNeedToDo);
 
             tutorialSteps.Add(newTutorialStep);
@@ -97,9 +88,9 @@ public class TutorialManager : MonoBehaviour
     public void startTutorial() {
         gameObject.SetActive(true);
         currentStep = tutorialSteps[0];
-        setMoveMent(false);
+        lockMovementExcept(new bool[] {false , false , false});
         
-        startStep();
+        processCurrentStep();
     }
 
     public void goToNextStep () {
@@ -110,15 +101,21 @@ public class TutorialManager : MonoBehaviour
         }
         else {
             currentStep = tutorialSteps[index];
+            lockMovementExcept(currentStep.objectToCheck);
             toggleDialogueProcess(true);
-            startStep();
+            processCurrentStep();
         }
     }
 
     //////////////////////////////////////////////////////////
 
-    public void startStep() {
+    public void processCurrentStep() {
         tutorialText.text = currentStep.dialogue;
+    }
+
+    public void endTutorial() {
+        gameObject.SetActive(false);
+        lockMovementExcept(new bool[] {true, true, true});
     }
 
     public void toggleDialogueProcess(bool value) {
@@ -126,15 +123,20 @@ public class TutorialManager : MonoBehaviour
         tutorialPanel.SetActive(value);
     }
 
-    public void setMoveMent(bool value) {
-        gameMode.isMotionSwitchEnabled = value;
-        boy.isMotionSwitchEnabled = value;
-        telescope.isMotionSwitchEnabled = value;
+    public void lockMovementExcept(bool[] value) {
+        if (value != null) {
+            gameMode.isMotionSwitchEnabled = value[0];
+            boy.isMotionSwitchEnabled = value[1];
+            telescope.isMotionSwitchEnabled = value[2];
+        }
+        else {}
     }
 
-    public void endTutorial() {
-        gameObject.SetActive(false);
-        setMoveMent(true);
+
+    void determineIsConditionSatisfied () {
+        if (currentStep.checkCondition()) {
+            goToNextStep();
+        }
     }
 
     void togglePopupInteractionFactor () {

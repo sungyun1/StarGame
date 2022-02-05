@@ -7,10 +7,7 @@ public class TutorialStep {
     public bool isThereConditionToCheck = false;
 
     public CheckConditionStrategy strategy;
-
-    public void unlockMovementThatNeeds() {
-        
-    }
+    public bool[] objectToCheck;
 
     public bool checkCondition () {
         if (strategy != null) {

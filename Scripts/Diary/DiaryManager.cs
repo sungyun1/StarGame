@@ -14,12 +14,13 @@ public class DiaryManager : UI_Interface
     private Vector3 closePos = new Vector3 ( 1080 * 1.5f, 1920 / 2, 0);
 
     private bool isMoving = false;
-    public bool isDiaryOpen = false;
+    public bool isGeneralPageOpen = false;
+    public bool isSpecificPageOpen = false;
 
     public void onOpenButtonClicked () {
         // Boy 가 눌렀을 때
         DiaryCanvas.GetComponent<Diary>().fillGeneralPage();
-        isDiaryOpen = true;
+        isGeneralPageOpen = true;
 
         if (isMotionLocked == false) {
             StartCoroutine(MoveObject(generalPage, openPos));
@@ -27,15 +28,22 @@ public class DiaryManager : UI_Interface
     }
 
     public void onCloseButtonClicked () {
-        isDiaryOpen = false;
         if (isMotionLocked == false) {
             GameObject obj = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+            if (obj.name == "generalPage") {
+                isGeneralPageOpen = false;
+            }
+            else if (obj.name == "detailPage") {
+                isSpecificPageOpen = false;
+            }
             StartCoroutine(MoveObject(obj, closePos));
         }
         
     }
 
     public void onSpecificCharactorChosen () {
+
+        isSpecificPageOpen = true;
 
         GameObject currentBtn = EventSystem.current.currentSelectedGameObject;
         string buttonNo = currentBtn.name.Substring(6,1);

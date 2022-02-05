@@ -61,15 +61,27 @@ public class checkCurrentStatusStrategy : CheckConditionStrategy {
 
 public class checkDiaryStrategy : CheckConditionStrategy {
     private DiaryManager diaryManager;
+    private string page;
 
-    public checkDiaryStrategy (GameObject obj) {
+    public checkDiaryStrategy (GameObject obj, string pageType) {
         diaryManager = obj.GetComponent<DiaryManager>();
+        page = pageType;
     }
 
     public bool check() {
-        if (diaryManager.isDiaryOpen) {
-            return true;
+        if (page == "general") {
+            if (diaryManager.isGeneralPageOpen) {
+                return true;
+            }
+            else return false;
         }
+        else if (page == "detail") {
+            if (diaryManager.isSpecificPageOpen) {
+                return true;
+            }
+            else return false;
+        }
+        
         else return false;
     }
 }

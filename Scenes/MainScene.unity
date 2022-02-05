@@ -9085,7 +9085,6 @@ MonoBehaviour:
   boy: {fileID: 1256028949}
   telescope: {fileID: 605278972}
   maskingPanel: {fileID: 1674202364}
-  diary: {fileID: 1650468627}
   chooser: {fileID: 1567443725}
   selector: {fileID: 1567443726}
 --- !u!114 &1567443721
@@ -9511,7 +9510,8 @@ MonoBehaviour:
   DiaryCanvas: {fileID: 1650468625}
   generalPage: {fileID: 1539685039}
   specificPage: {fileID: 1513153266}
-  isDiaryOpen: 0
+  isGeneralPageOpen: 0
+  isSpecificPageOpen: 0
 --- !u!114 &1650468627
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ public class controlTargetSelector : MonoBehaviour {
             case "CSD": 
                 step.isThereConditionToCheck = true;
                 step.objectToCheck = onlyBoy;
-                step.strategy = new checkDiaryStrategy(Diary);
+                step.strategy = new checkDiaryStrategy(Diary, "general");
                 break;
             case "CSU": 
                 step.isThereConditionToCheck = true;
@@ -59,6 +59,11 @@ public class controlTargetSelector : MonoBehaviour {
                 step.isThereConditionToCheck = true;
                 step.objectToCheck = nothing;
                 step.strategy = new createCharactorStrategy(Boy);
+                break;
+            case "ODP":
+                step.isThereConditionToCheck = true;
+                step.objectToCheck = nothing;
+                step.strategy = new checkDiaryStrategy(Diary, "detail");
                 break;
             case "PRE":
                 step.isThereConditionToCheck = false;

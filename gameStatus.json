@@ -1,1 +1,15 @@
-{"amountOfStarDust":2900,"amountOfGem":500,"whiteStarNum":3,"yellowStarNum":34,"blueStarNum":7,"normalStarGroupCreationLevel":11,"rareStarGroupCreationLevel":18,"epicStarGroupCreationLevel":11,"telescopeLevel":0,"playerLevel":0,"myCharactors":[],"stargroups":[],"currentDate":4}
+{
+    "amountOfStarDust": 2900,
+    "amountOfGem": 500,
+    "whiteStarNum": 0,
+    "yellowStarNum": 0,
+    "blueStarNum": 0,
+    "normalStarGroupCreationLevel": 11,
+    "rareStarGroupCreationLevel": 18,
+    "epicStarGroupCreationLevel": 11,
+    "telescopeLevel": 0,
+    "playerLevel": 0,
+    "myCharactors": [],
+    "stargroups": [],
+    "currentDate": 1
+}

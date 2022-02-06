@@ -1,15 +1,71 @@
 {
-    "amountOfStarDust": 2900,
+    "amountOfStarDust": 2300,
     "amountOfGem": 500,
-    "whiteStarNum": 0,
+    "whiteStarNum": 3,
     "yellowStarNum": 0,
     "blueStarNum": 0,
-    "normalStarGroupCreationLevel": 11,
+    "normalStarGroupCreationLevel": 12,
     "rareStarGroupCreationLevel": 18,
     "epicStarGroupCreationLevel": 11,
     "telescopeLevel": 0,
     "playerLevel": 0,
-    "myCharactors": [],
-    "stargroups": [],
+    "myCharactors": [
+        {
+            "name": "러너",
+            "type": "normal",
+            "charactorID": 1,
+            "position": {
+                "x": -2.0,
+                "y": -2.891798973083496
+            }
+        }
+    ],
+    "stargroups": [
+        {
+            "charactorID": 1,
+            "starGroup": [
+                {
+                    "connections": [
+                        {
+                            "position": {
+                                "x": -1.0767021179199219,
+                                "y": 8.948010444641114
+                            },
+                            "starType": "white",
+                            "index": 0
+                        },
+                        {
+                            "position": {
+                                "x": -0.6141555309295654,
+                                "y": 10.407648086547852
+                            },
+                            "starType": "white",
+                            "index": 1
+                        }
+                    ]
+                },
+                {
+                    "connections": [
+                        {
+                            "position": {
+                                "x": -0.6141555309295654,
+                                "y": 10.407648086547852
+                            },
+                            "starType": "white",
+                            "index": 1
+                        },
+                        {
+                            "position": {
+                                "x": 1.254338264465332,
+                                "y": 7.332718849182129
+                            },
+                            "starType": "white",
+                            "index": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "currentDate": 1
 }

@@ -43,7 +43,7 @@ public static class CSVReader
                     if (item != "") {
                         string tmp = item.Replace(":", ",").Replace("\"", "");
                         data[currentIndex].Add(tmp);
-                        Debug.Log(tmp);
+                        //Debug.Log(tmp);
                     }
                 }
                 currentIndex++;

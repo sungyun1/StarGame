@@ -11,6 +11,8 @@ public class TutorialManager : MonoBehaviour
 
     ///////////////////// 사용해야 하는 기능
 
+    public screenCaptureManager screenShot;
+
     public Popup popup;
     public ModeSwitchManager gameMode;
     public GameObject tutorialPanel;
@@ -59,7 +61,7 @@ public class TutorialManager : MonoBehaviour
 
     void onTap () {
         
-        if (gameObject.activeSelf) {
+        if (gameObject.activeSelf == true) {
             
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
@@ -119,10 +121,11 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void endTutorial() {
-        gameObject.SetActive(false);
+        
         lockMovementExcept(new bool[] {true, true, true});
+        screenShot.willTakeScreenShot = true;
+        gameObject.SetActive(false);
     }
-
     public void toggleDialogueProcess(bool value) {
         maskingPanel.SetActive(value);
         tutorialPanel.SetActive(value);

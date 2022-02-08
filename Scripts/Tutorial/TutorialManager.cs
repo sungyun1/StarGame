@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour
         boy.checkEventForTutorial += determineIsConditionSatisfied;
         telescope.checkEventForTutorial += determineIsConditionSatisfied;
 
-        startTutorial();
+        // startTutorial();
     }
 
     void onTap () {
@@ -123,7 +123,7 @@ public class TutorialManager : MonoBehaviour
     public void endTutorial() {
         
         lockMovementExcept(new bool[] {true, true, true});
-        screenShot.willTakeScreenShot = true;
+        // screenShot.willTakeScreenShot = true;
         gameObject.SetActive(false);
     }
     public void toggleDialogueProcess(bool value) {

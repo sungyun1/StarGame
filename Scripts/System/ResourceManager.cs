@@ -89,6 +89,11 @@ public class ResourceManager : MonoBehaviour
         gameData = JsonUtility.FromJson<Data>(dataFromFile);
     }
 
+    public void onGatherStarDust (int amount) {
+        gameData.amountOfStarDust += amount;
+        saveCurrentGameInfo();
+    }
+
     public void onBuyStar(string starType, int price) {
         gameData.amountOfStarDust -= price;
         switch (starType) {

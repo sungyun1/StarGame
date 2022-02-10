@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour
         boy.checkEventForTutorial += determineIsConditionSatisfied;
         telescope.checkEventForTutorial += determineIsConditionSatisfied;
 
-        startTutorial();
+        // startTutorial();
     }
 
     void onTap () {

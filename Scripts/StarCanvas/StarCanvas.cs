@@ -163,6 +163,8 @@ public class StarCanvas : popupClient
 
         GameObject line = pool.chooseTypeOfPool("line").pullObjectFromPoolTo(LineFolder);
         lr = line.GetComponent<LineRenderer>();
+        lr.startWidth = 0.05f;
+        lr.endWidth = 0.05f;
         lr.positionCount += 1;
         lr.SetPosition(0, fixed1);
         lr.positionCount += 1;

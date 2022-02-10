@@ -26,7 +26,7 @@ public class curveGenerator : MonoBehaviour
         controlObjects[1] = control[1].transform.position;
     }
 
-    void Start () {
+    public void drawCurrentSpaceMapProgress () {
         StartCoroutine(drawBezierCurve(3, start.transform.position, end.transform.position, controlObjects));
     }
 
@@ -52,7 +52,7 @@ public class curveGenerator : MonoBehaviour
             currentIndex += 1;
 
             if (currentIndex % 2 == 0) {
-                lineImageDrawer.drawLine(middlePoint, previous);
+                lineImageDrawer.drawLine(previous, middlePoint);
                 Debug.DrawLine(middlePoint, previous, Color.white, 1000f);
             } else {
                 previous = middlePoint;

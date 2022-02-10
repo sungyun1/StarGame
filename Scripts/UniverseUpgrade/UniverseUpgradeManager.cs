@@ -15,6 +15,8 @@ public class UniverseUpgradeManager : UI_Interface
     public GameObject rareUniverse;
     public GameObject epicUniverse;
 
+    public curveGenerator curve;
+
     public GameObject panel;
 
     //////////////////////////////////
@@ -42,6 +44,9 @@ public class UniverseUpgradeManager : UI_Interface
         chooseSpecificUniverse();
         StartCoroutine(MoveObject(DetailUniverse, openPos));
         StartCoroutine(Fade(panel, 0.5f));
+        while (isMotionLocked != false) {
+            curve.drawCurrentSpaceMapProgress();
+        }
     }
 
     public void closeSpecificPage () {

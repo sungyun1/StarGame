@@ -5,7 +5,7 @@ using UnityEngine;
 public class curveGenerator : MonoBehaviour
 {
 
-    public LineDrawer lineDrawer;
+    public LineImageDrawer lineImageDrawer;
 
     // number of points between start & end = 2 * (numOfLineSegment - 1)
     private int numOfLineSegment = 7;
@@ -52,7 +52,8 @@ public class curveGenerator : MonoBehaviour
             currentIndex += 1;
 
             if (currentIndex % 2 == 0) {
-                lineDrawer.drawLine(middlePoint, previous);
+                lineImageDrawer.drawLine(middlePoint, previous);
+                Debug.DrawLine(middlePoint, previous, Color.white, 1000f);
             } else {
                 previous = middlePoint;
             }

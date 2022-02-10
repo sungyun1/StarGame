@@ -8,6 +8,8 @@ public class gameObjectManager : MonoBehaviour
     // Start is called before the first frame update
     private Queue<GameObject> linePool = new Queue<GameObject>();
 
+    private Queue<GameObject> lineImagePool = new Queue<GameObject>();
+
     public Queue<GameObject> whiteStarPool = new Queue<GameObject>();
     private Queue<GameObject> blueStarPool = new Queue<GameObject>();
     private Queue<GameObject> yellowStarPool = new Queue<GameObject>();
@@ -17,6 +19,7 @@ public class gameObjectManager : MonoBehaviour
     ///////////////////////////////////////////////
 
     public GameObject linePrefab;
+    public GameObject lineImagePrefab;
     public GameObject whiteStarPrefab;
     public GameObject yellowStarPrefab;
     public GameObject blueStarPrefab;
@@ -24,10 +27,6 @@ public class gameObjectManager : MonoBehaviour
     private GameObject prefab;
 
     ///////////////////////////////////////////////////////
-
-    public CharactorBuilder builder;
-
-    // 메소드 체이닝
 
     public gameObjectManager chooseTypeOfPool (string type) {
 
@@ -47,6 +46,10 @@ public class gameObjectManager : MonoBehaviour
             case "blue":
                 currentPool = blueStarPool;
                 prefab = blueStarPrefab;
+                break;
+            case "lineImage":
+                currentPool = lineImagePool;
+                prefab = lineImagePrefab;
                 break;
             default:
                 break;

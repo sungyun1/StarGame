@@ -12,10 +12,13 @@ public class curveGenerator : MonoBehaviour
     private int numOfPoints;
     private float timeInterval;
     private float speedOfLine = 0.05f;
-    private Vector2 previous;
-    public GameObject start;
-    public GameObject end;
-    public GameObject[] control = new GameObject [2];
+
+    ////////////////////////////////////////////////////
+
+    private int currentStage = 4;
+    
+    public List<GameObject> planets = new List<GameObject>();
+    public List<GameObject> controlPoints = new List<GameObject>();
     public Vector2[] controlObjects = new Vector2 [2];
 
     void Awake() {
@@ -27,14 +30,22 @@ public class curveGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        controlObjects[0] = control[0].transform.position;
-        controlObjects[1] = control[1].transform.position;
-        StartCoroutine(drawBezierCurve(3, start.transform.position, end.transform.position, controlObjects));
+        for (int i = 0; i < currentStage; i++) {
+            controlObjects[0] = controlPoints[2 * i].transform.position;
+            controlObjects[1] = controlPoints[2 * i + 1].transform.position;
+            StartCoroutine(drawBezierCurve(3, i));
+            yield return new WaitForSeconds(1.5f);
+        }
+        
     }
 
-    public IEnumerator drawBezierCurve (int degree, Vector2 start, Vector2 end, Vector2[] controlPts) {
+    public IEnumerator drawBezierCurve (int degree, int stageNum) {
 
-        Vector2 middlePoint = start;
+        Vector2 startPt = planets[stageNum].transform.position;
+        Vector2 endPt = planets[stageNum + 1].transform.position;
+        Vector2[] controlPts = controlObjects;
+
+        Vector2 middlePoint = startPt;
         Vector2 previous = new Vector2(0, 0);
         float time = 0;
         float factor = 0;
@@ -45,10 +56,10 @@ public class curveGenerator : MonoBehaviour
             factor = 1 - time;
 
             if (degree == 2) {
-                middlePoint = secondBezierEquation(time, start, end, controlPts[0]);
+                middlePoint = secondBezierEquation(time, startPt, endPt, controlPts[0]);
             }
             else if (degree == 3) {
-                middlePoint = thridBezierEquation(time, start, end, controlPts);
+                middlePoint = thridBezierEquation(time, startPt, endPt, controlPts);
             }
 
             currentIndex += 1;

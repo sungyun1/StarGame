@@ -13,7 +13,6 @@ public class Data {
     public int whiteStarNum;
     public int yellowStarNum;
     public int blueStarNum;
-
     public int normalStarGroupCreationLevel = 2;
     public int rareStarGroupCreationLevel = 2;
     public int epicStarGroupCreationLevel = 2;
@@ -22,6 +21,10 @@ public class Data {
     public int telescopeLevel;
 
     public int playerLevel;
+
+    public int normalUniverseLevel = 0;
+    public int rareUniverseLevel = 0;
+    public int epicUniverseLevel = 0;
 
     // 캐릭터 관련
 
@@ -78,6 +81,9 @@ public class ResourceManager : MonoBehaviour
         gameData.epicStarGroupCreationLevel = 2;
         gameData.telescopeLevel = 1;
         gameData.playerLevel = 1;
+        gameData.normalUniverseLevel = 0;
+        gameData.rareUniverseLevel = 0;
+        gameData.epicUniverseLevel = 0;
         gameData.currentDate = 1;
         gameData.myCharactors.Clear();
         gameData.stargroups.Clear();
@@ -122,6 +128,11 @@ public class ResourceManager : MonoBehaviour
         gameData.playerLevel += 1;
         saveCurrentGameInfo();
     }
+
+    public void onUpgradeUniverse (string type) {
+        
+    }
+
 
     public void addCharactor(CharactorData chData) {
         gameData.myCharactors.Add(chData);

@@ -33,8 +33,6 @@ public class LineImageDrawer : MonoBehaviour {
 
         float angle = Vector2.Angle(directionVector, plane); // 라디안 값
         img.rotation = Quaternion.Euler(0, 0, angle);
-
-        print(img.anchoredPosition);
         
     }
 }

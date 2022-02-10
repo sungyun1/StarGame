@@ -15,7 +15,7 @@ public class curveGenerator : MonoBehaviour
 
     ////////////////////////////////////////////////////
 
-    private int currentStage = 4;
+    public int currentStage = 4;
     
     public List<GameObject> planets = new List<GameObject>();
     public List<GameObject> controlPoints = new List<GameObject>();

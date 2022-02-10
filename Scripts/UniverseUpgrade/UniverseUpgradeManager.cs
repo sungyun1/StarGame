@@ -19,6 +19,8 @@ public class UniverseUpgradeManager : UI_Interface
 
     public GameObject panel;
 
+    public ResourceManager gameResource;
+
     //////////////////////////////////
 
     private Vector3 openPos = new Vector3 ( 1080 / 2 , 1920 / 2, 0 );
@@ -57,16 +59,19 @@ public class UniverseUpgradeManager : UI_Interface
                 normalUniverse.SetActive(true);
                 rareUniverse.SetActive(false);
                 epicUniverse.SetActive(false);
+                curve.currentStage = gameResource.gameData.normalUniverseLevel;
                 break;
             case "rare":
                 normalUniverse.SetActive(false);
                 rareUniverse.SetActive(true);
                 epicUniverse.SetActive(false);
+                curve.currentStage = gameResource.gameData.rareUniverseLevel;
                 break;
             case "epic":
                 normalUniverse.SetActive(false);
                 rareUniverse.SetActive(false);
                 epicUniverse.SetActive(true);
+                curve.currentStage = gameResource.gameData.epicUniverseLevel;
                 break;
             default:
                 break;

@@ -10,7 +10,7 @@ public class LineImageDrawer : MonoBehaviour {
 
     private Vector2 coefficient = new Vector2(0.21f, 0.25f);
 
-    private Vector2 coefficient2 = new Vector2(-2705, -960);
+    private Vector2 coefficient2 = new Vector2(-540, -960);
     // 2670 960
 
     private Vector2 plane = new Vector2(1,0);

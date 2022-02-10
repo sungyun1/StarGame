@@ -44,9 +44,7 @@ public class UniverseUpgradeManager : UI_Interface
         chooseSpecificUniverse();
         StartCoroutine(MoveObject(DetailUniverse, openPos));
         StartCoroutine(Fade(panel, 0.5f));
-        while (isMotionLocked != false) {
-            curve.drawCurrentSpaceMapProgress();
-        }
+        StartCoroutine(curve.drawCurrentSpaceMapProgress());
     }
 
     public void closeSpecificPage () {

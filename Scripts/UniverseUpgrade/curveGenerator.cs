@@ -21,12 +21,14 @@ public class curveGenerator : MonoBehaviour
     void Awake() {
         numOfPoints = 2 * numOfLineSegment;
         timeInterval = 1f / ( numOfPoints + 1);
+    }
+
+    public IEnumerator drawCurrentSpaceMapProgress () { // 움직이고 난 후에 control pt를 잡아야 함.
+
+        yield return new WaitForSeconds(2f);
 
         controlObjects[0] = control[0].transform.position;
         controlObjects[1] = control[1].transform.position;
-    }
-
-    public void drawCurrentSpaceMapProgress () {
         StartCoroutine(drawBezierCurve(3, start.transform.position, end.transform.position, controlObjects));
     }
 
@@ -53,7 +55,7 @@ public class curveGenerator : MonoBehaviour
 
             if (currentIndex % 2 == 0) {
                 lineImageDrawer.drawLine(previous, middlePoint);
-                Debug.DrawLine(middlePoint, previous, Color.white, 1000f);
+                // Debug.DrawLine(middlePoint, previous, Color.white, 1000f);
             } else {
                 previous = middlePoint;
             }

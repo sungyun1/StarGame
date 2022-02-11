@@ -32,7 +32,11 @@ public class LineImageDrawer : MonoBehaviour {
         img.anchoredPosition = p1 + coefficient2;
 
         float angle = Vector2.Angle(directionVector, plane); // 라디안 값
-        img.rotation = Quaternion.Euler(0, 0, angle);
-        
+        img.rotation = Quaternion.Euler(0, 0, angle);        
+    }
+
+    public void eraseLine () {
+        pool.chooseTypeOfPool("lineImage");
+        pool.returnGroupOfObjectToPool(LineFolder);
     }
 }

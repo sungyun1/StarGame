@@ -56,7 +56,7 @@ public class Shop : popupClient
                 if (gameResource.gameData.amountOfStarDust >= priceOfProduct ) {
                     currentStrategy.buy( keyword , pool );
                     gameResource.onBuyStar( keyword , priceOfProduct );
-                    popupController.openSpecificTypeOfPopup("description");
+                    popupController.openSpecificTypeOfPopup("description", "별 구매가 완료되었습니다!");
                 }
                 else {
                     popupController.openToastMessage("돈이 부족합니다");
@@ -104,7 +104,7 @@ class BuyStarStrategy : Strategy {
     }
 
     public override void openPopupUsing( popUpController popup  ) {
-        popup.openSpecificTypeOfPopup("triplet");
+        popup.openSpecificTypeOfPopup("triplet", "별을 구매하시겠습니까?");
     }
 
     public override void buy(string type, gameObjectManager pool) {

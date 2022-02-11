@@ -36,7 +36,11 @@ public class curveGenerator : MonoBehaviour
             StartCoroutine(drawBezierCurve(3, i));
             yield return new WaitForSeconds(1.5f);
         }
-        
+    }
+
+    public IEnumerator eraseCurrentSpaceMapProgress () {
+        yield return new WaitForSeconds(0.1f);
+        lineImageDrawer.eraseLine();
     }
 
     public IEnumerator drawBezierCurve (int degree, int stageNum) {

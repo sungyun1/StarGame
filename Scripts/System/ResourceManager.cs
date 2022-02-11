@@ -130,7 +130,17 @@ public class ResourceManager : MonoBehaviour
     }
 
     public void onUpgradeUniverse (string type) {
-        
+        switch (type) {
+            case "normal":
+                gameData.normalUniverseLevel += 1;
+                break;
+            case "rare":
+                gameData.rareUniverseLevel += 1;
+                break;
+            case "epic":
+                gameData.epicUniverseLevel += 1;
+                break;
+        }
     }
 
 

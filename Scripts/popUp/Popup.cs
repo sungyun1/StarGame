@@ -198,7 +198,9 @@ public class Popup : MonoBehaviour {
     }
 
     public void onOK () {
+        print("ok");
         checkEventForTutorial();
+        print("ok");
         gameObject.SetActive(false);
     }
 

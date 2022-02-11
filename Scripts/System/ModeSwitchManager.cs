@@ -33,6 +33,8 @@ public class ModeSwitchManager : UI_Interface
 
     private bool isMotionFinished = true;
     public bool isMotionSwitchEnabled = true;
+
+    ////////////////////////////////// 튜토리얼
     public event Action checkEventForTutorial;
 
     //////////////////////////////////////////
@@ -79,19 +81,16 @@ public class ModeSwitchManager : UI_Interface
         if (isMotionSwitchEnabled) {
             if (typeofOperation == 1) { // slide up
                 onSlideUp();
-                checkEventForTutorial();
             } else if (typeofOperation == 2) { // slide down
                 onSlideDown();
-                checkEventForTutorial();
             }
             else if (typeofOperation == 3) { // slide right
                 onSlideRight();
-                checkEventForTutorial();
             }   
             else if (typeofOperation == 4) { // slide left 
                 onSlideLeft();
-                checkEventForTutorial();
             }
+            checkEventForTutorial();
         }
         
     }

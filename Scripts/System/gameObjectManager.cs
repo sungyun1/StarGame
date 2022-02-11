@@ -64,19 +64,30 @@ public class gameObjectManager : MonoBehaviour
     }
 
     public GameObject pullObjectFromPoolTo (GameObject parent) {
+        GameObject newObj;
         if (isQueueEmpty()) {
-            GameObject newObj = Instantiate(prefab);
-            newObj.transform.SetParent(parent.transform);
-            newObj.SetActive(true);
-            return newObj;
+            newObj = Instantiate(prefab);
         }
-        return currentPool.Dequeue();
+        else newObj = currentPool.Dequeue();
+        
+        newObj.transform.SetParent(parent.transform);
+        newObj.SetActive(true);
+        return newObj;
     }
 
     public void returnObjectToPool (GameObject obj) {
         obj.SetActive(false);
         obj.transform.SetParent(null);
         currentPool.Enqueue(obj);
+    }
+
+    public void returnGroupOfObjectToPool (GameObject folder) {
+        int num = folder.transform.childCount;
+
+        for (int i = 0; i < num; i++) {
+            GameObject target = folder.transform.GetChild(0).gameObject;
+            returnObjectToPool(target);
+        }
     }
 
 }

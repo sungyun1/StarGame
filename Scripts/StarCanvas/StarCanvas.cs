@@ -86,7 +86,7 @@ public class StarCanvas : popupClient
     }
 
     public override void beforePopup(string type) {
-        popupController.openSpecificTypeOfPopup(type);
+        popupController.openSpecificTypeOfPopup(type, "별자리를 구매하시겠습니까?");
     }
 
     public override void afterPopup() {
@@ -176,13 +176,8 @@ public class StarCanvas : popupClient
         if (gameObject.activeSelf) { // 자기가 활성화 되어 있을 때만 ~
         
             pool.chooseTypeOfPool("line");
+            pool.returnGroupOfObjectToPool(LineFolder);
 
-            int num = LineFolder.transform.childCount;
-
-            for (int i = 0; i < num; i++) {
-                GameObject line = LineFolder.transform.GetChild(0).gameObject;
-                pool.returnObjectToPool(line);
-            }
 
             string type = starThatUsed[0].type;
             pool.chooseTypeOfPool(type);
@@ -206,7 +201,7 @@ public class StarCanvas : popupClient
                 currentStarGroup.stargroup.Clear();
                 diary.isCharactorFound[ch.charactorID] = true;
 
-                popupController.openSpecificTypeOfPopup("description");
+                popupController.openSpecificTypeOfPopup("description", "별자리를 구매하였습니다");
             }
         }
     }

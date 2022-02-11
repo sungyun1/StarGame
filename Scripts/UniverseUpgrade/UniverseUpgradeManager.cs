@@ -51,6 +51,7 @@ public class UniverseUpgradeManager : UI_Interface
 
     public void closeSpecificPage () {
         StartCoroutine(MoveObject(DetailUniverse, closePos));
+        StartCoroutine(curve.eraseCurrentSpaceMapProgress());
     }
 
     public void chooseSpecificUniverse() {

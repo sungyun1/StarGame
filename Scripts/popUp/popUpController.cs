@@ -32,7 +32,8 @@ public class popUpController : MonoBehaviour
         popup.SetActive(false);
     }
 
-    public void openSpecificTypeOfPopup (string type) {
+    public void openSpecificTypeOfPopup (string type, string message) {
+        popupScript.popupText.text = message;
         switch (type) {
             case "binary":
                 popupScript.switchState(Popup.popupState.binaryChoice);

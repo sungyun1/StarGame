@@ -62,7 +62,6 @@ public class TutorialManager : MonoBehaviour
     void onTap () {
         
         if (gameObject.activeSelf == true) {
-            
             if (currentStep.isThereConditionToCheck) {
                 toggleDialogueProcess(false);
                 determineIsConditionSatisfied();
@@ -142,9 +141,12 @@ public class TutorialManager : MonoBehaviour
 
 
     void determineIsConditionSatisfied () {
-        if (currentStep.checkCondition()) {
-            goToNextStep();
+        if (gameObject.activeSelf) {
+            if (currentStep.checkCondition()) {
+                goToNextStep();
+            }
         }
+        
     }
 
     void togglePopupInteractionFactor () {

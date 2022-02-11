@@ -8173,6 +8173,7 @@ GameObject:
   - component: {fileID: 1310793770}
   - component: {fileID: 1310793771}
   - component: {fileID: 1310793772}
+  - component: {fileID: 1310793773}
   m_Layer: 5
   m_Name: DetailUniverse
   m_TagString: Untagged
@@ -8255,6 +8256,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 1971758971}
   LineFolder: {fileID: 1515980440}
+--- !u!114 &1310793773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310793769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bae8a16fba21ad4ba59a766d150ae25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameResource: {fileID: 1256028950}
+  popupController: {fileID: 1971758969}
+  buttons:
+  - {fileID: 1508623270}
+  - {fileID: 431586745}
+  - {fileID: 743236593}
+  - {fileID: 1654307350}
+  - {fileID: 1240309496}
+  - {fileID: 600361562}
 --- !u!1 &1332995048
 GameObject:
   m_ObjectHideFlags: 0

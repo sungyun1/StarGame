@@ -5,10 +5,9 @@ using System;
 
 public class Planet : Entity {
 
-    public event Action onPlanetClicked;
+    public int num;
 
     public override void onInteract() {
-        print("planet clicked");
-        onPlanetClicked();
+        
     }
 }

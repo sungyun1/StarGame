@@ -15,16 +15,14 @@ public class ShopManager : MonoBehaviour
 
     public Shop gameShop;
 
-    public bool isShopOpen = false;
-
     void Update () {
-        currentStarDust.text = gameResource.starDust.ToString();
-        currentGem.text = gameResource.gemNum.ToString();
+        currentStarDust.text = gameResource.gameData.amountOfStarDust.ToString();
+        currentGem.text = gameResource.gameData.amountOfGem.ToString();
     }
     
     public void onButtonClick() {
-        string myName = EventSystem.current.currentSelectedGameObject.name;
-        gameShop.buyProduct(myName);
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        gameShop.beforePopup(buttonName);
     }
     
 

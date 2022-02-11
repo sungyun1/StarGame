@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class Diary : MonoBehaviour {
-
-    // 캐릭터 관리에만 신경 쓰기.
 
     public Image CharactorImage;
     public Image SpaceMarkImage;
@@ -19,12 +16,10 @@ public class Diary : MonoBehaviour {
 
     public List<bool> isCharactorFound;
     public List<Button> Buttons;
-    private int totalCharactorNum = 2;
-
-    // 획득한 캐릭터 보관
-    public List<Charactor> myCharactors = new List<Charactor>();
+    private int totalCharactorNum = 22;
+    private int buttonNum = 6;
     
-    public void Start () {
+    public void Awake () {
 
         // found 면 신경쓰고, 아니면 신경 쓰지 않음. 열람조차 안 되게 함.
 
@@ -38,7 +33,7 @@ public class Diary : MonoBehaviour {
 
     public void fillGeneralPage () {
 
-        for (int i = 0; i < totalCharactorNum; i++) {
+        for (int i = 0; i < buttonNum; i++) {
 
             CharactorDB.DataIndex info = CharactorDB.DataIndex.hiddenStateSpritePath;
 

@@ -13,30 +13,54 @@ public class popUpController : MonoBehaviour
 
     public GameObject popup;
 
+    private Popup popupScript;
+
     private Dictionary<string, string> popUpQuestions;
 
-    public event Action finished;
+    public string popupResult;
+    public int detailPopupResult;
 
-    public Stack tmpStack = new Stack();
+    public event Action finished;
 
     void Awake() {
         popUpQuestions = new Dictionary<string, string>();
 
-        // 액션 등록 구간
-        gameCanvas.openYesOrNoPopup += openYesOrNo;
-        gameShop.openYesOrNoPopup += openYesOrNo;
+        popupScript = popup.GetComponent<Popup>();
     }
 
     void Start() {
         popup.SetActive(false);
     }
 
-    void openYesOrNo() {
-        popup.SetActive(true);
+    public void openSpecificTypeOfPopup (string type, string message) {
+        popupScript.popupText.text = message;
+        switch (type) {
+            case "binary":
+                popupScript.switchState(Popup.popupState.binaryChoice);
+                break;
+            case "triplet":
+                popupScript.switchState(Popup.popupState.tripletChoice);
+                break;
+            case "description":
+                popupScript.switchState(Popup.popupState.description);
+                break;
+            default:
+                throw new Exception("state of Popup is not allocated");
+        }
+        if (popup.activeSelf != true) {
+            popup.SetActive(true);
+        }
     }
 
-    public void proceed() {
+    public void openToastMessage (string message) {
+        popupScript.toastMessage.text = message;
+        StartCoroutine(popupScript.callToastMessage());
+    }
+
+    public void proceedWithKeyword(string result) {
         // 그냥 진행해라~
+        popupResult = result;
+        detailPopupResult = popupScript.currentStarInShopping;
         finished();
     }
 
